@@ -15,12 +15,13 @@ public class ProductRepository : IProductRepository
     
     public async Task AddAsync(Product product)
     {
-        await _context.Set<Product>().AddAsync(product);
+        await _context.Products.AddAsync(product);
+        await _context.SaveChangesAsync();
     }
 
-    public async Task<Product> GetProductById(Guid id)
+    public async Task<Product> GetProductByIdAsync(Guid id)
     {
-        return await _context.Set<Product>().FirstOrDefaultAsync(p => p.Id == id);
+        return await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
     }
 
     public async Task<IEnumerable<Product>> GetProductsAsync()

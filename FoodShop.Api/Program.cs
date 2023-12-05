@@ -1,4 +1,5 @@
 using Carter;
+using FoodShop.Api.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCarter();
+
+builder.Services.InstallInfrastructureServices(builder.Configuration);
+builder.Services.InstallApplicationServices(builder.Configuration);
+builder.Services.InstallDomainServices(builder.Configuration);
+
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -18,6 +27,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.MapCarter();
+
 
 
 app.Run();

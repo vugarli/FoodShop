@@ -4,7 +4,7 @@ namespace FoodShop.Domain.Entities;
 
 public class Variation : Entity
 {
-    public Variation(Guid id,string name,int categoryId) : base(id)
+    public Variation(Guid id,string name,Guid categoryId) : base(id)
     {
         Name = name;
         CategoryId = categoryId;
@@ -12,6 +12,6 @@ public class Variation : Entity
 
     public string Name { get; private set; }
     
-    public int CategoryId { get; private set; }
+    public Guid CategoryId { get; private set; }
     public Category Category { get; private set; }
 }

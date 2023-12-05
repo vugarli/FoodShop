@@ -4,16 +4,16 @@ namespace FoodShop.Domain.Entities;
 
 public class ProductEntry : Entity
 {
-    public ProductEntry(Guid id,int productId,string sku,decimal price,string image,int quantity) : base(id)
+    public ProductEntry(Guid id,Guid productId,string SKU,decimal price,string image,int quantity) : base(id)
     {
         ProductId = productId;
         Price = price;
         Image = image;
         Quantity = quantity;
-        SKU = sku;
+        this.SKU = SKU;
     }
 
-    public int ProductId { get; private set; }
+    public Guid ProductId { get; private set; }
     public Product Product { get; private set; }
 
     public string SKU { get; private set; }

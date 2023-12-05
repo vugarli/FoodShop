@@ -12,10 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Configurations\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\FoodShop.Application\FoodShop.Application.csproj" />
     <ProjectReference Include="..\FoodShop.Domain\FoodShop.Domain.csproj" />
   </ItemGroup>
