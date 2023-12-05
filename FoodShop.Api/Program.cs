@@ -1,5 +1,6 @@
 using Carter;
 using FoodShop.Api.Configuration;
+using FoodShop.Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,7 @@ builder.Services.AddCarter();
 builder.Services.InstallInfrastructureServices(builder.Configuration);
 builder.Services.InstallApplicationServices(builder.Configuration);
 builder.Services.InstallDomainServices(builder.Configuration);
-
+builder.Services.AddTransient<ExceptionMiddleware>();
 
 
 
@@ -26,8 +27,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.MapCarter();
+app.UseMiddleware<ExceptionMiddleware>();
 
+app.MapCarter();
 
 
 app.Run();
