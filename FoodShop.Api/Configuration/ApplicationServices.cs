@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FoodShop.Application.Behaviours;
+using FoodShop.Application.Products;
 using FoodShop.Application.Products.Commands.CreateProduct;
 
 namespace FoodShop.Api.Configuration;
@@ -17,6 +18,7 @@ public static class ApplicationServices
             }
                 );
         services.AddValidatorsFromAssembly(typeof(CreateProductCommand).Assembly);
+        services.AddAutoMapper(typeof(ProductDto).Assembly);
         return services;
     }
 }

@@ -1,6 +1,7 @@
 using Carter;
 using FoodShop.Api.Configuration;
 using FoodShop.Api.Middleware;
+using FoodShop.Presentation.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddCarter();
+
 
 builder.Services.InstallInfrastructureServices(builder.Configuration);
 builder.Services.InstallApplicationServices(builder.Configuration);
@@ -29,7 +30,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseMiddleware<ExceptionMiddleware>();
 
-app.MapCarter();
+app.MapProducts().WithOpenApi();
 
 
 app.Run();

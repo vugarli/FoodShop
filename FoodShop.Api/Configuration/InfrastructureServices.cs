@@ -1,4 +1,5 @@
 ﻿using FoodShop.Application.Abstractions;
+using FoodShop.Domain.Abstractions;
 using FoodShop.Infrastructure;
 using FoodShop.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +14,7 @@ public static class InfrastructureServices
         services.AddDbContext<ApplicationDbContext>(
             options => options.UseSqlServer(config["ConnectionString"],
                 o => o.MigrationsAssembly("FoodShop.Api")));
-        
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         
         return services;
     }

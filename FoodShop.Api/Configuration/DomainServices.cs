@@ -7,7 +7,7 @@ public static class DomainServices
 {
     public static IServiceCollection InstallDomainServices(this IServiceCollection services, ConfigurationManager config)
     {
-        services.AddScoped<IUnitOfWork, ApplicationDbContext>();
+        
         
         return services;
     }
