@@ -1,4 +1,4 @@
-﻿using Carter;
+﻿
 using FoodShop.Application.Products.Commands.CreateProduct;
 using FoodShop.Application.Products.Commands.DeleteProduct;
 using FoodShop.Application.Products.Commands.UpdateProduct;
@@ -7,9 +7,9 @@ using FoodShop.Application.Products.Queries.GetProducts;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+
 
 namespace FoodShop.Presentation.Endpoints;
 

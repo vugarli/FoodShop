@@ -1,4 +1,3 @@
-using Carter;
 using FoodShop.Api.Configuration;
 using FoodShop.Api.Middleware;
 using FoodShop.Presentation.Endpoints;
