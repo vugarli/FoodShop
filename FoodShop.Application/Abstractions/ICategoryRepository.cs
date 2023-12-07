@@ -12,7 +12,7 @@ public interface ICategoryRepository
 
     public Task DeleteCategoryByIdAsync(Guid id);
 
-    public Task AddAsync(Category category);
+    public Task CreateCategoryAsync(Category category);
 
     public Task<bool> CategoryExistsAsync(Guid id,CancellationToken cancellationToken);
 

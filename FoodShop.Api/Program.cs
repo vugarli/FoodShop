@@ -31,6 +31,7 @@ app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapProducts().WithOpenApi();
 app.MapCategories().WithOpenApi();
+app.MapVariations().WithOpenApi();
 
 
 app.Run();

@@ -12,6 +12,8 @@ public static class InfrastructureServices
     {
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<IVariationRepository, VariationRepository>();
+        
         services.AddDbContext<ApplicationDbContext>(
             options => options.UseSqlServer(config["ConnectionString"],
                 o => o.MigrationsAssembly("FoodShop.Api")));

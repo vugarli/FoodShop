@@ -35,7 +35,7 @@ public class CategoryRepository : ICategoryRepository
         await _dbContext.Set<Category>().Where(c => c.Id == id).ExecuteDeleteAsync();
     }
 
-    public async Task AddAsync(Category category)
+    public async Task CreateCategoryAsync(Category category)
     {
         await _dbContext.Set<Category>().AddAsync(category);
     }

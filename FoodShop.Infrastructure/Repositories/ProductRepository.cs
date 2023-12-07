@@ -17,7 +17,7 @@ public class ProductRepository : IProductRepository
         _mapper = mapper;
     }
     
-    public async Task AddAsync(Product product)
+    public async Task CreateProductAsync(Product product)
     {
         await _context.Products.AddAsync(product);
     }
