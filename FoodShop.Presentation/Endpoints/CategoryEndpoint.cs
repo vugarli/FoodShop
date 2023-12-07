@@ -1,4 +1,8 @@
-﻿
+﻿using FoodShop.Application.Categories.Commands.CreateCategory;
+using FoodShop.Application.Categories.Commands.DeleteCategory;
+using FoodShop.Application.Categories.Commands.UpdateCategory;
+using FoodShop.Application.Categories.Queries.GetCategories;
+using FoodShop.Application.Categories.Queries.GetCategoryById;
 using FoodShop.Application.Products.Commands.CreateProduct;
 using FoodShop.Application.Products.Commands.DeleteProduct;
 using FoodShop.Application.Products.Commands.UpdateProduct;
@@ -10,60 +14,64 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
-
 namespace FoodShop.Presentation.Endpoints;
 
-public static class ProductEndpoint
+public static class CategoryEndpoint
 {
 
-    public static RouteGroupBuilder MapProducts(this IEndpointRouteBuilder app)
+
+    public static RouteGroupBuilder MapCategories (this IEndpointRouteBuilder builder)
     {
-
-        var group = app.MapGroup("/products");
+        var group = builder.MapGroup("/categories");
+        group.WithTags("Categories");
         
-
-        group.WithTags("Products");
+        
 
         group.MapGet("/", async ([FromServices] ISender sender) =>
         {
-            var result = await sender.Send(new GetProductsQuery());
+            var result = await sender.Send(new GetCategoriesQuery());
             return Results.Ok(result);
-        }).WithName("GetProducts");
+        }).WithName("GetCategories");
 
         group.MapGet("/{id:guid}", async ([FromServices] ISender sender, [FromRoute] Guid id) =>
         {
-            var result = await sender.Send(new GetProductByIdQuery(id));
+            var result = await sender.Send(new GetCategoryByIdQuery(id));
             if (result == null)
                 return Results.NotFound();
             return Results.Ok(result);
-        }).WithName("GetProductById");
+        }).WithName("GetCategoryById");
 
-        group.MapPost("/", async ([FromServices] ISender sender, [FromBody] CreateProductCommand command) =>
+        group.MapPost("/", async ([FromServices] ISender sender, [FromBody] CreateCategoryCommand command) =>
         {
             var result = await sender.Send(command);
-            return Results.CreatedAtRoute("GetProductById", new { id = result.Id });
-        }).WithName("CreateProduct");
+            return Results.CreatedAtRoute("GetCategoryById", new { id = result.Id });
+        }).WithName("CreateCategory");
 
         group.MapPut("/{id:guid}",
             async (
                 [FromServices] ISender sender,
-                [FromBody] UpdateProductCommand command,
+                [FromBody] UpdateCategoryCommand command,
                 [FromRoute] Guid id) =>
             {
                 if (id != command.Id) return Results.BadRequest("Ids do not match!"); //TODO
                 var result = await sender.Send(command);
                 return Results.Ok(result);
-            }).WithName("UpdateProduct");
+            }).WithName("UpdateCategory");
 
         group.MapDelete("/{id:guid}",
             async (
                 [FromServices] ISender sender,
                 [FromRoute] Guid id) =>
             {
-                await sender.Send(new DeleteProductCommand(id));
+                await sender.Send(new DeleteCategoryCommand(id));
                 return Results.Ok();
-            }).WithName("DeleteProduct");
-        
+            }).WithName("DeleteCategory");
+
         return group;
+
+
     }
+    
+    
+    
 }

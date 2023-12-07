@@ -8,4 +8,4 @@ public sealed record CreateProductCommand
         string Description,
         Guid CategoryId,
         string Image
-        ) : ICommand<Guid>;
+        ) : ICommand<ProductDto>;

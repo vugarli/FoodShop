@@ -11,6 +11,7 @@ public static class InfrastructureServices
     public static IServiceCollection InstallInfrastructureServices(this IServiceCollection services, ConfigurationManager config)
     {
         services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddDbContext<ApplicationDbContext>(
             options => options.UseSqlServer(config["ConnectionString"],
                 o => o.MigrationsAssembly("FoodShop.Api")));

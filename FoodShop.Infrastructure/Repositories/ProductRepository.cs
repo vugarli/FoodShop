@@ -20,7 +20,6 @@ public class ProductRepository : IProductRepository
     public async Task AddAsync(Product product)
     {
         await _context.Products.AddAsync(product);
-        //await _context.SaveChangesAsync();
     }
 
     public async Task<Product> GetProductByIdAsync(Guid id)

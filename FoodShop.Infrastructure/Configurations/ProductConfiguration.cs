@@ -10,6 +10,6 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
     {
         builder.HasKey(p => p.Id);
         builder.HasOne<Category>(p => p.Category)
-            .WithMany().OnDelete(DeleteBehavior.NoAction);
+            .WithMany().OnDelete(DeleteBehavior.Cascade);
     }
 }

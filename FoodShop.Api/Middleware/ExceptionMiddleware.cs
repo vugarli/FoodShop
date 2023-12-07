@@ -29,6 +29,8 @@ public class ExceptionMiddleware : IMiddleware
             {
                 problem.Extensions["errors"] = ExceptionDetails.Errors;
             }
+            else
+                throw;
 
             context.Response.StatusCode = ExceptionDetails.Status;
             await context.Response.WriteAsJsonAsync(problem);
