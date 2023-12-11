@@ -16,7 +16,6 @@ builder.Services.InstallDomainServices(builder.Configuration);
 builder.Services.AddTransient<ExceptionMiddleware>();
 
 
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -33,6 +32,7 @@ app.MapProducts().WithOpenApi();
 app.MapCategories().WithOpenApi();
 app.MapVariations().WithOpenApi();
 app.MapVariationOptions().WithOpenApi();
+app.MapProductEntries().WithOpenApi();
 
 
 app.Run();
