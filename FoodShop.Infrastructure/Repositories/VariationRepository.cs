@@ -1,4 +1,5 @@
 ﻿using FoodShop.Application.Abstractions;
+using FoodShop.Application.Pagination;
 using FoodShop.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,5 +47,15 @@ public class VariationRepository : IVariationRepository
     public async Task DeleteVariationAsync(Guid id)
     {
         var r = await _dbContext.Set<Variation>().Where(v => v.Id == id).ExecuteDeleteAsync();
+    }
+
+    public async Task<IEnumerable<Variation>> GetPaginatedVariationsAsync(int page, int per_page)
+    {
+        return await _dbContext.Set<Variation>().AddPagination(page, per_page).ToListAsync();
+    }
+
+    public async Task<int> GetVariationsCountAsync()
+    {
+        return await _dbContext.Set<Variation>().CountAsync();
     }
 }

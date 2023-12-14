@@ -1,5 +1,6 @@
 using FoodShop.Admin.WebApp.Client.Pages;
 using FoodShop.Admin.WebApp.Components;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,8 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+builder.Services.AddMudServices();
+
+builder.Services.AddHttpClient("API",
+    client => client.BaseAddress = new Uri("http://localhost:5294/"));
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

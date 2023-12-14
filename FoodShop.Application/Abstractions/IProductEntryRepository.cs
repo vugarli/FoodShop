@@ -13,6 +13,8 @@ public interface IProductEntryRepository
     public Task<ProductEntry> GetProductEntryByIdAsync(Guid id);
 
     public Task<IEnumerable<ProductEntry>> GetProductEntriesAsync();
+    public Task<IEnumerable<ProductEntry>> GetPaginatedProductEntriesAsync(int page,int per_page);
 
     public Task<bool> ProductEntryExistsAsync(Guid id,CancellationToken cancellationToken);
+    public Task<int> GetProductEntriesCountAsync();
 }

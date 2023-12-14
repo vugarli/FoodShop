@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using FoodShop.Application.Abstractions;
+using FoodShop.Application.Pagination;
+using FoodShop.Domain.Entities;
 using MediatR;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FoodShop.Application.Categories.Queries.GetCategories;
 
-public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery,IEnumerable<CategoryDto>>
+public class GetCategoriesQueryHandler : IRequestHandler<GetPaginatedCategoriesQuery, PaginatedResult<CategoryDto>>
 {
     private readonly ICategoryRepository _repository;
     private readonly IMapper _mapper;
@@ -16,10 +19,14 @@ public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery,IEnu
     }
     
     
-    public async Task<IEnumerable<CategoryDto>> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedResult<CategoryDto>> Handle(GetPaginatedCategoriesQuery request, CancellationToken cancellationToken)
     {
-        var categories = await _repository.GetCategoriesAsync();
+        var categories = await _repository.GetPaginatedCategoriesAsync(request.page,request.per_page);
         var categoryDtos = _mapper.Map<IEnumerable<CategoryDto>>(categories);
-        return categoryDtos;
+        var count = await _repository.GetCategoriesCountAsync();
+
+        var pModel = new PaginatedResult<CategoryDto>(categoryDtos, request.page, request.per_page, count);
+
+        return pModel;
     }
 }

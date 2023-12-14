@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography.X509Certificates;
 using FoodShop.Application.Abstractions;
+using FoodShop.Application.Pagination;
 using FoodShop.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
@@ -47,5 +48,15 @@ public class VariationOptionRepository : IVariationOptionRepository
     public Task<bool> VariationOptionExistsAsync(Guid id, CancellationToken cancellationToken)
     {
         return _context.Set<VariationOption>().AnyAsync(vo=>vo.Id == id);
+    }
+
+    public async Task<IEnumerable<VariationOption>> GetPaginatedVariationOptionsAsync(int page, int per_page)
+    {
+        return await _context.Set<VariationOption>().AddPagination(page, per_page).ToListAsync();
+    }
+
+    public async Task<int> GetVariationOptionsCountAsync()
+    {
+        return await _context.Set<VariationOption>().CountAsync();
     }
 }

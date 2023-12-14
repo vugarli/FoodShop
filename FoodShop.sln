@@ -13,13 +13,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodShop.Infrastructure", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodShop.Presentation", "FoodShop.Presentation\FoodShop.Presentation.csproj", "{D7EAB7FB-7B73-48EF-B55B-F2056B12633F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodShop.Web", "FoodShop.Web\FoodShop.Web\FoodShop.Web.csproj", "{D1D18B09-009B-41A1-BFE4-71FF1093F10A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodShop.Web", "FoodShop.Web\FoodShop.Web\FoodShop.Web.csproj", "{D1D18B09-009B-41A1-BFE4-71FF1093F10A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodShop.Web.Client", "FoodShop.Web\FoodShop.Web.Client\FoodShop.Web.Client.csproj", "{C716A66F-000E-4F8D-87C3-BC0E697F7C07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodShop.Web.Client", "FoodShop.Web\FoodShop.Web.Client\FoodShop.Web.Client.csproj", "{C716A66F-000E-4F8D-87C3-BC0E697F7C07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodShop.Admin.WebApp", "FoodShop.Admin.WebApp\FoodShop.Admin.WebApp\FoodShop.Admin.WebApp.csproj", "{E17EC386-D32A-489D-AD74-0FD6F87A308C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodShop.Admin.WebApp", "FoodShop.Admin.WebApp\FoodShop.Admin.WebApp\FoodShop.Admin.WebApp.csproj", "{E17EC386-D32A-489D-AD74-0FD6F87A308C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodShop.Admin.WebApp.Client", "FoodShop.Admin.WebApp\FoodShop.Admin.WebApp.Client\FoodShop.Admin.WebApp.Client.csproj", "{BBD81113-FDD7-4B81-9B36-0D9E0E50A75F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodShop.Admin.WebApp.Client", "FoodShop.Admin.WebApp\FoodShop.Admin.WebApp.Client\FoodShop.Admin.WebApp.Client.csproj", "{BBD81113-FDD7-4B81-9B36-0D9E0E50A75F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -4,10 +4,12 @@ using FoodShop.Application.Products.Commands.DeleteProduct;
 using FoodShop.Application.Products.Commands.UpdateProduct;
 using FoodShop.Application.Products.Queries.GetProductById;
 using FoodShop.Application.Products.Queries.GetProducts;
+using FoodShop.Presentation.Paginations;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Routing;
 
 
@@ -24,9 +26,10 @@ public static class ProductEndpoint
 
         group.WithTags("Products");
 
-        group.MapGet("/", async ([FromServices] ISender sender) =>
+        group.MapGet("/", async ([FromServices] ISender sender, [AsParameters] GetPaginatedProductsQuery query,LinkGenerator linkgen) =>
         {
-            var result = await sender.Send(new GetProductsQuery());
+            var result = await sender.Send(query);
+            result.SetUrls(linkgen, "GetProducts");
             return Results.Ok(result);
         }).WithName("GetProducts");
 

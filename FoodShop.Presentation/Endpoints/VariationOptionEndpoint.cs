@@ -4,6 +4,7 @@ using FoodShop.Application.VariationOptions.Commands.UpdateVariationOption;
 using FoodShop.Application.VariationOptions.Queries.GetVariationOptionById;
 using FoodShop.Application.VariationOptions.Queries.GetVariationOptions;
 using FoodShop.Application.Variations.Queries.GetVariations;
+using FoodShop.Presentation.Paginations;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -21,9 +22,10 @@ public static class VariationOptionEndpoint
         
         group.WithTags("Variation Options");
 
-        group.MapGet("/", async ([FromServices] ISender sender) =>
+        group.MapGet("/", async ([FromServices] ISender sender, [AsParameters] GetPaginatedVariationOptionsQuery query,LinkGenerator linkgen) =>
         {
-            var result = await sender.Send(new GetVariationOptionsQuery());
+            var result = await sender.Send(query);
+            result.SetUrls(linkgen, "GetVariationOptions");
             return Results.Ok(result);
         }).WithName("GetVariationOptions");
 

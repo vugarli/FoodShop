@@ -1,4 +1,5 @@
 ﻿using FoodShop.Application.Abstractions;
+using FoodShop.Application.Pagination;
 using FoodShop.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -43,5 +44,15 @@ public class CategoryRepository : ICategoryRepository
     public async Task<bool> CategoryExistsAsync(Guid id,CancellationToken cancellationToken)
     {
         return await _dbContext.Set<Category>().AnyAsync(c=>c.Id==id,cancellationToken);
+    }
+
+    public async Task<IEnumerable<Category>> GetPaginatedCategoriesAsync(int page, int per_page)
+    {
+        return await _dbContext.Set<Category>().AddPagination(page, per_page).ToListAsync();
+    }
+
+    public async Task<int> GetCategoriesCountAsync()
+    {
+        return await _dbContext.Set<Category>().CountAsync();
     }
 }

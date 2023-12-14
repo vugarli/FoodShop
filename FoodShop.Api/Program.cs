@@ -15,7 +15,7 @@ builder.Services.InstallApplicationServices(builder.Configuration);
 builder.Services.InstallDomainServices(builder.Configuration);
 builder.Services.AddTransient<ExceptionMiddleware>();
 
-
+builder.Services.AddCors();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -34,5 +34,6 @@ app.MapVariations().WithOpenApi();
 app.MapVariationOptions().WithOpenApi();
 app.MapProductEntries().WithOpenApi();
 
+app.UseCors(options=>options.AllowAnyOrigin());
 
 app.Run();

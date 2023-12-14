@@ -1,10 +1,11 @@
 ﻿using FoodShop.Application.Abstractions;
+using FoodShop.Application.Pagination;
 using FoodShop.Domain.Entities;
 using MediatR;
 
 namespace FoodShop.Application.Products.Queries.GetProducts;
 
-public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery,IEnumerable<Product>>
+public class GetProductsQueryHandler : IRequestHandler<GetPaginatedProductsQuery, PaginatedResult<Product>>
 {
     private readonly IProductRepository _repository;
 
@@ -12,8 +13,13 @@ public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery,IEnumera
     {
         _repository = repository;
     }
-    public async Task<IEnumerable<Product>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedResult<Product>> Handle(GetPaginatedProductsQuery request, CancellationToken cancellationToken)
     {
-        return await _repository.GetProductsAsync();
+        var data = await _repository.GetPaginatedProductsAsync(request.page,request.per_page);
+        var count = await _repository.GetProductsCountAsync();
+
+        var pModel = new PaginatedResult<Product>(data,request.page,request.per_page,count);
+
+        return pModel;
     }
 }

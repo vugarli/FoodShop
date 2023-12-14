@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FoodShop.Application.Abstractions;
+using FoodShop.Application.Pagination;
 using FoodShop.Application.Products.Commands.UpdateProduct;
 using FoodShop.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -47,5 +48,15 @@ public class ProductRepository : IProductRepository
     public async Task DeleteProductByIdAsync(Guid Id)
     {
         await _context.Products.Where(p => p.Id == Id).ExecuteDeleteAsync();
+    }
+
+    public async Task<IEnumerable<Product>> GetPaginatedProductsAsync(int page, int per_page)
+    {
+        return await _context.Set<Product>().AddPagination(page,per_page).ToListAsync();
+    }
+
+    public async Task<int> GetProductsCountAsync()
+    {
+        return await _context.Set<Product>().CountAsync();
     }
 }

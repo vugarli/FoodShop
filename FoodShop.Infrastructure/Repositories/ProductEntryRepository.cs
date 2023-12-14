@@ -1,4 +1,5 @@
 ﻿using FoodShop.Application.Abstractions;
+using FoodShop.Application.Pagination;
 using FoodShop.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -48,5 +49,15 @@ public class ProductEntryRepository : IProductEntryRepository
     public async Task<bool> ProductEntryExistsAsync(Guid id,CancellationToken cancellationToken)
     {
         return await _context.Set<ProductEntry>().AnyAsync(pe => pe.Id == id,cancellationToken);
+    }
+
+    public async Task<IEnumerable<ProductEntry>> GetPaginatedProductEntriesAsync(int page, int per_page)
+    {
+        return await _context.Set<ProductEntry>().AddPagination(page, per_page).ToListAsync();
+    }
+
+    public async Task<int> GetProductEntriesCountAsync()
+    {
+        return await _context.Set<ProductEntry>().CountAsync();
     }
 }
