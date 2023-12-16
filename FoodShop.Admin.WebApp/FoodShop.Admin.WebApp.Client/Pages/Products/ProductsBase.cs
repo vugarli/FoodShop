@@ -28,7 +28,7 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Products
         [Inject]
         public IDialogService DialogService { get; set; }
 
-        public MudDataGrid<ProductDto>? _dataGrid;
+        public MudDataGrid<VM_Product>? _dataGrid { get; set; }
 
         public HashSet<VM_Product> SelectedItems { get; set; } = new();
 
@@ -70,6 +70,25 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Products
         {
             SelectedItems = items;
         }
+
+        public async void DeleteSelectedProducts()
+        {
+            if(SelectedItems!= null && SelectedItems.Count() > 0)
+            {
+                var res = await ProductService.DeleteProducts(SelectedItems.Select(p=>p.Id));
+                if(res)
+                {
+                    Snackbar.Add("Deleted", Severity.Success);
+                    _dataGrid.SelectedItems = null;
+                    await _dataGrid.ReloadServerData();
+                }else
+                {
+                    Snackbar.Add("Delete op failed", Severity.Error);
+                }
+                SelectedItems.Clear();
+            }
+        }
+
 
         // use for soft deleted row RowStyleFunc="@RowStyle"
         public string RowStyle(VM_Product product,int i)

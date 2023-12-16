@@ -59,4 +59,15 @@ public class ProductRepository : IProductRepository
     {
         return await _context.Set<Product>().CountAsync();
     }
+
+    public async Task DeleteProductsByIdsAsync(IEnumerable<Guid> Ids)
+    {
+        await _context.Set<Product>().Where(p => Ids.Contains(p.Id)).ExecuteDeleteAsync();
+    }
+
+    public async Task<bool> ProductsExistsAsync(IEnumerable<Guid> Ids, CancellationToken cancellationToken)
+    {
+        var count = await _context.Set<Product>().Where(x => Ids.Contains(x.Id)).CountAsync();
+        return count == Ids.Count();
+    }
 }

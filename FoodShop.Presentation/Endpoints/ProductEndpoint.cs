@@ -1,6 +1,7 @@
 ﻿
 using FoodShop.Application.Products.Commands.CreateProduct;
 using FoodShop.Application.Products.Commands.DeleteProduct;
+using FoodShop.Application.Products.Commands.DeleteProducts;
 using FoodShop.Application.Products.Commands.UpdateProduct;
 using FoodShop.Application.Products.Queries.GetProductById;
 using FoodShop.Application.Products.Queries.GetProducts;
@@ -66,7 +67,16 @@ public static class ProductEndpoint
                 await sender.Send(new DeleteProductCommand(id));
                 return Results.Ok();
             }).WithName("DeleteProduct");
-        
+
+        group.MapDelete("/",
+            async (
+                [FromServices] ISender sender,
+                [FromBody] IEnumerable<Guid> ids) =>
+            {
+                await sender.Send(new DeleteProductsCommand(ids));
+                return Results.Ok();
+            }).WithName("DeleteProducts");
+
         return group;
     }
 }

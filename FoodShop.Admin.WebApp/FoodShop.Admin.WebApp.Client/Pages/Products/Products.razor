@@ -1,9 +1,10 @@
 ﻿@page "/products"
-@    using FoodShop.Admin.WebApp.Client.Pages.Products;
-@    using FoodShop.Application.Categories
-@    using FoodShop.Application.Products
-@    using FoodShop.Domain.Entities
-@    using MudBlazor
+@using FoodShop.Admin.WebApp.Client.Pages.Products;
+@using FoodShop.Admin.WebApp.Client.Pages.Products.ViewModels
+@using FoodShop.Application.Categories
+@using FoodShop.Application.Products
+@using FoodShop.Domain.Entities
+@using MudBlazor
 @inherits ProductsBase
 @rendermode InteractiveWebAssembly
 
@@ -17,12 +18,12 @@
 
 @if (SelectedItems.Count() > 0)
 {
-    <MudButton Color="Color.Error">Delete @SelectedItems.Count()</MudButton>
+    <MudButton @onclick="DeleteSelectedProducts" Color="Color.Error">Delete @SelectedItems.Count()</MudButton>
 }
 
 
 
-<MudDataGrid MultiSelection="true" ServerData="LoadGridData" T="VM_Product" SelectedItemsChanged="@SelectedItemsChanged">
+<MudDataGrid @ref="_dataGrid" MultiSelection="true" ServerData="LoadGridData" T="VM_Product" SelectedItemsChanged="@SelectedItemsChanged">
     <Columns>
         <SelectColumn T="VM_Product" />
         <PropertyColumn Property="x=>x.Id"></PropertyColumn>
@@ -31,15 +32,15 @@
         <PropertyColumn Property="x=>x.CategoryId"></PropertyColumn>
         <PropertyColumn Property="x=>x.CategoryName"></PropertyColumn>
         <TemplateColumn Title="Action">
-        <CellTemplate>
+            <CellTemplate>
                 <MudButton @onclick="@(()=>DisplayEditDialog(context.Item.Id))" Color="Color.Warning">Edit</MudButton>
-        </CellTemplate>
+            </CellTemplate>
         </TemplateColumn>
     </Columns>
     <PagerContent>
 
         <MudDataGridPager T="VM_Product" PageSizeOptions="[3,6,12]" />
-        
+
     </PagerContent>
 </MudDataGrid>
 

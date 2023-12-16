@@ -4,6 +4,7 @@ using FoodShop.Admin.WebApp.Client.Extensions;
 using MudBlazor.Services;
 using FoodShop.Admin.WebApp.Client.Abstractions.Services;
 using FoodShop.Admin.WebApp.Client.Services;
+using FoodShop.Admin.WebApp.Client.Pages.Products;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +43,6 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
-    .AddAdditionalAssemblies(typeof(Counter).Assembly);
+    .AddAdditionalAssemblies(typeof(Products).Assembly);
 
 app.Run();

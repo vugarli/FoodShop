@@ -2,6 +2,8 @@
 using FoodShop.Admin.WebApp.Client.Pages.Products.ViewModels;
 using FoodShop.Application.Pagination;
 using System.Net.Http.Json;
+using System.Text.Json.Serialization;
+using System.Text;
 
 namespace FoodShop.Admin.WebApp.Client.Services
 {
@@ -22,6 +24,14 @@ namespace FoodShop.Admin.WebApp.Client.Services
         public async Task<bool> DeleteProduct(Guid id)
         {
             var res = await client.DeleteAsync($"/products/{id}");
+            return res.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> DeleteProducts(IEnumerable<Guid> ids)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Delete, "/products");
+            request.Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(ids), Encoding.UTF8, "application/json");
+            var res = await client.SendAsync(request);
             return res.IsSuccessStatusCode;
         }
 
