@@ -34,6 +34,6 @@ app.MapVariations().WithOpenApi();
 app.MapVariationOptions().WithOpenApi();
 app.MapProductEntries().WithOpenApi();
 
-app.UseCors(options=>options.AllowAnyOrigin());
+app.UseCors(options=>options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.Run();

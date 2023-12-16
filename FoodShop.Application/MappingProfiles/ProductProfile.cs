@@ -12,7 +12,9 @@ public class ProductProfile : Profile
         CreateMap<Product, ProductDto>();
         
         CreateMap<ProductDto, Product>();
-        CreateMap<Product, Product>();
+
+        CreateMap<Product, ProductDto>().ForMember(p=>p.CategoryName,pd=>pd.MapFrom(p=>p.Category.Name));
+        
         CreateMap<UpdateProductCommand, Product>();
         
     }

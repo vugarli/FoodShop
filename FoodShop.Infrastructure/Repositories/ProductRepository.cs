@@ -30,7 +30,7 @@ public class ProductRepository : IProductRepository
 
     public async Task<IEnumerable<Product>> GetProductsAsync()
     {
-        return await _context.Set<Product>().ToListAsync();
+        return await _context.Set<Product>().Include(p=>p.Category).ToListAsync();
     }
 
     public async Task<bool> ProductExistsAsync(Guid Id,CancellationToken cancellationToken)
@@ -52,7 +52,7 @@ public class ProductRepository : IProductRepository
 
     public async Task<IEnumerable<Product>> GetPaginatedProductsAsync(int page, int per_page)
     {
-        return await _context.Set<Product>().AddPagination(page,per_page).ToListAsync();
+        return await _context.Set<Product>().Include(p => p.Category).AddPagination(page,per_page).ToListAsync();
     }
 
     public async Task<int> GetProductsCountAsync()

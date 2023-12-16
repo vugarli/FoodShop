@@ -9,7 +9,30 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\Products\CreateProductDialog.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
+    <PackageReference Include="MudBlazor" Version="6.11.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\FoodShop.Application\FoodShop.Application.csproj" />
+    <ProjectReference Include="..\..\FoodShop.Domain\FoodShop.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Products\CreateProductDialog.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Products\CreateProductDialog.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\Products\Dialogs\Create\CreateProductDialog.razor" />
   </ItemGroup>
 
 </Project>

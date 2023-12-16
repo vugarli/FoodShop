@@ -1,6 +1,9 @@
 using FoodShop.Admin.WebApp.Client.Pages;
 using FoodShop.Admin.WebApp.Components;
+using FoodShop.Admin.WebApp.Client.Extensions;
 using MudBlazor.Services;
+using FoodShop.Admin.WebApp.Client.Abstractions.Services;
+using FoodShop.Admin.WebApp.Client.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,10 +11,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
-builder.Services.AddMudServices();
+
+builder.Services.RegisterCommonServices();
 
 builder.Services.AddHttpClient("API",
     client => client.BaseAddress = new Uri("http://localhost:5294/"));
+
+builder.Services.AddTransient<IProductService, ProductService>();
 
 var app = builder.Build();
 

@@ -1,0 +1,42 @@
+﻿@using FoodShop.Application.Categories
+@using MudBlazor
+@inherits CreateProductDialogBase;
+
+
+<MudBlazor.MudDialog>
+    <DialogContent>
+     
+
+<EditForm Model="ProductVM" OnValidSubmit="Create" @ref="_editForm">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+    <MudPaper Class="d-flex flex-column p-5 mb-2" Elevation="4">
+
+    
+    
+        <MudTextField @bind-Value="ProductVM.Name" Label="Name" Variant="Variant.Text"></MudTextField>
+        <MudTextField @bind-Value="ProductVM.Description" Label="Description" ></MudTextField>
+        <MudTextField @bind-Value="ProductVM.Image" Label="Image Url" ></MudTextField>
+
+        <MudSelect T="Guid" MultiSelection="false" Label="Category" Variant="Variant.Filled" @bind-Value="ProductVM.CategoryId" AnchorOrigin="Origin.BottomCenter">
+            @if (Categories != null)
+                @foreach (var category in Categories)
+                {
+                    <MudSelectItem T="Guid" Label="Categories" HelperText="Pick the Category" Value="category.Id">
+                        @category.Name
+                    </MudSelectItem>
+                }
+        </MudSelect>
+    </MudPaper>
+</EditForm>
+
+    </DialogContent>
+
+    
+    <DialogActions>
+        <MudBlazor.MudButton @onclick="Create" Color="MudBlazor.Color.Success">Create</MudBlazor.MudButton>
+        <MudBlazor.MudButton @onclick="Cancel" Color="MudBlazor.Color.Error">Cancel</MudBlazor.MudButton>
+    </DialogActions>
+
+
+</MudBlazor.MudDialog>
