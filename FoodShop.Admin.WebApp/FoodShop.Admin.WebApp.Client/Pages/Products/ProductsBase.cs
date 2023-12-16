@@ -1,6 +1,7 @@
 ﻿using FoodShop.Admin.WebApp.Client.Abstractions.Services;
 using FoodShop.Admin.WebApp.Client.Pages.Products.Dialogs.Create;
 using FoodShop.Admin.WebApp.Client.Pages.Products.Dialogs.Update;
+using FoodShop.Admin.WebApp.Client.Pages.Products.ViewModels;
 using FoodShop.Application.Categories;
 using FoodShop.Application.Pagination;
 using FoodShop.Application.Products;

@@ -1,4 +1,4 @@
-﻿using FoodShop.Admin.WebApp.Client.Pages.Products;
+﻿using FoodShop.Admin.WebApp.Client.Pages.Products.ViewModels;
 using FoodShop.Application.Pagination;
 
 namespace FoodShop.Admin.WebApp.Client.Abstractions.Services

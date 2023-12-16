@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FoodShop.Admin.WebApp.Client.Pages.Products
+namespace FoodShop.Admin.WebApp.Client.Pages.Products.ViewModels
 {
     public class VM_Product
     {

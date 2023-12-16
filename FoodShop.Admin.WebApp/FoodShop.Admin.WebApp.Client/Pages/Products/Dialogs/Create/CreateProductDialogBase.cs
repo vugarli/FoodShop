@@ -1,5 +1,5 @@
 ﻿using FoodShop.Admin.WebApp.Client.Pages;
-using FoodShop.Admin.WebApp.Client.Pages.Products;
+using FoodShop.Admin.WebApp.Client.Pages.Products.ViewModels;
 using FoodShop.Application.Categories;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;

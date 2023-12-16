@@ -1,5 +1,5 @@
 ﻿using FoodShop.Admin.WebApp.Client.Abstractions.Services;
-using FoodShop.Admin.WebApp.Client.Pages.Products;
+using FoodShop.Admin.WebApp.Client.Pages.Products.ViewModels;
 using FoodShop.Application.Pagination;
 using System.Net.Http.Json;
 

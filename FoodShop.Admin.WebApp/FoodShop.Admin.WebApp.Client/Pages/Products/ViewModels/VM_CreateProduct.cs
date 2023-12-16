@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FoodShop.Admin.WebApp.Client.Pages.Products
+namespace FoodShop.Admin.WebApp.Client.Pages.Products.ViewModels
 {
     //TODO add messages
     public class VM_CreateProduct
@@ -15,8 +15,8 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Products
 
         [Required]
         [RegularExpression("^((?!00000000-0000-0000-0000-000000000000).)*$", ErrorMessage = "Invalid Guid")]
-        public Guid CategoryId { get; set; } 
-        
+        public Guid CategoryId { get; set; }
+
         [Required]
         public string Image { get; set; }
     }
