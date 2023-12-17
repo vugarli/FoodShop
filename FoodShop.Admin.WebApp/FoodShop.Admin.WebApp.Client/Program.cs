@@ -14,6 +14,7 @@ builder.Services.AddHttpClient("API", (sp, cl) =>
 });
 
 builder.Services.AddTransient<IProductService, ProductService>();
+builder.Services.AddTransient<ICategoryService, CategoryService>();
 
 
 await builder.Build().RunAsync();

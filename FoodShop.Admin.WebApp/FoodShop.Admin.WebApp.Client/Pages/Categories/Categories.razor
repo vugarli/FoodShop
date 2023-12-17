@@ -1,0 +1,46 @@
+﻿@page "/categories"
+@using FoodShop.Admin.WebApp.Client.Pages.Categories.ViewModels
+@using FoodShop.Admin.WebApp.Client.Pages.Products;
+@using FoodShop.Admin.WebApp.Client.Pages.Products.ViewModels
+@using FoodShop.Application.Categories
+@using FoodShop.Application.Products
+@using FoodShop.Domain.Entities
+@using MudBlazor
+@inherits CategoriesBase
+@rendermode InteractiveWebAssembly
+
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<h3>Categories</h3>
+
+<MudButton Color="Color.Success" @onclick="DisplayCreateDialog">Create</MudButton>
+
+ @if (SelectedItems.Count() > 0)
+ {
+    <MudButton @onclick="DeleteSelectedCategories" Color="Color.Error">Delete @SelectedItems.Count()</MudButton>
+ }
+ 
+
+
+<MudDataGrid @ref="_dataGrid" MultiSelection="true" ServerData="LoadGridData" T="VM_Category" SelectedItemsChanged="@SelectedItemsChanged">
+    <Columns>
+        <SelectColumn T="VM_Category" />
+        <PropertyColumn Property="x=>x.Id"></PropertyColumn>
+        <PropertyColumn Property="x=>x.Name"></PropertyColumn>
+        <PropertyColumn Property="x=>x.ParentId"></PropertyColumn>
+        <PropertyColumn Property="x=>x.ParentName"></PropertyColumn>
+         <TemplateColumn Title="Action">
+            <CellTemplate>
+                <MudButton @onclick="@(()=>DisplayEditDialog(context.Item.Id))" Color="Color.Warning">Edit</MudButton>
+            </CellTemplate>
+        </TemplateColumn> 
+    </Columns>
+    <PagerContent>
+
+        <MudDataGridPager T="VM_Category" PageSizeOptions="[3,6,12]" />
+
+    </PagerContent>
+</MudDataGrid>
+

@@ -1,8 +1,10 @@
 ﻿using FoodShop.Application.Categories.Commands.CreateCategory;
+using FoodShop.Application.Categories.Commands.DeleteCategories;
 using FoodShop.Application.Categories.Commands.DeleteCategory;
 using FoodShop.Application.Categories.Commands.UpdateCategory;
 using FoodShop.Application.Categories.Queries.GetCategories;
 using FoodShop.Application.Categories.Queries.GetCategoryById;
+using FoodShop.Application.Categories.Queries.GetParentCategories;
 using FoodShop.Application.Products.Commands.CreateProduct;
 using FoodShop.Application.Products.Commands.DeleteProduct;
 using FoodShop.Application.Products.Commands.UpdateProduct;
@@ -34,6 +36,13 @@ public static class CategoryEndpoint
             result.SetUrls(linkgen, "GetCategories");
             return Results.Ok(result);
         }).WithName("GetCategories");
+
+        //TODO fix this fishy endpoint
+        group.MapGet("/parent", async ([FromServices] ISender sender) =>
+        {
+            var result = await sender.Send(new GetParentCategoriesQuery());
+            return Results.Ok(result);
+        }).WithName("GetParentCategories");
 
 
         group.MapGet("/{id:guid}", async ([FromServices] ISender sender, [FromRoute] Guid id) =>
@@ -69,6 +78,15 @@ public static class CategoryEndpoint
                 await sender.Send(new DeleteCategoryCommand(id));
                 return Results.Ok();
             }).WithName("DeleteCategory");
+
+        group.MapDelete("/",
+            async (
+                [FromServices] ISender sender,
+                [FromBody] IEnumerable<Guid> ids) =>
+            {
+                await sender.Send(new DeleteCategoriesCommand(ids));
+                return Results.Ok();
+            }).WithName("DeleteCategories");
 
         return group;
 

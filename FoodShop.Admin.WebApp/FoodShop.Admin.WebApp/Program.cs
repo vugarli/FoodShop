@@ -19,6 +19,8 @@ builder.Services.AddHttpClient("API",
     client => client.BaseAddress = new Uri("http://localhost:5294/"));
 
 builder.Services.AddTransient<IProductService, ProductService>();
+builder.Services.AddTransient<ICategoryService, CategoryService>();
+
 
 var app = builder.Build();
 

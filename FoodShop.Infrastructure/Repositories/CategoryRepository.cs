@@ -16,12 +16,12 @@ public class CategoryRepository : ICategoryRepository
     
     public async Task<Category> GetCategoryByIdAsync(Guid id)
     {
-        return await _dbContext.Set<Category>().FirstOrDefaultAsync(c=>c.Id == id);
+        return await _dbContext.Set<Category>().Include(c=>c.ParentCategory).FirstOrDefaultAsync(c=>c.Id == id);
     }
 
     public async Task<IEnumerable<Category>> GetCategoriesAsync()
     {
-        return await _dbContext.Set<Category>().ToListAsync();
+        return await _dbContext.Set<Category>().Include(c => c.ParentCategory).ToListAsync();
     }
 
     public async Task<Category> UpdateCategoryAsync(Category category)
@@ -48,11 +48,27 @@ public class CategoryRepository : ICategoryRepository
 
     public async Task<IEnumerable<Category>> GetPaginatedCategoriesAsync(int page, int per_page)
     {
-        return await _dbContext.Set<Category>().AddPagination(page, per_page).ToListAsync();
+        return await _dbContext.Set<Category>().Include(c => c.ParentCategory).AddPagination(page, per_page).ToListAsync();
     }
 
     public async Task<int> GetCategoriesCountAsync()
     {
         return await _dbContext.Set<Category>().CountAsync();
+    }
+
+    public async Task<IEnumerable<Category>> GetParentCategoriesAsync()
+    {
+        return await _dbContext.Set<Category>().Where(c => c.ParentId == null).ToListAsync();
+    }
+
+    public async Task<bool> CategoriesExistsAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken)
+    {
+        var result = await _dbContext.Set<Category>().Where(c => ids.Contains(c.Id)).CountAsync();
+        return result == ids.Count();
+    }
+
+    public async Task DeleteCategoriesByIdsAsync(IEnumerable<Guid> ids)
+    {
+        await _dbContext.Set<Category>().Where(c => ids.Contains(c.Id)).ExecuteDeleteAsync();
     }
 }

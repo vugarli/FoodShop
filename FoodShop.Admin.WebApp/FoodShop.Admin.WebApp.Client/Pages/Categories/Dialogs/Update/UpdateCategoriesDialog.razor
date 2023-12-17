@@ -1,0 +1,39 @@
+﻿@inherits UpdateCategoriesDialogBase
+
+@using MudBlazor;
+
+
+<MudBlazor.MudDialog>
+    <DialogContent>
+
+
+        <EditForm Model="CategoryVM" @ref="_editForm" OnValidSubmit="Create">
+            <DataAnnotationsValidator></DataAnnotationsValidator>
+            <ValidationSummary></ValidationSummary>
+
+            <MudPaper Class="d-flex flex-column p-5 mb-2" Elevation="4">
+
+               
+                <MudTextField @bind-Value="CategoryVM.Name" Variant="Variant.Text" Label="Name"></MudTextField>
+
+                <MudSelect T="Guid?" MultiSelection="false" Label="Category" Variant="Variant.Filled" @bind-Value="CategoryVM.ParentId">
+                    @if (ParentCategories != null)
+                        @foreach (var pCategory in ParentCategories)
+                        {
+                            <MudSelectItem T="Guid?" Value="pCategory.Id">
+                                @pCategory.Name
+                            </MudSelectItem>
+                        }
+                </MudSelect>
+            </MudPaper>
+        </EditForm>
+
+
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton @onclick="Create" Color="Color.Success">Create</MudButton>
+        <MudButton @onclick="Cancel" Color="Color.Error">Cancel</MudButton>
+    </DialogActions>
+
+</MudBlazor.MudDialog>

@@ -10,7 +10,8 @@ public class CategoryProfile : Profile
 {
     public CategoryProfile()
     {
-        CreateMap<Category, CategoryDto>();
+        CreateMap<Category, CategoryDto>().ForMember(x=>x.ParentName,a=>a.MapFrom(c=>c.ParentCategory.Name));
+
         CreateMap<CategoryDto, Category>();
 
         CreateMap<CreateCategoryCommand, Category>()
