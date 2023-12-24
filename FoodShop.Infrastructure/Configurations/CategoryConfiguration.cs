@@ -12,7 +12,11 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
         builder.HasOne<Category>(c => c.ParentCategory)
             .WithMany().HasForeignKey(c=>c.ParentId)
             .OnDelete(DeleteBehavior.NoAction);
-        builder.HasMany<Variation>(c => c.Variations)
-            .WithOne(v => v.Category).HasForeignKey(v=>v.CategoryId);
+
+        builder.HasOne<BaseCategoryDiscriminators>(c => c.BaseCategoryDiscriminator)
+            .WithMany(b => b.Categories).HasForeignKey(c => c.BaseCategoryDiscriminatorId);
+
+        builder.HasMany<VariationCategory>(c => c.VaritaionCategories)
+            .WithOne(v => v.Category).HasForeignKey(c=>c.CategoryId);
     }
 }

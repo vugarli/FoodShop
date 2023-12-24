@@ -2,4 +2,4 @@
 
 namespace FoodShop.Application.Categories.Commands.CreateCategory;
 
-public record CreateCategoryCommand(Nullable<Guid> ParentId,string Name):ICommand<CategoryDto>;
+public record CreateCategoryCommand(Nullable<Guid> ParentId,string Name, Nullable<Guid> BaseDiscriminatorId) :ICommand<CategoryDto>;

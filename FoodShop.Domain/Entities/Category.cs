@@ -1,19 +1,25 @@
 ﻿using FoodShop.Domain.Primitives;
+using Microsoft.EntityFrameworkCore;
 
 namespace FoodShop.Domain.Entities;
 
 public class Category : Entity
 {
-    public Category(Guid id,string name,Nullable<Guid> parentId) : base(id)
+    public Category(Guid id,string name,Nullable<Guid> parentId,Nullable<Guid> BaseCategoryDiscriminatorId) : base(id)
     {
         Name = name;
         ParentId = parentId;
-    }
-    
-    public Nullable<Guid> ParentId { get; private set; }
+        this.BaseCategoryDiscriminatorId = BaseCategoryDiscriminatorId;
+	}
+	
+	public Nullable<Guid> ParentId { get; private set; }
     public Category ParentCategory { get; set; }
+
     public string Name { get; private set; }
 
-    public IEnumerable<Variation> Variations { get; private set; }
+    public BaseCategoryDiscriminators? BaseCategoryDiscriminator { get; set; }
+    public Guid? BaseCategoryDiscriminatorId { get; private set; }
+
+    public IEnumerable<VariationCategory> VaritaionCategories { get; private set; }
     
 }

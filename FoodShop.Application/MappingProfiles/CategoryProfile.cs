@@ -15,9 +15,9 @@ public class CategoryProfile : Profile
         CreateMap<CategoryDto, Category>();
 
         CreateMap<CreateCategoryCommand, Category>()
-            .ConstructUsing(c=>new Category(Guid.NewGuid(),c.Name,c.ParentId));
+            .ConstructUsing(c=>new Category(Guid.NewGuid(),c.Name,c.ParentId,c.BaseDiscriminatorId));
         
         CreateMap<UpdateCategoryCommand, Category>()
-            .ConstructUsing(c=>new Category(Guid.NewGuid(),c.Name,c.ParentId));
+            .ConstructUsing(c=>new Category(Guid.NewGuid(),c.Name,c.ParentId,c.BaseDiscriminatorId));
     }
 }

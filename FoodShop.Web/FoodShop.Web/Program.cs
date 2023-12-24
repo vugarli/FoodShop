@@ -1,5 +1,7 @@
+using FoodShop.Web.Abstractions.Services;
 using FoodShop.Web.Client.Pages;
 using FoodShop.Web.Components;
+using FoodShop.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+
+builder.Services.AddHttpClient("API", (sp, cl) =>
+{
+    cl.BaseAddress = new Uri("http://localhost:5294");
+});
+
+
+builder.Services.AddScoped<ILatesArrivalsProductServices, LatestArrivalsProductService>();
+
 
 var app = builder.Build();
 
@@ -21,6 +32,7 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
 
 app.UseHttpsRedirection();
 

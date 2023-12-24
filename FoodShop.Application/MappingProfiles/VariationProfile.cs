@@ -15,9 +15,9 @@ public class VariationProfile : Profile
         CreateMap<VariationDto, Variation>();
 
         CreateMap<CreateVariationCommand, Variation>()
-            .ConstructUsing(c=>new Variation(Guid.NewGuid(),c.Name,c.CategoryId));
+            .ConstructUsing(c=>new Variation(Guid.NewGuid(),c.Name));
         
         CreateMap<UpdateVariationCommand, Variation>()
-            .ConstructUsing(c=>new Variation(Guid.NewGuid(),c.Name,c.CategoryId));
+            .ConstructUsing(c=>new Variation(Guid.NewGuid(),c.Name));
     }
 }

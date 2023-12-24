@@ -2,4 +2,4 @@
 
 namespace FoodShop.Application.Categories.Commands.UpdateCategory;
 
-public record UpdateCategoryCommand(Guid Id,string Name,Nullable<Guid> ParentId):ICommand<CategoryDto>;
+public record UpdateCategoryCommand(Guid Id,string Name,Nullable<Guid> ParentId,Nullable<Guid> BaseDiscriminatorId) :ICommand<CategoryDto>;

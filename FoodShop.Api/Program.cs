@@ -1,5 +1,6 @@
 using FoodShop.Api.Configuration;
 using FoodShop.Api.Middleware;
+using FoodShop.Api.Seeding;
 using FoodShop.Presentation.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,13 +17,17 @@ builder.Services.InstallDomainServices(builder.Configuration);
 builder.Services.AddTransient<ExceptionMiddleware>();
 
 builder.Services.AddCors();
+
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+   // app.SeedDb();
 }
 
 app.UseHttpsRedirection();

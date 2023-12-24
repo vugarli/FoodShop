@@ -10,9 +10,8 @@ public class VariationConfiguration : IEntityTypeConfiguration<Variation>
     {
         builder.HasKey(v => v.Id);
 
-        builder.HasOne<Category>(v => v.Category)
-            .WithMany(c=>c.Variations)
-            .HasForeignKey(v=>v.CategoryId).OnDelete(DeleteBehavior.NoAction);
+        builder.HasMany(v => v.VaritaionCategories)
+            .WithOne(c => c.Variation);
         
     }
 }

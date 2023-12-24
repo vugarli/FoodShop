@@ -4,14 +4,12 @@ namespace FoodShop.Domain.Entities;
 
 public class Variation : Entity
 {
-    public Variation(Guid id,string name,Guid categoryId) : base(id)
+    public Variation(Guid id,string name) : base(id)
     {
         Name = name;
-        CategoryId = categoryId;
     }
 
     public string Name { get; private set; }
-    
-    public Guid CategoryId { get; private set; }
-    public Category Category { get; private set; }
+
+	public IEnumerable<VariationCategory> VaritaionCategories { get; private set; }
 }
