@@ -9,43 +9,39 @@
     <div id="product-filter-nav" class="product-filter-nav mb-3">
         <div class="product-category">
             <h5 class="filter-heading  text-center text-lg-left">Category</h5>
-            @if (DiscGroup.Count() > 0 && DiscGroup.FirstOrDefault(d => d.Name == Discriminator) != null)
-            @foreach(var item in DiscGroup.FirstOrDefault(d=>d.Name == Discriminator).Groups)
-            {
-            <p class="d-flex gap-1">
-                <a class="btn btn-primary" data-bs-target="#@item.CategoryGroupName" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                    @item.CategoryGroupName
-                </a>
-            </p>
-                    <div class="collapse multi-collapse m-2" id="@item.CategoryGroupName">
-                <div class="card card-body">
-                    <ul>
-                        @foreach(var sc in item.SubCategories)
-                            {   
-                                <li>
-                                        <MudButton @onclick="@(a=>NavigateTo($"productlisting/{Discriminator}/{item.CategoryGroupName}/{sc.Name}"))">@sc.Name</MudButton>
-                                </li>
+
+            <MudNavMenu Bordered="true">
+                @if (DiscGroup.Count() > 0 && DiscGroup.FirstOrDefault(d => d.Name == Discriminator) != null)
+                    @foreach (var item in DiscGroup.FirstOrDefault(d => d.Name == Discriminator).Groups)
+                    {
+
+                        <MudNavGroup Title="@item.CategoryGroupName">
+
+
+                            @foreach (var sc in item.SubCategories)
+                            {
+                                <MudNavLink ForceLoad="false" Match="NavLinkMatch.Prefix" Href="@($"productlisting/{Discriminator}/{item.CategoryGroupName}/{sc.Name}")">@sc.Name</MudNavLink>
                             }
-                    </ul>
-                </div>
-            </div>
-            }
+
+                        </MudNavGroup>
+                    }
+            </MudNavMenu>
 
 
         </div>
 
         <div class="d-flex flex-column">
 
-        <MudExtensions.MudRangeSlider Value="MinValue ?? 0" UpperValue="MaxValue ?? 100" T="int" UpperValueChanged="MaxChanged" ValueChanged="MinChanged" Immediate="false" ValueLabel="true" Step="1" Max="100" Min="1" Range="true"></MudExtensions.MudRangeSlider>
+            <MudExtensions.MudRangeSlider Value="MinValue ?? 0" UpperValue="MaxValue ?? 100" T="int" UpperValueChanged="MaxChanged" ValueChanged="MinChanged" Immediate="false" ValueLabel="true" Step="1" Max="100" Min="1" Range="true"></MudExtensions.MudRangeSlider>
 
-        <div class="d-inline-flex flex-row justify-content-between">
-            <span>@MinValue</span>
-            <span>@MaxValue</span>
+            <div class="d-inline-flex flex-row justify-content-between">
+                <span>@MinValue</span>
+                <span>@MaxValue</span>
+            </div>
+
         </div>
 
-        </div>
-
-        <MudButton @onclick="@(async a=>await OnFilter.InvokeAsync())" >Filter</MudButton>
+        <MudButton @onclick="@(async a=>await OnFilter.InvokeAsync())">Filter</MudButton>
 
         <div class="product-add mt-4">
             <div class="row no-gutters">
@@ -90,12 +86,12 @@
 
 
     [Inject]
-    IDiscriminatorGroupsService discriminatorGroupsService { get; set;}
+    IDiscriminatorGroupsService discriminatorGroupsService { get; set; }
 
 
     [Parameter]
     public EventCallback<SliderRange> ValuesChanged { get; set; }
-    
+
     [Parameter]
     public EventCallback OnFilter { get; set; }
 
