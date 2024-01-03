@@ -1,4 +1,4 @@
-﻿using FoodShop.Application.Pagination;
+﻿
 using FoodShop.Web.Abstractions.Services;
 using FoodShop.Web.ViewModels.Products;
 

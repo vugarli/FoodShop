@@ -1,5 +1,5 @@
 ﻿using FoodShop.Admin.WebApp.Client.Pages.Products.ViewModels;
-using FoodShop.Application.Pagination;
+using FoodShop.Application.Queries;
 
 namespace FoodShop.Admin.WebApp.Client.Abstractions.Services
 {
@@ -12,6 +12,6 @@ namespace FoodShop.Admin.WebApp.Client.Abstractions.Services
         public Task<bool> UpdateProduct(VM_UpdateProduct product);
         public Task<VM_Product> GetProductById(Guid id);
         public Task<IEnumerable<VM_Product>> GetProducts();
-        public Task<PaginatedResult<VM_Product>> GetPaginatedProducts(int page, int per_page);
+        public Task<PaginatedQueryResult<VM_Product>> GetPaginatedProducts(int page, int per_page);
     }
 }

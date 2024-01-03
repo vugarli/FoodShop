@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FoodShop.Application.BaseCategoryDiscriminators;
 using FoodShop.Application.Categories;
 using FoodShop.Application.Categories.Commands.CreateCategory;
 using FoodShop.Application.Categories.Commands.UpdateCategory;
@@ -10,7 +11,9 @@ public class CategoryProfile : Profile
 {
     public CategoryProfile()
     {
-        CreateMap<Category, CategoryDto>().ForMember(x=>x.ParentName,a=>a.MapFrom(c=>c.ParentCategory.Name));
+        CreateMap<Category, CategoryDto>()
+            .ForMember(x=>x.ParentName,a=>a.MapFrom(c=>c.ParentCategory.Name))
+            .ForMember(x=>x.BaseCategoryDiscriminatorName,a=>a.MapFrom(c=>c.BaseCategoryDiscriminator.Name));
 
         CreateMap<CategoryDto, Category>();
 
@@ -19,5 +22,10 @@ public class CategoryProfile : Profile
         
         CreateMap<UpdateCategoryCommand, Category>()
             .ConstructUsing(c=>new Category(Guid.NewGuid(),c.Name,c.ParentId,c.BaseDiscriminatorId));
+
+        // discriminator profile
+
+        CreateMap<BaseCategoryDiscriminator, BaseCategoryDiscriminatorDto>();
+
     }
 }

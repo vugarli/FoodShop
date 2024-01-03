@@ -3,7 +3,7 @@ using FoodShop.Admin.WebApp.Client.Pages.Products.Dialogs.Create;
 using FoodShop.Admin.WebApp.Client.Pages.Products.Dialogs.Update;
 using FoodShop.Admin.WebApp.Client.Pages.Products.ViewModels;
 using FoodShop.Application.Categories;
-using FoodShop.Application.Pagination;
+using FoodShop.Application.Queries;
 using FoodShop.Application.Products;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
@@ -49,7 +49,7 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Products
         {
             var client = ClientFactory.CreateClient("API");
 
-            var response = await client.GetFromJsonAsync<PaginatedResult<CategoryDto>>($"/categories?page={1}&per_page={50}");
+            var response = await client.GetFromJsonAsync<PaginatedQueryResult<CategoryDto>>($"/categories?page={1}&per_page={50}");
             Categories = response.Data.ToList();
         }
 

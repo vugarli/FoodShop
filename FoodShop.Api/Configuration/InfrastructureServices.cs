@@ -15,6 +15,7 @@ public static class InfrastructureServices
         services.AddScoped<IVariationRepository, VariationRepository>();
         services.AddScoped<IVariationOptionRepository, VariationOptionRepository>();
         services.AddScoped<IProductEntryRepository, ProductEntryRepository>();
+        services.AddScoped<IBaseCategoryDiscriminatorRepository, BaseCategoryDiscriminatorRepository>();
         
         services.AddDbContext<ApplicationDbContext>(
             options => options.UseSqlServer(config["ConnectionString"],

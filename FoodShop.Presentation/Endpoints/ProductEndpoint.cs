@@ -1,10 +1,15 @@
 ﻿
+using FoodShop.Application.Filters;
+using FoodShop.Application.ProductEntries;
+using FoodShop.Application.Products;
 using FoodShop.Application.Products.Commands.CreateProduct;
 using FoodShop.Application.Products.Commands.DeleteProduct;
 using FoodShop.Application.Products.Commands.DeleteProducts;
 using FoodShop.Application.Products.Commands.UpdateProduct;
 using FoodShop.Application.Products.Queries.GetProductById;
 using FoodShop.Application.Products.Queries.GetProducts;
+using FoodShop.Application.Queries;
+using FoodShop.Domain.Entities;
 using FoodShop.Presentation.Paginations;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -27,12 +32,22 @@ public static class ProductEndpoint
 
         group.WithTags("Products");
 
-        group.MapGet("/", async ([FromServices] ISender sender, [AsParameters] GetPaginatedProductsQuery query,LinkGenerator linkgen) =>
+        group.MapGet("/", async (
+            [FromServices] ISender sender,
+            [AsParameters] PaginationFilter<Product> paginationFilter,
+            [AsParameters] ProductFilter productFilter,
+            LinkGenerator linkgen) =>
         {
-            var result = await sender.Send(query);
-            result.SetUrls(linkgen, "GetProducts");
+            var result = await sender.Send(new GetProductsQuery(paginationFilter,productFilter));
+
+            //temp
+            if (result is PaginatedQueryResult<ProductDto>)
+                (result as PaginatedQueryResult<ProductDto>).SetUrls(linkgen, "GetProducts");
+
             return Results.Ok(result);
         }).WithName("GetProducts");
+
+
 
         group.MapGet("/{id:guid}", async ([FromServices] ISender sender, [FromRoute] Guid id) =>
         {

@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography.X509Certificates;
 using FoodShop.Application.Abstractions;
-using FoodShop.Application.Pagination;
+using FoodShop.Application.Queries;
 using FoodShop.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;

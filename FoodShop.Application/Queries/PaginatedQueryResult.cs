@@ -3,27 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace FoodShop.Application.Pagination
+namespace FoodShop.Application.Queries
 {
-    public class PaginatedResult<T>
+    public class PaginatedQueryResult<T> : QueryResult<T>
     {
-        public PaginatedResult(IEnumerable<T> data, int page, int per_page, int rowCount)
+        public PaginatedQueryResult(IEnumerable<T> data, int page, int per_page, int rowCount) :base(data)
         {
-            Data = data;
             Page = page;
             Per_Page = per_page;
             RowCount = rowCount;
         }
-        public IEnumerable<T> Data { get; init; }
-
+        
         public int Page { get; init; }
         public int Per_Page { get; init; }
         public int RowCount { get; init; }
         public int TotalPages { get => (int) Math.Ceiling(RowCount * 1.0d /Per_Page); }
 
-        public string Previous { get; set; }
-        public string Next { get; set; }
+        public string? Previous { get; set; }
+        public string? Next { get; set; }
     }
 
 }

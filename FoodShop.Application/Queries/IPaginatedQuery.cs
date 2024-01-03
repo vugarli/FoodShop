@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FoodShop.Application.Pagination
+namespace FoodShop.Application.Queries
 {
     internal interface IPaginatedQuery
     {

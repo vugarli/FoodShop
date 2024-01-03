@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace FoodShop.Domain.Entities
 {
-	public class BaseCategoryDiscriminators : Entity
+	public class BaseCategoryDiscriminator : Entity
 	{
         public string Name { get; set; }
-		public BaseCategoryDiscriminators(Guid id, string Name) : base(id)
+		public BaseCategoryDiscriminator(Guid id, string Name) : base(id)
 		{
 			this.Name = Name;
 		}

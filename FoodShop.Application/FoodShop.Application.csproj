@@ -16,4 +16,9 @@
     <ProjectReference Include="..\FoodShop.Domain\FoodShop.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="BaseCategoryDiscriminators\Commands\" />
+    <Folder Include="FrontRelated\" />
+  </ItemGroup>
+
 </Project>

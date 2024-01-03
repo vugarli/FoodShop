@@ -11,13 +11,13 @@ namespace FoodShop.Infrastructure.TestData
 			dbContext.Database.EnsureCreated();
 
 
-			var baseCategoryDiscriminators = new BaseCategoryDiscriminators[]
+			var baseCategoryDiscriminators = new BaseCategoryDiscriminator[]
 			{
-				new BaseCategoryDiscriminators(Guid.NewGuid(),"Men"),
-				new BaseCategoryDiscriminators(Guid.NewGuid(),"Women"),
+				new BaseCategoryDiscriminator(Guid.NewGuid(),"Men"),
+				new BaseCategoryDiscriminator(Guid.NewGuid(),"Women"),
 			};
 
-			dbContext.Set<BaseCategoryDiscriminators>().AddRange(baseCategoryDiscriminators);
+			dbContext.Set<BaseCategoryDiscriminator>().AddRange(baseCategoryDiscriminators);
 			
 
 			var SubCategories = new Category[]
@@ -79,36 +79,36 @@ namespace FoodShop.Infrastructure.TestData
 
 			var MenSubSubCategories = new Category[]
 			{
-				new Category(Guid.NewGuid(),"Trausers",SubCategories[0].Id,baseCategoryDiscriminators[1].Id),
-				new Category(Guid.NewGuid(),"Jeans",SubCategories[0].Id,baseCategoryDiscriminators[1].Id),
-				new Category(Guid.NewGuid(),"Shorts",SubCategories[0].Id,baseCategoryDiscriminators[1].Id),
-				new Category(Guid.NewGuid(),"T-shirts",SubCategories[0].Id,baseCategoryDiscriminators[1].Id),
-				new Category(Guid.NewGuid(),"Sweatshirts and hoodies",SubCategories[0].Id,baseCategoryDiscriminators[1].Id),
-				new Category(Guid.NewGuid(),"Jackets",SubCategories[0].Id,baseCategoryDiscriminators[1].Id),
-				new Category(Guid.NewGuid(),"Coats",SubCategories[0].Id,baseCategoryDiscriminators[1].Id),
-				new Category(Guid.NewGuid(),"Shirts",SubCategories[0].Id,baseCategoryDiscriminators[1].Id),
-				new Category(Guid.NewGuid(),"Overshirts",SubCategories[0].Id,baseCategoryDiscriminators[1].Id),
-				new Category(Guid.NewGuid(),"Knits",SubCategories[0].Id,baseCategoryDiscriminators[1].Id),
-				new Category(Guid.NewGuid(),"Tracksuit",SubCategories[0].Id,baseCategoryDiscriminators[1].Id),
+				new Category(Guid.NewGuid(),"Trausers",SubCategories[0].Id,baseCategoryDiscriminators[0].Id),
+				new Category(Guid.NewGuid(),"Jeans",SubCategories[0].Id,baseCategoryDiscriminators[0].Id),
+				new Category(Guid.NewGuid(),"Shorts",SubCategories[0].Id,baseCategoryDiscriminators[0].Id),
+				new Category(Guid.NewGuid(),"T-shirts",SubCategories[0].Id,baseCategoryDiscriminators[0].Id),
+				new Category(Guid.NewGuid(),"Sweatshirts and hoodies",SubCategories[0].Id,baseCategoryDiscriminators[0].Id),
+				new Category(Guid.NewGuid(),"Jackets",SubCategories[0].Id,baseCategoryDiscriminators[0].Id),
+				new Category(Guid.NewGuid(),"Coats",SubCategories[0].Id,baseCategoryDiscriminators[0].Id),
+				new Category(Guid.NewGuid(),"Shirts",SubCategories[0].Id,baseCategoryDiscriminators[0].Id),
+				new Category(Guid.NewGuid(),"Overshirts",SubCategories[0].Id,baseCategoryDiscriminators[0].Id),
+				new Category(Guid.NewGuid(),"Knits",SubCategories[0].Id,baseCategoryDiscriminators[0].Id),
+				new Category(Guid.NewGuid(),"Tracksuit",SubCategories[0].Id,baseCategoryDiscriminators[0].Id),
 
 
-				new Category(Guid.NewGuid(),"Boots and ankle boots",SubCategories[1].Id,baseCategoryDiscriminators[1].Id),
-				new Category(Guid.NewGuid(),"Trainers",SubCategories[1].Id,baseCategoryDiscriminators[1].Id),
-				new Category(Guid.NewGuid(),"Casual shoes",SubCategories[1].Id,baseCategoryDiscriminators[1].Id),
-				new Category(Guid.NewGuid(),"Sandals",SubCategories[1].Id,baseCategoryDiscriminators[1].Id),
-				new Category(Guid.NewGuid(),"Leather",SubCategories[1].Id,baseCategoryDiscriminators[1].Id),
+				new Category(Guid.NewGuid(),"Boots and ankle boots",SubCategories[1].Id,baseCategoryDiscriminators[0].Id),
+				new Category(Guid.NewGuid(),"Trainers",SubCategories[1].Id,baseCategoryDiscriminators[0].Id),
+				new Category(Guid.NewGuid(),"Casual shoes",SubCategories[1].Id,baseCategoryDiscriminators[0].Id),
+				new Category(Guid.NewGuid(),"Sandals",SubCategories[1].Id,baseCategoryDiscriminators[0].Id),
+				new Category(Guid.NewGuid(),"Leather",SubCategories[1].Id,baseCategoryDiscriminators[0].Id),
 
-				new Category(Guid.NewGuid(),"Crossbody bags",SubCategories[2].Id,baseCategoryDiscriminators[1].Id),
-				new Category(Guid.NewGuid(),"Backbags",SubCategories[2].Id,baseCategoryDiscriminators[1].Id),
-				new Category(Guid.NewGuid(),"Large bags",SubCategories[2].Id,baseCategoryDiscriminators[1].Id),
-				new Category(Guid.NewGuid(),"Travel bags",SubCategories[2].Id,baseCategoryDiscriminators[1].Id),
+				new Category(Guid.NewGuid(),"Crossbody bags",SubCategories[2].Id,baseCategoryDiscriminators[0].Id),
+				new Category(Guid.NewGuid(),"Backbags",SubCategories[2].Id,baseCategoryDiscriminators[0].Id),
+				new Category(Guid.NewGuid(),"Large bags",SubCategories[2].Id,baseCategoryDiscriminators[0].Id),
+				new Category(Guid.NewGuid(),"Travel bags",SubCategories[2].Id,baseCategoryDiscriminators[0].Id),
 
-				new Category(Guid.NewGuid(),"Jewellery",SubCategories[3].Id,baseCategoryDiscriminators[1].Id),
-				new Category(Guid.NewGuid(),"Sunglasses",SubCategories[3].Id,baseCategoryDiscriminators[1].Id),
-				new Category(Guid.NewGuid(),"Wallets",SubCategories[3].Id,baseCategoryDiscriminators[1].Id),
-				new Category(Guid.NewGuid(),"Belts",SubCategories[3].Id,baseCategoryDiscriminators[1].Id),
-				new Category(Guid.NewGuid(),"Caps, Hats",SubCategories[3].Id,baseCategoryDiscriminators[1].Id),
-				new Category(Guid.NewGuid(),"Gloves",SubCategories[3].Id,baseCategoryDiscriminators[1].Id),
+				new Category(Guid.NewGuid(),"Jewellery",SubCategories[3].Id,baseCategoryDiscriminators[0].Id),
+				new Category(Guid.NewGuid(),"Sunglasses",SubCategories[3].Id,baseCategoryDiscriminators[0].Id),
+				new Category(Guid.NewGuid(),"Wallets",SubCategories[3].Id,baseCategoryDiscriminators[0].Id),
+				new Category(Guid.NewGuid(),"Belts",SubCategories[3].Id,baseCategoryDiscriminators[0].Id),
+				new Category(Guid.NewGuid(),"Caps, Hats",SubCategories[3].Id,baseCategoryDiscriminators[0].Id),
+				new Category(Guid.NewGuid(),"Gloves",SubCategories[3].Id,baseCategoryDiscriminators[0].Id),
 			};
 
 			dbContext.Set<Category>().AddRange(MenSubSubCategories);

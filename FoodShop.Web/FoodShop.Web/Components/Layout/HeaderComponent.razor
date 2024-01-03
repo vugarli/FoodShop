@@ -1,4 +1,6 @@
-﻿<!-- START HEADER NAVIGATION -->
+﻿@using FoodShop.Web.Abstractions.Services
+@using FoodShop.Web.ViewModels.Categories
+<!-- START HEADER NAVIGATION -->
 <div class="header-area">
     <div class="container">
         <div class="row upper-nav">
@@ -126,75 +128,46 @@
                                     <li class="nav-item">
                                         <a class="nav-link" href="index-shop.html">HOME</a>
                                     </li>
-
+                                    @if (DiscGroups != null)
+                                    @foreach (var disc in DiscGroups)
+                                    {
                                     <li class="nav-item dropdown static">
-                                        <a class="nav-link dropdown-toggle active" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> WOMEN </a>
+
+                                        @* start disc *@
+                                        <a class="nav-link dropdown-toggle active" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> @disc.Name </a>
+                                        
                                         <ul class="dropdown-menu megamenu flexable-megamenu">
                                             <li>
                                                 <div class="container">
-                                                    <div class="row">
+
+                                        @* start catgroups*@
+                                          
+                                                        <div class="row">
+                                                            @foreach (var group in disc.Groups)
+                                                            {
+
                                                         <div class="col-lg-3 col-md-6 col-sm-12 mengmenu_border">
-                                                            <h5 class="dropdown-title"> Most Wanted </h5>
+                                                            <h5 class="dropdown-title"> @group.CategoryGroupName </h5>
+                                                            
                                                             <ul>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="product-listing.html">WomensWear</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="product-listing.html">Classic Dress</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="product-listing.html">Nightwear</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="product-listing.html">Active wear</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="product-listing.html">Footwear / Shoes</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="product-listing.html">Coats / Outerwear</a></li>
-                                                            </ul>
-                                                            <h5 class="dropdown-title"> Babies </h5>
-                                                            <ul>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="product-listing.html">Baby Clothes</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="product-listing.html">Baby Footwear</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="product-listing.html">Sleep Suits</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="product-listing.html">Socks And Tights</a></li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-lg-3 col-md-6 col-sm-12 mengmenu_border">
-                                                            <h5 class="dropdown-title"> All Accessories </h5>
-                                                            <ul>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="product-listing.html">Hand Bags</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="product-listing.html">Belts</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="product-listing.html">Jewellery</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="product-listing.html">Scarves</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="product-listing.html">Sun Glasses</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="product-listing.html">Others</a></li>
+                                                                @foreach(var sub in group.SubCategories)
+                                                                {
+                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="product-listing.html">@sub.Name</a></li>
+                                                                }
                                                             </ul>
 
-                                                            <h5 class="dropdown-title"> Shop Collections </h5>
-                                                            <ul>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="product-listing.html">Holiday Shop</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="product-listing.html">Gifts</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="product-listing.html">Workwear Range</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="product-listing.html">Essential</a></li>
-                                                            </ul>
-
+                                                            
                                                         </div>
-
-                                                        <div class="col-lg-6 col-md-12 col-sm-12">
-                                                            <h5 class="dropdown-title text-left">Featured Items </h5>
-                                                            <div class="carousel-menu mt-4">
-                                                                <div class="featured-megamenu-carousel owl-carousel owl-theme">
-                                                                    <div class="item ">
-                                                                        <img src="img/shop1.jpg" alt="shop-image">
-                                                                    </div>
-                                                                    <div class="item">
-                                                                        <img src="img/shop2.jpg" alt="shop-image">
-                                                                    </div>
-                                                                </div>
-                                                                <i class="lni-chevron-left ini-customPrevBtn"></i>
-                                                                <i class="lni-chevron-right ini-customNextBtn"></i>
-                                                            </div>
-                                                            <p class="mt-4 megamenu-slider-para">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
-                                                            <a href="product-listing.html" class="btn trans-pink-color-gradient-btn slider-btn text-left">Shop Now</a>
-                                                        </div>
+                                                        }
                                                     </div>
                                                 </div>
                                             </li>
                                         </ul>
                                     </li>
-                                    <li class="nav-item dropdown static">
+                                        }
+
+
+                                    @* <li class="nav-item dropdown static">
                                         <a class="nav-link dropdown-toggle active" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> MEN </a>
                                         <ul class="dropdown-menu megamenu flexable-megamenu">
                                             <li>
@@ -261,20 +234,11 @@
                                             </li>
                                         </ul>
                                     </li>
-
+ *@
                                     <!--                                    <li class="nav-item">-->
                                     <!--                                        <a class="nav-link" href="about.html">SHOES</a>-->
                                     <!--                                    </li>-->
-                                    <li class="nav-item dropdown position-relative">
-                                        <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PAGES</a>
-                                        <div class="dropdown-menu">
-                                            <ul>
-                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="product-listing.html">Listing One</a></li>
-                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="product-detail.html">Detail Page</a></li>
-                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="standalone.html">StandAlone Page</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
+                                    
                                     <li class="nav-item">
                                         <a class="nav-link" href="contact.html">CONTACT</a>
                                     </li>
@@ -413,5 +377,18 @@
 
 
 @code {
+
+
+    [Inject]
+    IDiscriminatorGroupsService discriminatorGroupService { get; set; }
+
+    public IEnumerable<BaseDiscriminatorGroupVM> DiscGroups { get; set; }
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        base.OnInitialized();
+        DiscGroups = await discriminatorGroupService.GetDiscriminatorGroups();
+    }
 
 }

@@ -1,7 +1,12 @@
+
 using FoodShop.Web.Abstractions.Services;
+using FoodShop.Web.Client.Abstractions.Services;
 using FoodShop.Web.Client.Pages;
+using FoodShop.Web.Client.Services;
 using FoodShop.Web.Components;
 using FoodShop.Web.Services;
+using MudBlazor.Services;
+using MudExtensions.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +22,12 @@ builder.Services.AddHttpClient("API", (sp, cl) =>
 
 
 builder.Services.AddScoped<ILatesArrivalsProductServices, LatestArrivalsProductService>();
+builder.Services.AddScoped<IDiscriminatorGroupsService, DiscriminatorGroupsService>();
+builder.Services.AddScoped<IFilteredProductEntryService, FilteredProductEntryService>();
 
+
+builder.Services.AddMudServices();
+builder.Services.AddMudExtensions();
 
 var app = builder.Build();
 
@@ -32,6 +42,8 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+
 
 
 app.UseHttpsRedirection();

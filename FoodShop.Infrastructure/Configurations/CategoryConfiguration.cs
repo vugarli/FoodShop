@@ -13,7 +13,7 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
             .WithMany().HasForeignKey(c=>c.ParentId)
             .OnDelete(DeleteBehavior.NoAction);
 
-        builder.HasOne<BaseCategoryDiscriminators>(c => c.BaseCategoryDiscriminator)
+        builder.HasOne<BaseCategoryDiscriminator>(c => c.BaseCategoryDiscriminator)
             .WithMany(b => b.Categories).HasForeignKey(c => c.BaseCategoryDiscriminatorId);
 
         builder.HasMany<VariationCategory>(c => c.VaritaionCategories)

@@ -1,4 +1,5 @@
-﻿using FoodShop.Domain.Entities;
+﻿using FoodShop.Application.Filters;
+using FoodShop.Domain.Entities;
 
 namespace FoodShop.Application.Abstractions;
 
@@ -15,6 +16,9 @@ public interface IProductEntryRepository
     public Task<IEnumerable<ProductEntry>> GetProductEntriesAsync();
     public Task<IEnumerable<ProductEntry>> GetPaginatedProductEntriesAsync(int page,int per_page);
 
-    public Task<bool> ProductEntryExistsAsync(Guid id,CancellationToken cancellationToken);
+    public Task<IEnumerable<ProductEntry>> GetProductEntriesWithFiltersAsync(params IFilter<ProductEntry>[] filters);
+    public Task<int> GetProductEntriesWithFiltersCountAsync(params IFilter<ProductEntry>[] filters);
     public Task<int> GetProductEntriesCountAsync();
+
+    public Task<bool> ProductEntryExistsAsync(Guid id,CancellationToken cancellationToken);
 }

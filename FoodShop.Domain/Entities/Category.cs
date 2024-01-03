@@ -17,7 +17,7 @@ public class Category : Entity
 
     public string Name { get; private set; }
 
-    public BaseCategoryDiscriminators? BaseCategoryDiscriminator { get; set; }
+    public BaseCategoryDiscriminator? BaseCategoryDiscriminator { get; set; }
     public Guid? BaseCategoryDiscriminatorId { get; private set; }
 
     public IEnumerable<VariationCategory> VaritaionCategories { get; private set; }

@@ -10,7 +10,9 @@ public class ProductEntryProfile : Profile
 {
     public ProductEntryProfile()
     {
-        CreateMap<ProductEntry, ProductEntryDto>();
+        CreateMap<ProductEntry, ProductEntryDto>()
+            .ForMember(dto=>dto.ProductName,p=>p.MapFrom(pe=>pe.Product.Name));
+
         CreateMap<ProductEntryDto, ProductEntry>();
 
         CreateMap<CreateProductEntryCommand, ProductEntry>()

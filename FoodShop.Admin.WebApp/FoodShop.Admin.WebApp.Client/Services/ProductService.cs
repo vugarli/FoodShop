@@ -1,6 +1,6 @@
 ﻿using FoodShop.Admin.WebApp.Client.Abstractions.Services;
 using FoodShop.Admin.WebApp.Client.Pages.Products.ViewModels;
-using FoodShop.Application.Pagination;
+using FoodShop.Application.Queries;
 using System.Net.Http.Json;
 using System.Text.Json.Serialization;
 using System.Text;
@@ -35,9 +35,9 @@ namespace FoodShop.Admin.WebApp.Client.Services
             return res.IsSuccessStatusCode;
         }
 
-        public async Task<PaginatedResult<VM_Product>> GetPaginatedProducts(int page, int per_page)
+        public async Task<PaginatedQueryResult<VM_Product>> GetPaginatedProducts(int page, int per_page)
         {
-            var res = await client.GetFromJsonAsync<PaginatedResult<VM_Product>>($"/products?page={page}&per_page={per_page}");
+            var res = await client.GetFromJsonAsync<PaginatedQueryResult<VM_Product>>($"/products?page={page}&per_page={per_page}");
             return res;
         }
 

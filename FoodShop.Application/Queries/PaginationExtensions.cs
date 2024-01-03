@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace FoodShop.Application.Pagination
+namespace FoodShop.Application.Queries
 {
     public static class PaginationExtensions
     {

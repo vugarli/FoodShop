@@ -1,5 +1,6 @@
 ﻿using FoodShop.Application.Abstractions;
-using FoodShop.Application.Pagination;
+using FoodShop.Application.Filters;
+using FoodShop.Application.Queries;
 using FoodShop.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,6 +36,7 @@ public class ProductEntryRepository : IProductEntryRepository
     public async Task<ProductEntry> GetProductEntryByIdAsync(Guid id)
     {
         var productEntry = await _context.Set<ProductEntry>()
+            .Include(pe=>pe.Product)
             .FirstOrDefaultAsync(pe => pe.Id == id);
         return productEntry;
     }
@@ -59,5 +61,15 @@ public class ProductEntryRepository : IProductEntryRepository
     public async Task<int> GetProductEntriesCountAsync()
     {
         return await _context.Set<ProductEntry>().CountAsync();
+    }
+
+    public async Task<IEnumerable<ProductEntry>> GetProductEntriesWithFiltersAsync(params IFilter<ProductEntry>[] filters)
+    {
+        return await _context.Set<ProductEntry>().Include(pe => pe.Product).ApplyFilters(filters).ToListAsync();
+    }
+
+    public async Task<int> GetProductEntriesWithFiltersCountAsync(params IFilter<ProductEntry>[] filters)
+    {
+        return await _context.Set<ProductEntry>().ApplyFilters(filters).CountAsync();
     }
 }

@@ -1,5 +1,5 @@
 ﻿using FoodShop.Application.Abstractions;
-using FoodShop.Application.Pagination;
+using FoodShop.Application.Queries;
 using FoodShop.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 

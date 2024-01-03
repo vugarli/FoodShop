@@ -1,4 +1,4 @@
-﻿using FoodShop.Application.Pagination;
+﻿using FoodShop.Application.Queries;
 using Microsoft.AspNetCore.Routing;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace FoodShop.Presentation.Paginations
     public static class PaginationExtensions
     {
 
-        public static void SetUrls<T>(this PaginatedResult<T> p,LinkGenerator linkgen, string actionName)
+        public static void SetUrls<T>(this PaginatedQueryResult<T> p,LinkGenerator linkgen, string actionName)
         {
             if(p.Page != 1)
                 p.Previous = linkgen.GetPathByName(actionName, new { page = p.Page - 1, per_page = p.Per_Page });

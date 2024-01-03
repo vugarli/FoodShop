@@ -2,7 +2,7 @@
 using FoodShop.Admin.WebApp.Client.Pages.Categories.ViewModels;
 using FoodShop.Admin.WebApp.Client.Pages.Products.ViewModels;
 using FoodShop.Application.Abstractions;
-using FoodShop.Application.Pagination;
+using FoodShop.Application.Queries;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -51,9 +51,9 @@ namespace FoodShop.Admin.WebApp.Client.Services
             return category;
         }
 
-        public async Task<PaginatedResult<VM_Category>> GetPaginatedCategories(int page, int per_page)
+        public async Task<PaginatedQueryResult<VM_Category>> GetPaginatedCategories(int page, int per_page)
         {
-            var categories = await client.GetFromJsonAsync<PaginatedResult<VM_Category>>($"/categories?page={page}&per_page={per_page}");
+            var categories = await client.GetFromJsonAsync<PaginatedQueryResult<VM_Category>>($"/categories?page={page}&per_page={per_page}");
             return categories;
         }
 

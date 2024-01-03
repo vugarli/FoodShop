@@ -1,4 +1,6 @@
-﻿using FoodShop.Application.ProductEntries.Commands.CreateProductEntry;
+﻿using FoodShop.Application.Filters;
+using FoodShop.Application.ProductEntries;
+using FoodShop.Application.ProductEntries.Commands.CreateProductEntry;
 using FoodShop.Application.ProductEntries.Commands.DeleteProductEntry;
 using FoodShop.Application.ProductEntries.Commands.UpdateProductEntry;
 using FoodShop.Application.ProductEntries.Queries.GetProductEntries;
@@ -8,6 +10,7 @@ using FoodShop.Application.Products.Commands.DeleteProduct;
 using FoodShop.Application.Products.Commands.UpdateProduct;
 using FoodShop.Application.Products.Queries.GetProductById;
 using FoodShop.Application.Products.Queries.GetProducts;
+using FoodShop.Application.Queries;
 using FoodShop.Domain.Entities;
 using FoodShop.Presentation.Paginations;
 using MediatR;
@@ -16,13 +19,12 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using System.Reflection;
 
 namespace FoodShop.Presentation.Endpoints;
 
 public static class ProductEntryEndpoint
 {
-
-
     public static RouteGroupBuilder MapProductEntries(this IEndpointRouteBuilder builder)
     {
         var group = builder.MapGroup("/ProductEntries");
@@ -30,10 +32,17 @@ public static class ProductEntryEndpoint
 
         group.WithTags("ProductEntries");
 
-        group.MapGet("/", async ([FromServices] ISender sender, [AsParameters] GetPaginatedProductEntriesQuery query,LinkGenerator linkgen) =>
+        group.MapGet("/", async ([FromServices] ISender sender,
+            [AsParameters] PaginationFilter<ProductEntry> paginationFilter,
+            [AsParameters] ProductEntryFilter productEntryFilter,
+            LinkGenerator linkgen) =>
         {
-            var result = await sender.Send(query);
-            result.SetUrls(linkgen, "GetProductEntries");
+            var result = await sender.Send(new GetProductEntriesQuery(paginationFilter,productEntryFilter));
+            
+            //temp
+            if(result is PaginatedQueryResult<ProductEntryDto>)
+                (result as PaginatedQueryResult<ProductEntryDto>).SetUrls(linkgen, "GetProductEntries");
+
             return Results.Ok(result);
         }).WithName("GetProductEntries");
 

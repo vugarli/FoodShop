@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using FoodShop.Application.Abstractions;
-using FoodShop.Application.Pagination;
+using FoodShop.Application.Filters;
+using FoodShop.Application.Queries;
 using FoodShop.Domain.Entities;
 using MediatR;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FoodShop.Application.ProductEntries.Queries.GetProductEntries;
 
-public class GetProductEntriesQueryHandler : IRequestHandler<GetPaginatedProductEntriesQuery, PaginatedResult<ProductEntryDto>>
+public class GetProductEntriesQueryHandler : IRequestHandler<GetProductEntriesQuery, IQueryResult>
 {
     private readonly IProductEntryRepository _repository;
     private readonly IMapper _mapper;
@@ -17,14 +18,27 @@ public class GetProductEntriesQueryHandler : IRequestHandler<GetPaginatedProduct
         _repository = repository;
         _mapper = mapper;
     }
-    public async Task<PaginatedResult<ProductEntryDto>> Handle(GetPaginatedProductEntriesQuery request, CancellationToken cancellationToken)
+    public async Task<IQueryResult> Handle(GetProductEntriesQuery request, CancellationToken cancellationToken)
     {
-        var productEntries = await _repository.GetPaginatedProductEntriesAsync(request.page,request.per_page);
+        var productEntries = await _repository.GetProductEntriesWithFiltersAsync(request.filters);
         var dtos = _mapper.Map<IEnumerable<ProductEntryDto>>(productEntries);
-        var count = await _repository.GetProductEntriesCountAsync();
+        var count = await _repository.GetProductEntriesWithFiltersCountAsync(request.filters.Where(f => !(f is IPaginationFilter)).ToArray());
 
-        var pModel = new PaginatedResult<ProductEntryDto>(dtos, request.page, request.per_page, count);
+        IQueryResult queryResult;
 
-        return pModel;
+        //temp
+        if (request.filters.Any(f => f is PaginationFilter<ProductEntry>))
+        { 
+            var pFilter = (PaginationFilter<ProductEntry>) request.filters.FirstOrDefault(c => c is PaginationFilter<ProductEntry>);
+
+            if(pFilter!= null && pFilter.per_page != null && pFilter.page != null)
+                queryResult = new PaginatedQueryResult<ProductEntryDto>(dtos, (int)pFilter.page, (int)pFilter.per_page, count);
+            else
+                queryResult = new QueryResult<ProductEntryDto>(dtos);
+        }
+        else
+            queryResult = new QueryResult<ProductEntryDto>(dtos);
+
+        return queryResult;
     }
 }

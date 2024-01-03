@@ -27,13 +27,14 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-   // app.SeedDb();
+    //app.SeedDb();
 }
 
 app.UseHttpsRedirection();
 app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapProducts().WithOpenApi();
+app.MapBaseCategoryDiscriminators().WithOpenApi();
 app.MapCategories().WithOpenApi();
 app.MapVariations().WithOpenApi();
 app.MapVariationOptions().WithOpenApi();

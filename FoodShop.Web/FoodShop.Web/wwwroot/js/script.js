@@ -85,15 +85,15 @@ $(window).on("load", function () {
     $(".owl-next").html('<div class="navigation-link-next"><a class="next-btn"><i class="lni-chevron-right"></i> </a></div>');
 
     // $('.navigation-links a.prev-btn').click(function() {
-//     var owl = $('.sync-portfolio-carousel');
-//     owl.owlCarousel();
-//     owl.trigger('next.owl.carousel');
-// });
-// $('.navigation-links a.next-btn').click(function() {
-//     var owl = $('.sync-portfolio-carousel');
-//     owl.owlCarousel();
-//     owl.trigger('prev.owl.carousel', [300]);
-// });
+    //     var owl = $('.sync-portfolio-carousel');
+    //     owl.owlCarousel();
+    //     owl.trigger('next.owl.carousel');
+    // });
+    // $('.navigation-links a.next-btn').click(function() {
+    //     var owl = $('.sync-portfolio-carousel');
+    //     owl.owlCarousel();
+    //     owl.trigger('prev.owl.carousel', [300]);
+    // });
 
 
 
@@ -194,15 +194,15 @@ jQuery(function ($) {
 
     $(".user-data").on('click', function () {
         // alert("yes");
-        $(".user-data .dropdown-m").css({display: 'block'});
+        $(".user-data .dropdown-m").css({ display: 'block' });
     });
     $(".slider").on('click', function () {
         // alert("yes");
-        $(".user-data .dropdown-m").css({display: 'none'});
+        $(".user-data .dropdown-m").css({ display: 'none' });
     });
 
 
-//Drop Down For register And cart menu
+    //Drop Down For register And cart menu
     $(document).click(function (event) {
         //if you click on anything except the modal itself or the "open modal" link, close the modal
         if (!$(event.target).closest(".mini-menu-card .shopping-cart").length) {
@@ -239,7 +239,7 @@ jQuery(function ($) {
         }
     });
 
-// Custom Mega Menu OWL
+    // Custom Mega Menu OWL
     $('.ini-customNextBtn').click(function () {
         var owl = $('.featured-megamenu-carousel');
         owl.owlCarousel();
@@ -381,9 +381,9 @@ jQuery(function ($) {
         $(".search-box-overlay").addClass("fixed-box");
     });
 
-    $("#close-window").click(function(){
+    $("#close-window").click(function () {
         $(".search-box-overlay").addClass("remove-fixed-box");
-        setTimeout(function(){
+        setTimeout(function () {
             $(".search-box-overlay").removeClass("fixed-box");
             $(".search-box-overlay").removeClass("remove-fixed-box");
         }, 1000);
@@ -554,11 +554,11 @@ jQuery(function ($) {
     ======================================*/
     var wow = new WOW(
         {
-            boxClass:'wow',      // default
-            animateClass:'animated', // default
-            offset:0,          // default
-            mobile:false,       // default
-            live:true        // default
+            boxClass: 'wow',      // default
+            animateClass: 'animated', // default
+            offset: 0,          // default
+            mobile: false,       // default
+            live: true        // default
         }
     );
     wow.init();
@@ -579,7 +579,7 @@ jQuery(function ($) {
 
     //Click event to scroll to top
     $(document).on('click', '.scroll-top-arrow', function () {
-        $('html, body').animate({scrollTop: 0}, 800);
+        $('html, body').animate({ scrollTop: 0 }, 800);
         return false;
     });
 
@@ -587,79 +587,79 @@ jQuery(function ($) {
     /* ===================================
               REV SLIDER
     ======================================*/
- if ($(".slider").length) {
+    if ($(".slider").length) {
 
-     $("#rev_slider_1_1").show().revolution({
-         sliderType: "standard",
-         jsFileLocation: "//localhost/reveditor/revslider/public/assets/js/",
-         sliderLayout: "fullscreen",
-         dottedOverlay: "none",
-         delay: 9000,
-         navigation: {
-             keyboardNavigation: "off",
-             keyboard_direction: "horizontal",
-             mouseScrollNavigation: "off",
-             mouseScrollReverse: "default",
-             onHoverStop: "off",
-             arrows: {
-                 style: "gyges",
-                 enable: true,
-                 hide_onmobile: true,
-                 hide_under: 767,
-                 hide_onleave: false,
-                 tmp: '',
-                 left: {
-                     h_align: "left",
-                     v_align: "center",
-                     h_offset: 20,
-                     v_offset: 0
-                 },
-                 right: {
-                     h_align: "right",
-                     v_align: "center",
-                     h_offset: 20,
-                     v_offset: 0
-                 }
-             }
-         },
-         responsiveLevels: [1240, 1024, 778, 480],
-         visibilityLevels: [1240, 1024, 778, 480],
-         gridwidth: [1140, 1024, 778, 480],
-         gridheight: [700, 768, 960, 420],
-         lazyType: "none",
-         parallax: {
-             type: "mouse",
-             origo: "enterpoint",
-             speed: 400,
-             speedbg: 0,
-             speedls: 0,
-             levels: [2, 3, 5, 10, 25, 30, 35, 40, 45, 46, 47, 48, 49, 50, 51, 55],
-             disable_onmobile: "on"
-         },
-         shadow: 0,
-         spinner: "spinner2",
-         stopLoop: "off",
-         stopAfterLoops: -1,
-         stopAtSlide: -1,
-         shuffle: "off",
-         autoHeight: "off",
-         fullScreenAutoWidth: "off",
-         fullScreenAlignForce: "off",
-         fullScreenOffsetContainer: "",
-         fullScreenOffset: "",
-         disableProgressBar: "on",
-         hideThumbsOnMobile: "off",
-         hideSliderAtLimit: 0,
-         hideCaptionAtLimit: 0,
-         hideAllCaptionAtLilmit: 0,
-         debugMode: false,
-         fallbacks: {
-             simplifyAll: "off",
-             nextSlideOnWindowFocus: "off",
-             disableFocusListener: false,
-         }
-     });
- }
+        $("#rev_slider_1_1").show().revolution({
+            sliderType: "standard",
+            jsFileLocation: "//localhost/reveditor/revslider/public/assets/js/",
+            sliderLayout: "fullscreen",
+            dottedOverlay: "none",
+            delay: 9000,
+            navigation: {
+                keyboardNavigation: "off",
+                keyboard_direction: "horizontal",
+                mouseScrollNavigation: "off",
+                mouseScrollReverse: "default",
+                onHoverStop: "off",
+                arrows: {
+                    style: "gyges",
+                    enable: true,
+                    hide_onmobile: true,
+                    hide_under: 767,
+                    hide_onleave: false,
+                    tmp: '',
+                    left: {
+                        h_align: "left",
+                        v_align: "center",
+                        h_offset: 20,
+                        v_offset: 0
+                    },
+                    right: {
+                        h_align: "right",
+                        v_align: "center",
+                        h_offset: 20,
+                        v_offset: 0
+                    }
+                }
+            },
+            responsiveLevels: [1240, 1024, 778, 480],
+            visibilityLevels: [1240, 1024, 778, 480],
+            gridwidth: [1140, 1024, 778, 480],
+            gridheight: [700, 768, 960, 420],
+            lazyType: "none",
+            parallax: {
+                type: "mouse",
+                origo: "enterpoint",
+                speed: 400,
+                speedbg: 0,
+                speedls: 0,
+                levels: [2, 3, 5, 10, 25, 30, 35, 40, 45, 46, 47, 48, 49, 50, 51, 55],
+                disable_onmobile: "on"
+            },
+            shadow: 0,
+            spinner: "spinner2",
+            stopLoop: "off",
+            stopAfterLoops: -1,
+            stopAtSlide: -1,
+            shuffle: "off",
+            autoHeight: "off",
+            fullScreenAutoWidth: "off",
+            fullScreenAlignForce: "off",
+            fullScreenOffsetContainer: "",
+            fullScreenOffset: "",
+            disableProgressBar: "on",
+            hideThumbsOnMobile: "off",
+            hideSliderAtLimit: 0,
+            hideCaptionAtLimit: 0,
+            hideAllCaptionAtLilmit: 0,
+            debugMode: false,
+            fallbacks: {
+                simplifyAll: "off",
+                nextSlideOnWindowFocus: "off",
+                disableFocusListener: false,
+            }
+        });
+    }
 
 
 

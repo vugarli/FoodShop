@@ -1,0 +1,65 @@
+﻿@using FoodShop.Web.Client.Abstractions.Services
+@using FoodShop.Web.ViewModels.Products
+@using MudBlazor
+
+<div class="col-md-12 col-lg-8 order-1 order-lg-2">
+    <div class="row">
+
+        <!-- START LISTING HEADING -->
+        <div class="col-12 product-listing-heading">
+            <h1 class="heading text-left">Product Listing</h1>
+            <p class="para_text text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. tellus lacus faucibus lectus, sed cursused eros ligula non odio.</p>
+        </div>
+        <!-- END LISTING HEADING -->
+
+        <!-- START PRODUCT LISTING SECTION -->
+        <div class="col-12 product-listing-products">
+
+            <!-- START DISPLAY PRODUCT -->
+            <div class="product-list row">
+
+                <MudGrid Spacing="3" Justify="Justify.FlexStart">
+                    @if(Products != null)
+                    @foreach(var product in Products)
+                    {
+                        
+                    <MudItem Class="w-25">
+
+                        <MudCarousel Style="height:200px;" ShowArrows="false" ShowBullets="false" EnableSwipeGesture="true" AutoCycle="true" TData="object">
+                            <MudCarouselItem Transition="Transition.Fade">
+                                    <MudImage Fluid="true" Src="@product.Image" Alt="product" Class="rounded-lg"/>
+                            </MudCarouselItem>
+                            <MudCarouselItem Transition="Transition.Fade">
+                                    <MudImage Fluid="true" Src="img/product-listing/p41.jpg" Alt="product" Class="rounded-lg"/>
+                            </MudCarouselItem>
+                        </MudCarousel>
+
+                                <MudItem class="p-3">
+                                    <h4 class="text-center p-item-name"><a href="product-detail.html"> @product.ProductName </a></h4>
+                                    <p class="text-center p-item-price">$@product.Price</p>
+                                </MudItem>
+                       </MudItem>
+                
+                    }
+
+                </MudGrid>
+
+            </div>
+            <!-- END DISPLAY PRODUCT -->
+        </div>
+        <!-- END PRODUCT LISTING SECTION -->
+
+
+
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public List<ProductItemViewModel> Products { get; set; }
+
+    [Parameter]
+    public EventCallback<List<ProductItemViewModel>> ProductsChanged { get; set; }
+
+}
