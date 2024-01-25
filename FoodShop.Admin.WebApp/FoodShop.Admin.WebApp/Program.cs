@@ -20,6 +20,7 @@ builder.Services.AddHttpClient("API",
 
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IFileUploadService, FileUploadService>();
 
 
 var app = builder.Build();

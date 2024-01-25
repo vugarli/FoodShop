@@ -20,6 +20,7 @@ public static class InfrastructureServices
         services.AddDbContext<ApplicationDbContext>(
             options => options.UseSqlServer(config["ConnectionString"],
                 o => o.MigrationsAssembly("FoodShop.Api")));
+
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         

@@ -1,4 +1,5 @@
-﻿using FoodShop.Domain.Entities;
+﻿using FoodShop.Application.Categories.Commands.CreateCategory;
+using FoodShop.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,10 @@ namespace FoodShop.Application.Filters
         public string? Gender { get; set; }
         public int? MinPrice { get; set; }
         public int? MaxPrice { get; set; }
+        
+        public bool? LatestArrivals { get; set; }
+
+
 
         public IQueryable<ProductEntry> Filter(IQueryable<ProductEntry> query)
         {
@@ -28,6 +33,9 @@ namespace FoodShop.Application.Filters
 
             if (Category != null)
                 query = query.Where(pe => pe.Product.Category.ParentCategory != null && pe.Product.Category.ParentCategory.Name == Category);
+
+            if (LatestArrivals != null && LatestArrivals == true)
+                query = query.OrderByDescending(pe => pe.CreatedAt).Take(8);
 
             return query;
         }

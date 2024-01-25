@@ -9,6 +9,14 @@ public abstract class Entity : IEquatable<Entity>
         init;
     }
 
+    public DateTime CreatedAt { get; set; }
+    public DateTime ModifiedAt { get; set; }
+
+    public bool IsDeleted { get; private set; }
+    public void Delete() => IsDeleted = true;
+    public void RevokeDelete() => IsDeleted = false;
+
+
     public Entity(Guid id)
     {
         Id = id;

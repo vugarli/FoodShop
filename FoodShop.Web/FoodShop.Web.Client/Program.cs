@@ -18,6 +18,7 @@ builder.Services.AddMudExtensions();
 
 builder.Services.AddScoped<IDiscriminatorGroupsService, DiscriminatorGroupsService>();
 builder.Services.AddScoped<IFilteredProductEntryService, FilteredProductEntryService>();
+builder.Services.AddScoped<ILatesArrivalsProductServices, LatestArrivalsProductService>();
 
 
 

@@ -1,0 +1,67 @@
+﻿@using FoodShop.Web.Abstractions.Services
+@using FoodShop.Web.Client.Services
+@using FoodShop.Web.ViewModels.Products
+@using Microsoft.AspNetCore.Components.Sections
+@using MudBlazor
+
+@*  <SectionContent SectionName="css">
+     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+     <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+ </SectionContent> *@
+
+
+        
+
+
+<MudCarousel ItemsSource="@LatestArrivalsGroups" Class="align-items-center" Style="height:300px;" ShowArrows="true" ShowBullets="false" EnableSwipeGesture="true" AutoCycle="true" TData="IEnumerable<ProductItemViewModel>">
+
+    <ItemTemplate>
+        <MudGrid Spacing="10"  style="height:300;" Justify="Justify.Center">
+            @foreach(var item in context)
+            {
+                
+            <MudItem>
+
+                <MudPaper Elevation="0" style="background-color:white;" Outline="false" Width="214px">
+
+                    <MudImage Height="285" Width="214" Src="@item.Image" />
+
+                    <div class="d-flex flex-column p-1 align-items-center">
+                        <MudText Align="Align.Center" Typo="Typo.h6" Color="Color.Dark">@item.ProductName</MudText>
+                        <MudText Align="Align.Center" Typo="Typo.h6" Color="Color.Secondary">$ @item.Price</MudText>
+                    </div>
+
+
+                </MudPaper>
+
+            </MudItem>
+            }
+            
+
+
+        </MudGrid>
+    </ItemTemplate>
+
+</MudCarousel>
+
+
+
+
+     
+
+@code {
+
+    [Inject]
+    ILatesArrivalsProductServices latesArrivalsProductServices { get; set; }
+
+    public IEnumerable<IEnumerable<ProductItemViewModel>> LatestArrivalsGroups { get; set; } = new List<List<ProductItemViewModel>>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        LatestArrivalsGroups = await latesArrivalsProductServices.GetLatestArrivalsGroups();
+    }
+}

@@ -16,7 +16,16 @@
     
         <MudTextField @bind-Value="ProductVM.Name" Label="Name" Variant="Variant.Text"></MudTextField>
         <MudTextField @bind-Value="ProductVM.Description" Label="Description" ></MudTextField>
-        <MudTextField @bind-Value="ProductVM.Image" Label="Image Url" ></MudTextField>
+
+        <MudFileUpload T="IBrowserFile" FilesChanged="SetFile">
+            <ButtonTemplate Context="fileupload_context" > 
+            <MudFab HtmlTag="label"
+                Color="Color.Secondary"
+                Icon="@Icons.Material.Filled.Image"
+                Label="Load picture"
+                for="@fileupload_context.Id" />
+            </ButtonTemplate>
+        </MudFileUpload>
 
         <MudSelect T="Guid" MultiSelection="false" Label="Category" Variant="Variant.Filled" @bind-Value="ProductVM.CategoryId" AnchorOrigin="Origin.BottomCenter">
             @if (Categories != null)

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodShop.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231223215236_initial")]
+    [Migration("20240123181156_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -25,11 +25,20 @@ namespace FoodShop.Api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("FoodShop.Domain.Entities.BaseCategoryDiscriminators", b =>
+            modelBuilder.Entity("FoodShop.Domain.Entities.BaseCategoryDiscriminator", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -47,8 +56,16 @@ namespace FoodShop.Api.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("BaseCategoryDiscriminatorId")
-                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -75,6 +92,9 @@ namespace FoodShop.Api.Migrations
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -82,6 +102,12 @@ namespace FoodShop.Api.Migrations
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -100,9 +126,18 @@ namespace FoodShop.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -129,6 +164,15 @@ namespace FoodShop.Api.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -159,6 +203,15 @@ namespace FoodShop.Api.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Value")
                         .IsRequired()
@@ -191,11 +244,9 @@ namespace FoodShop.Api.Migrations
 
             modelBuilder.Entity("FoodShop.Domain.Entities.Category", b =>
                 {
-                    b.HasOne("FoodShop.Domain.Entities.BaseCategoryDiscriminators", "BaseCategoryDiscriminator")
+                    b.HasOne("FoodShop.Domain.Entities.BaseCategoryDiscriminator", "BaseCategoryDiscriminator")
                         .WithMany("Categories")
-                        .HasForeignKey("BaseCategoryDiscriminatorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BaseCategoryDiscriminatorId");
 
                     b.HasOne("FoodShop.Domain.Entities.Category", "ParentCategory")
                         .WithMany()
@@ -274,7 +325,7 @@ namespace FoodShop.Api.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FoodShop.Domain.Entities.BaseCategoryDiscriminators", b =>
+            modelBuilder.Entity("FoodShop.Domain.Entities.BaseCategoryDiscriminator", b =>
                 {
                     b.Navigation("Categories");
                 });

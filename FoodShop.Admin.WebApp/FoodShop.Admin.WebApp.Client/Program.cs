@@ -16,5 +16,7 @@ builder.Services.AddHttpClient("API", (sp, cl) =>
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
 
+builder.Services.AddScoped<IFileUploadService,FileUploadService>();
+
 
 await builder.Build().RunAsync();

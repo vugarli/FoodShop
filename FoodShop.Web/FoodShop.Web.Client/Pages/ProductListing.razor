@@ -24,10 +24,8 @@
 
 <a class="scroll-top-arrow" href="javascript:void(0);"><i class="fa fa-angle-up"></i></a>
 
-<div class="product-listing">
-    <div class="container">
-        <div class="row no-gutters">
-            
+   
+<div class="d-flex flex-row align-items-center">
 
             <CascadingValue Value="@Max" Name="MaxValue">
                 <CascadingValue Value="@Min" Name="MinValue">
@@ -35,14 +33,12 @@
                     <FilterOptions OnFilter="Filter" ValuesChanged="OnPriceRangeChange" Discriminator="@Discriminator"></FilterOptions>
 
                 </CascadingValue>
-            </CascadingValue>
-            
+            </CascadingValue> 
 
             <FilteredComponents @bind-Products="Products" ></FilteredComponents>
             
             @* <MudButton @onclick="@(()=>Products.Add(new ProductItemViewModel(){ProductName="a"}))"> Add </MudButton> *@
-        </div>
-    </div>
+
 </div>
 
 
