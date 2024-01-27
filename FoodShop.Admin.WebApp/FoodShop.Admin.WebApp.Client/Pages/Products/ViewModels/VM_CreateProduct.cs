@@ -17,10 +17,8 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Products.ViewModels
         [Required]
         [RegularExpression("^((?!00000000-0000-0000-0000-000000000000).)*$", ErrorMessage = "Invalid Guid")]
         public Guid CategoryId { get; set; }
-
+        [Required]
         public string Image { get; set; }
 
-        [Required]
-        public IBrowserFile ImageFile { get; set; }
     }
 }

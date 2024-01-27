@@ -1,4 +1,5 @@
 ﻿using FoodShop.Application.Abstractions;
+using FoodShop.Application.Filters;
 using FoodShop.Application.Queries;
 using FoodShop.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -57,5 +58,10 @@ public class VariationRepository : IVariationRepository
     public async Task<int> GetVariationsCountAsync()
     {
         return await _dbContext.Set<Variation>().CountAsync();
+    }
+
+    public async Task<IEnumerable<Variation>> GetFilteredVariationsAsync(params IFilter<Variation>[] filters)
+    {
+        return await _dbContext.Set<Variation>().ApplyFilters(filters).ToListAsync();
     }
 }

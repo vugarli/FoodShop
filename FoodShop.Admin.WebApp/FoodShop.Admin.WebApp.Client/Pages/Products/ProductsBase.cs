@@ -43,8 +43,6 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Products
         public VM_CreateProduct ProductVM { get; set; } = new();
 
 
-        public bool isVisibleOverlay { get; set; }
-
         protected override async Task OnInitializedAsync()
         {
             var client = ClientFactory.CreateClient("API");
@@ -104,7 +102,7 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Products
             DialogOptions options = new DialogOptions();
             options.FullWidth = true;
             var dialogparams = new DialogParameters<UpdateProductDialog>();
-            dialogparams.Add<IEnumerable<CategoryDto>>(x => x.Categories, Categories);
+            //dialogparams.Add<IEnumerable<CategoryDto>>(x => x.Categories, Categories);
             var product = await ProductService.GetProductById(Id);
             var updateProd = new VM_UpdateProduct()
             {
@@ -115,7 +113,7 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Products
                 CategoryId = product.CategoryId
             };
             dialogparams.Add<IEnumerable<CategoryDto>>(x => x.Categories, Categories);
-            dialogparams.Add<VM_UpdateProduct>(x => x.ProductVM, updateProd);
+            dialogparams.Add<VM_UpdateProduct>(x => x.UpdateModel, updateProd);
 
             var dialog = await DialogService.ShowAsync<UpdateProductDialog>("Update",dialogparams,options);
             using var result = dialog.Result;
@@ -128,6 +126,7 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Products
                 if(updateResult.IsSuccessStatusCode)
                 {
                     Snackbar.Add("Updated!", Severity.Success);
+                    await _dataGrid.ReloadServerData();
                 }
                 else
                 {
@@ -144,11 +143,11 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Products
             var resultDialog = await task;
             if (!resultDialog.Canceled)
             {
-                var client = ClientFactory.CreateClient("API");
-                var result = await client.PostAsJsonAsync("/products", resultDialog.Data);
-                if (result.IsSuccessStatusCode)
+                var result = await ProductService.CreateProduct(resultDialog.Data as VM_CreateProduct);
+                if (result)
                 {
                     Snackbar.Add("Created", Severity.Success);
+                    await _dataGrid.ReloadServerData();
                 }
                 else
                 {

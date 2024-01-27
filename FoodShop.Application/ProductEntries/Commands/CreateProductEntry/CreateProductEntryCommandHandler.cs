@@ -23,6 +23,7 @@ public class CreateProductEntryCommandHandler : IRequestHandler<CreateProductEnt
     {
         var productEntry = _mapper.Map<ProductEntry>(request);
         productEntry = await _repository.CreateProductEntryAsync(productEntry);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
         var dto = _mapper.Map<ProductEntryDto>(productEntry);
         return dto;
     }

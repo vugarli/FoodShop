@@ -14,7 +14,10 @@ public class VariationOptionProfile : Profile
 
     public VariationOptionProfile()
     {
-        CreateMap<VariationOption, VariationOptionDto>();
+        CreateMap<VariationOption, VariationOptionDto>()
+            .ForMember(dto=>dto.VariationName,opt=>opt.MapFrom(vo=>vo.Variation.Name));
+
+
         CreateMap<VariationOptionDto, VariationOption>();
 
         CreateMap<CreateVariationOptionCommand, VariationOption>()

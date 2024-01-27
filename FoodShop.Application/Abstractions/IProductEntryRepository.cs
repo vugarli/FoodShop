@@ -21,4 +21,7 @@ public interface IProductEntryRepository
     public Task<int> GetProductEntriesCountAsync();
 
     public Task<bool> ProductEntryExistsAsync(Guid id,CancellationToken cancellationToken);
+
+    public Task DeleteProductEntriesAsync(IEnumerable<Guid> Ids);
+    public Task<bool> ProductEntriesExistAsync(IEnumerable<Guid> Ids, CancellationToken cancellationToken);
 }

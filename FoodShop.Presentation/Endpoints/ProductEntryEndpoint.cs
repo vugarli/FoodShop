@@ -1,6 +1,7 @@
 ﻿using FoodShop.Application.Filters;
 using FoodShop.Application.ProductEntries;
 using FoodShop.Application.ProductEntries.Commands.CreateProductEntry;
+using FoodShop.Application.ProductEntries.Commands.DeleteProductEntries;
 using FoodShop.Application.ProductEntries.Commands.DeleteProductEntry;
 using FoodShop.Application.ProductEntries.Commands.UpdateProductEntry;
 using FoodShop.Application.ProductEntries.Queries.GetProductEntries;
@@ -70,6 +71,13 @@ public static class ProductEntryEndpoint
                 var result = await sender.Send(command);
                 return Results.Ok(result);
             }).WithName("UpdateProductEntry");
+
+        group.MapDelete("/", async ([FromServices] ISender sender,
+            [FromBody] IEnumerable<Guid> ids) =>
+        {
+            await sender.Send(new DeleteProductEntriesCommand(ids));
+            return Results.Ok();
+        }).WithName("DeleteProductEntries");
 
         group.MapDelete("/{id:guid}",
             async (

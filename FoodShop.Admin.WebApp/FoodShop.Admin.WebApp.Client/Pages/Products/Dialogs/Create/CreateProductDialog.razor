@@ -1,33 +1,27 @@
 ﻿@using FoodShop.Application.Categories
+@using FoodShop.Admin.WebApp.Client.Components
 @using MudBlazor
 @inherits CreateProductDialogBase;
+
 
 
 <MudBlazor.MudDialog>
     <DialogContent>
      
 
-<EditForm Model="ProductVM" OnValidSubmit="Create" @ref="_editForm">
+<EditForm Model="CreateModel" OnSubmit="Create" @ref="_editForm">
     <DataAnnotationsValidator></DataAnnotationsValidator>
     <ValidationSummary></ValidationSummary>
     <MudPaper Class="d-flex flex-column p-5 mb-2" Elevation="4">
 
     
     
-        <MudTextField @bind-Value="ProductVM.Name" Label="Name" Variant="Variant.Text"></MudTextField>
-        <MudTextField @bind-Value="ProductVM.Description" Label="Description" ></MudTextField>
+        <MudTextField @bind-Value="CreateModel.Name" Label="Name" Variant="Variant.Text"></MudTextField>
+        <MudTextField @bind-Value="CreateModel.Description" Label="Description" ></MudTextField>
 
-        <MudFileUpload T="IBrowserFile" FilesChanged="SetFile">
-            <ButtonTemplate Context="fileupload_context" > 
-            <MudFab HtmlTag="label"
-                Color="Color.Secondary"
-                Icon="@Icons.Material.Filled.Image"
-                Label="Load picture"
-                for="@fileupload_context.Id" />
-            </ButtonTemplate>
-        </MudFileUpload>
+        <FormImageUploadSection @bind-SelectedImage="SelectedFile" > </FormImageUploadSection>
 
-        <MudSelect T="Guid" MultiSelection="false" Label="Category" Variant="Variant.Filled" @bind-Value="ProductVM.CategoryId" AnchorOrigin="Origin.BottomCenter">
+        <MudSelect T="Guid" MultiSelection="false" Label="Category" Variant="Variant.Filled" @bind-Value="CreateModel.CategoryId" AnchorOrigin="Origin.BottomCenter">
             @if (Categories != null)
                 @foreach (var category in Categories)
                 {

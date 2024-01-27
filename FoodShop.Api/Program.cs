@@ -42,6 +42,9 @@ app.MapProductEntries().WithOpenApi();
 
 app.MapUpload().WithOpenApi();
 
-app.UseCors(options=>options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
+app.UseCors(x => x
+                   .AllowAnyMethod()
+                   .AllowAnyHeader()
+                   .SetIsOriginAllowed(origin => true)
+                   .AllowCredentials()); // allow credentials
 app.Run();

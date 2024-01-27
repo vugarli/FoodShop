@@ -1,19 +1,22 @@
 ﻿@using FoodShop.Application.Categories
 @using MudBlazor
+@using FoodShop.Admin.WebApp.Client.Components
 @inherits UpdateProductDialogBase;
 
 
 <MudBlazor.MudDialog>
     <DialogContent>
-        <EditForm Model="ProductVM" OnValidSubmit="Update" @ref="_editForm">
+        <EditForm Model="UpdateModel" OnSubmit="Update" @ref="_editForm">
             <DataAnnotationsValidator></DataAnnotationsValidator>
             <ValidationSummary></ValidationSummary>
             <MudPaper Class="d-flex flex-column p-5 mb-2" Elevation="4">
-                <MudTextField @bind-Value="ProductVM.Name" Label="Name" Variant="Variant.Text"></MudTextField>
-                <MudTextField @bind-Value="ProductVM.Description" Label="Description"></MudTextField>
-                <MudTextField @bind-Value="ProductVM.Image" Label="Image Url"></MudTextField>
+                <MudTextField @bind-Value="UpdateModel.Name" Label="Name" Variant="Variant.Text"></MudTextField>
+                <MudTextField @bind-Value="UpdateModel.Description" Label="Description"></MudTextField>
 
-                <MudSelect T="Guid" MultiSelection="false" Label="Category" Variant="Variant.Filled" @bind-Value="ProductVM.CategoryId" AnchorOrigin="Origin.BottomCenter">
+                <FormImageUploadSection @bind-SelectedImage="SelectedFile"ImageData="@ImageData" > </FormImageUploadSection>
+
+
+                <MudSelect T="Guid" MultiSelection="false" Label="Category" Variant="Variant.Filled" @bind-Value="UpdateModel.CategoryId" AnchorOrigin="Origin.BottomCenter">
                     @if (Categories != null)
                         @foreach (var category in Categories)
                         {

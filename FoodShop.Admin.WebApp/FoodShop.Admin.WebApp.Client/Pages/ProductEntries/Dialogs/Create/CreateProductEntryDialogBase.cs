@@ -1,34 +1,33 @@
 ﻿using FoodShop.Admin.WebApp.Client.Abstractions.Services;
-using FoodShop.Admin.WebApp.Client.Pages;
+using FoodShop.Admin.WebApp.Client.Pages.ProductEntries.ViewModels;
 using FoodShop.Admin.WebApp.Client.Pages.Products.ViewModels;
 using FoodShop.Application.Categories;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
-using System.Xml.Linq;
 
-namespace FoodShop.Admin.WebApp.Client.Pages
+namespace FoodShop.Admin.WebApp.Client.Pages.ProductEntries.Dialogs.Create
 {
-    public class CreateProductDialogBase : ComponentBase
+    public class CreateProductEntryDialogBase : ComponentBase
     {
         [CascadingParameter] MudDialogInstance MudDialog { get; set; }
-
-        [Parameter]
-        public List<CategoryDto> Categories { get; set; } = new();
-
+        public VM_CreateProductEntry CreateModel { get; set; } = new();
 
         public EditForm _editForm { get; set; }
 
-        public IBrowserFile SelectedFile { get; set; }
+        [Parameter]
+        public List<VM_Product> Products { get; set; } = new List<VM_Product>();
 
-        public VM_CreateProduct CreateModel { get; set; } = new();
+        public IBrowserFile SelectedFile { get; set; }
 
         [Inject]
         IFileUploadService fileUploadService { get; set; }
 
 
+        public string ImageData { get; set; }
 
-        public async Task Create()
+
+        public async void Create()
         {
             if (SelectedFile != null)
                     CreateModel.Image = await fileUploadService.UploadFileAndProvideNameAsync(SelectedFile);
@@ -42,5 +41,6 @@ namespace FoodShop.Admin.WebApp.Client.Pages
         {
             MudDialog.Cancel();
         }
+
     }
 }

@@ -80,7 +80,7 @@ public class ProductRepository : IProductRepository
 
     public async Task<IEnumerable<Product>> GetFilteredProductsAsync(params IFilter<Product>[] filters)
     {
-        return await _context.Set<Product>().ApplyFilters<Product>(filters).ToListAsync();
+        return await _context.Set<Product>().Include(p=>p.Category).ApplyFilters<Product>(filters).ToListAsync();
     }
 
 

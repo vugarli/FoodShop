@@ -1,0 +1,56 @@
+﻿@using FoodShop.Admin.WebApp.Client.Components
+@using MudBlazor
+@inherits UpdateProductEntryDialogBase
+
+
+
+
+
+
+<MudBlazor.MudDialog>
+
+    <DialogContent>
+<div style="width:100%">
+
+        <EditForm Model="UpdateModel" OnSubmit="Update" @ref="_editForm">
+
+            <DataAnnotationsValidator></DataAnnotationsValidator>
+            <ValidationSummary></ValidationSummary>
+
+            <MudPaper Class="d-flex flex-column p-5 mb-2" Elevation="0">
+
+                <MudTextField @bind-Value="UpdateModel.SKU" Label="SKU" Variant="Variant.Text"></MudTextField>
+                <MudTextField @bind-Value="UpdateModel.Quantity" Label="Quantity" Variant="Variant.Text"></MudTextField>
+                <MudTextField @bind-Value="UpdateModel.Price" Label="Price" Variant="Variant.Text"></MudTextField>
+
+                <FormImageUploadSection @bind-SelectedImage="SelectedFile" ImageData="@ImageData"> </FormImageUploadSection>
+
+                <MudSelect T="Guid" MultiSelection="false" Label="Product" Variant="Variant.Filled" @bind-Value="UpdateModel.ProductId">
+                    @if (Products != null)
+                        @foreach (var product in Products)
+                        {
+                            <MudSelectItem T="Guid" Label="Product" HelperText="Pick the Product" Value="product.Id">
+                                @product.Name
+                            </MudSelectItem>
+                        }
+                </MudSelect>
+
+
+            </MudPaper>
+
+        </EditForm>
+
+
+</div>
+    </DialogContent>
+
+
+
+    <DialogActions>
+        <MudBlazor.MudButton @onclick="Update" Color="MudBlazor.Color.Success">Update</MudBlazor.MudButton>
+        <MudBlazor.MudButton @onclick="Cancel" Color="MudBlazor.Color.Error">Cancel</MudBlazor.MudButton>
+    </DialogActions>
+
+</MudBlazor.MudDialog>
+
+

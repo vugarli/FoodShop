@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography.X509Certificates;
 using FoodShop.Application.Abstractions;
+using FoodShop.Application.Filters;
 using FoodShop.Application.Queries;
 using FoodShop.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -58,5 +59,10 @@ public class VariationOptionRepository : IVariationOptionRepository
     public async Task<int> GetVariationOptionsCountAsync()
     {
         return await _context.Set<VariationOption>().CountAsync();
+    }
+
+    public async Task<IEnumerable<VariationOption>> GetFilteredVariationOptionsAsync(params IFilter<VariationOption>[] filters)
+    {
+        return await _context.Set<VariationOption>().Include(vo=>vo.Variation).ApplyFilters(filters).ToListAsync();
     }
 }

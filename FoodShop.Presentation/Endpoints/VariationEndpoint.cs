@@ -1,13 +1,18 @@
-﻿using FoodShop.Application.Products.Commands.CreateProduct;
+﻿using FoodShop.Application.Filters;
+using FoodShop.Application.ProductEntries;
+using FoodShop.Application.Products.Commands.CreateProduct;
 using FoodShop.Application.Products.Commands.DeleteProduct;
 using FoodShop.Application.Products.Commands.UpdateProduct;
 using FoodShop.Application.Products.Queries.GetProductById;
 using FoodShop.Application.Products.Queries.GetProducts;
+using FoodShop.Application.Queries;
+using FoodShop.Application.Variations;
 using FoodShop.Application.Variations.Commands.CreateVariation;
 using FoodShop.Application.Variations.Commands.DeleteVariation;
 using FoodShop.Application.Variations.Commands.UpdateVariation;
 using FoodShop.Application.Variations.Queries.GetVariationById;
 using FoodShop.Application.Variations.Queries.GetVariations;
+using FoodShop.Domain.Entities;
 using FoodShop.Presentation.Paginations;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -27,10 +32,14 @@ public static class VariationEndpoint
 
         group.WithTags("Variations");
 
-        group.MapGet("/", async ([FromServices] ISender sender, [AsParameters] GetPaginatedVariationsQuery query,LinkGenerator linkgen) =>
+        group.MapGet("/", async ([FromServices] ISender sender, 
+            [AsParameters] PaginationFilter<Variation> paginationFilter,
+            LinkGenerator linkgen) =>
         {
-            var result = await sender.Send(query);
-            result.SetUrls(linkgen, "GetVariations");
+            var result = await sender.Send(new GetVariationsQuery(paginationFilter));
+
+            if (result is PaginatedQueryResult<VariationDto>)
+                (result as PaginatedQueryResult<VariationDto>).SetUrls(linkgen, "GetVariations");
 
             return Results.Ok(result);
         }).WithName("GetVariations");

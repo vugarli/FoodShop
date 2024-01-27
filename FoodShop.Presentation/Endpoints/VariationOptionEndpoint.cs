@@ -1,9 +1,14 @@
-﻿using FoodShop.Application.VariationOptions.Commands.CreateVariationOption;
+﻿using FoodShop.Application.Filters;
+using FoodShop.Application.ProductEntries;
+using FoodShop.Application.Queries;
+using FoodShop.Application.VariationOptions;
+using FoodShop.Application.VariationOptions.Commands.CreateVariationOption;
 using FoodShop.Application.VariationOptions.Commands.DeleteVariationOption;
 using FoodShop.Application.VariationOptions.Commands.UpdateVariationOption;
 using FoodShop.Application.VariationOptions.Queries.GetVariationOptionById;
 using FoodShop.Application.VariationOptions.Queries.GetVariationOptions;
 using FoodShop.Application.Variations.Queries.GetVariations;
+using FoodShop.Domain.Entities;
 using FoodShop.Presentation.Paginations;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -22,10 +27,15 @@ public static class VariationOptionEndpoint
         
         group.WithTags("Variation Options");
 
-        group.MapGet("/", async ([FromServices] ISender sender, [AsParameters] GetPaginatedVariationOptionsQuery query,LinkGenerator linkgen) =>
+        group.MapGet("/", async ([FromServices] ISender sender, 
+            [AsParameters] PaginationFilter<VariationOption> paginationFilter
+            ,LinkGenerator linkgen) =>
         {
-            var result = await sender.Send(query);
-            result.SetUrls(linkgen, "GetVariationOptions");
+            var result = await sender.Send(new GetVariationOptionsQuery(paginationFilter));
+
+            if (result is PaginatedQueryResult<VariationOptionDto>)
+                (result as PaginatedQueryResult<VariationOptionDto>).SetUrls(linkgen, "GetVariationOptions");
+
             return Results.Ok(result);
         }).WithName("GetVariationOptions");
 

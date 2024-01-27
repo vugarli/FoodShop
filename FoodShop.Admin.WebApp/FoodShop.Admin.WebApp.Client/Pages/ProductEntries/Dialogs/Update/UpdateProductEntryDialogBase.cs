@@ -1,32 +1,29 @@
 ﻿using FoodShop.Admin.WebApp.Client.Abstractions.Services;
+using FoodShop.Admin.WebApp.Client.Pages.ProductEntries.ViewModels;
 using FoodShop.Admin.WebApp.Client.Pages.Products.ViewModels;
-using FoodShop.Admin.WebApp.Client.Services;
-using FoodShop.Application.Categories;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
 
-namespace FoodShop.Admin.WebApp.Client.Pages.Products.Dialogs.Update
+namespace FoodShop.Admin.WebApp.Client.Pages.ProductEntries.Dialogs.Update
 {
-    public class UpdateProductDialogBase : ComponentBase
+    public class UpdateProductEntryDialogBase : ComponentBase
     {
-        
         [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+        public EditForm _editForm { get; set; }
 
         [Parameter]
-        public VM_UpdateProduct UpdateModel{ get; set; }
+        public VM_UpdateProductEntry UpdateModel { get; set; }
+        
+        [Parameter]
+        public List<VM_Product> Products { get; set; } = new List<VM_Product>();
 
         public IBrowserFile SelectedFile { get; set; }
-
-        public string ImageData { get; set; }
-
-        public EditForm _editForm { get; set; }
 
         [Inject]
         IFileUploadService fileUploadService { get; set; }
 
-        [Parameter]
-        public List<CategoryDto> Categories { get; set; } = new();
+        public string ImageData { get; set; }
 
         protected override void OnInitialized()
         {
@@ -37,7 +34,7 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Products.Dialogs.Update
         public async Task Update()
         {
             if (SelectedFile != null)
-                UpdateModel.Image = await fileUploadService.UploadFileAndProvideNameAsync(SelectedFile);
+                    UpdateModel.Image = await fileUploadService.UploadFileAndProvideNameAsync(SelectedFile);
             if (_editForm?.EditContext?.Validate() ?? false)
             {
                 MudDialog.Close(DialogResult.Ok(UpdateModel));
@@ -46,7 +43,7 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Products.Dialogs.Update
 
         public void Cancel()
         {
-            MudDialog.Close(DialogResult.Cancel());
+            MudDialog.Cancel();
         }
 
     }

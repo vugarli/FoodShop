@@ -1,4 +1,7 @@
-﻿namespace FoodShop.Application.ProductEntries;
+﻿using FoodShop.Application.VariationOptions;
+using FoodShop.Domain.Entities;
+
+namespace FoodShop.Application.ProductEntries;
 
 public class ProductEntryDto
 {
@@ -9,4 +12,5 @@ public class ProductEntryDto
     public decimal Price { get; private set; }
     public string Image { get; private set; }
     public int Quantity { get; private set; }
+    public IEnumerable<VariationOptionDto>? VariationOptions { get; private set; }
 }

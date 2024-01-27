@@ -70,6 +70,17 @@ public class ProductEntryRepository : IProductEntryRepository
 
     public async Task<int> GetProductEntriesWithFiltersCountAsync(params IFilter<ProductEntry>[] filters)
     {
-        return await _context.Set<ProductEntry>().ApplyFilters(filters).CountAsync();
+        return await _context.Set<ProductEntry>().Include(pe=>pe.VariationOptions).ApplyFilters(filters).CountAsync();
+    }
+
+    public async Task DeleteProductEntriesAsync(IEnumerable<Guid> Ids)
+    {
+        await _context.Set<ProductEntry>().Where(pe=>Ids.Contains(pe.Id)).ExecuteDeleteAsync();
+    }
+
+    public async Task<bool> ProductEntriesExistAsync(IEnumerable<Guid> Ids, CancellationToken cancellationToken)
+    {
+        var count = await _context.Set<ProductEntry>().Where(x => Ids.Contains(x.Id)).CountAsync(cancellationToken);
+        return count == Ids.Count();
     }
 }

@@ -1,4 +1,5 @@
-﻿using FoodShop.Domain.Entities;
+﻿using FoodShop.Application.Filters;
+using FoodShop.Domain.Entities;
 
 namespace FoodShop.Application.Abstractions;
 
@@ -10,6 +11,7 @@ public interface IVariationRepository
     public Task<bool> VariationExistsAsync(Guid id,CancellationToken cancellationToken);
     public Task<IEnumerable<Variation>> GetVariationsAsync();
     public Task<IEnumerable<Variation>> GetPaginatedVariationsAsync(int page,int per_page);
+    public Task<IEnumerable<Variation>> GetFilteredVariationsAsync(params IFilter<Variation>[] filters);
 
     public Task<Variation> UpdateVariationAsync(Variation variation);
 

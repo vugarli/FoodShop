@@ -1,18 +1,13 @@
-﻿@page "/products"
-@using FoodShop.Admin.WebApp.Client.Pages.Products;
-@using FoodShop.Admin.WebApp.Client.Pages.Products.ViewModels
-@using FoodShop.Application.Categories
-@using FoodShop.Application.Products
-@using FoodShop.Domain.Entities
+﻿@page "/productentries"
+@using FoodShop.Admin.WebApp.Client.Pages.ProductEntries.ViewModels
 @using MudBlazor
-@inherits ProductsBase
+@inherits ProductEntriesBase
 @rendermode InteractiveWebAssembly
 
 <MudThemeProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
-
-<h3>Products</h3>
+<h3>ProductEntries</h3>
 
 <MudButton Color="Color.Success" @onclick="DisplayCreateDialog">Create</MudButton>
 
@@ -21,29 +16,32 @@
     <MudButton @onclick="DeleteSelectedProducts" Color="Color.Error">Delete @SelectedItems.Count()</MudButton>
 }
 
-<MudDataGrid @ref="_dataGrid" MultiSelection="true" ServerData="LoadGridData" T="VM_Product" SelectedItemsChanged="@SelectedItemsChanged">
+<MudDataGrid @ref="_dataGrid" MultiSelection="true" ServerData="LoadGridData" T="VM_ProductEntry" SelectedItemsChanged="@SelectedItemsChanged">
     <Columns>
-        <SelectColumn T="VM_Product" />
+        <SelectColumn T="VM_ProductEntry" />
         <PropertyColumn Property="x=>x.Id"></PropertyColumn>
-        <PropertyColumn Property="x=>x.Name"></PropertyColumn>
-        <PropertyColumn Property="x=>x.Description"></PropertyColumn>
-        <PropertyColumn Property="x=>x.CategoryId"></PropertyColumn>
-        <PropertyColumn Property="x=>x.CategoryName"></PropertyColumn>
+        <PropertyColumn Property="x=>x.ProductName"></PropertyColumn>
+        <PropertyColumn Property="x=>x.SKU"></PropertyColumn>
+        <PropertyColumn Property="x=>x.Price"></PropertyColumn>
+        <PropertyColumn Property="x=>x.Quantity"></PropertyColumn>
+        <PropertyColumn Property="x=>x.ProductId"></PropertyColumn>
+
         <TemplateColumn Context="data" Title="Image">
             <CellTemplate>
                 <MudImage Height="100" Width="100" Src="@($"http://localhost:9000/photos/{data.Item.Image}")"></MudImage>
             </CellTemplate>
         </TemplateColumn>
+        
         <TemplateColumn Title="Action">
             <CellTemplate>
                 <MudButton @onclick="@(()=>DisplayEditDialog(context.Item.Id))" Color="Color.Warning">Edit</MudButton>
             </CellTemplate>
         </TemplateColumn>
+    
     </Columns>
     <PagerContent>
 
-        <MudDataGridPager T="VM_Product" PageSizeOptions="[3,6,12]" />
+        <MudDataGridPager T="VM_ProductEntry" PageSizeOptions="[3,6,12]" />
 
     </PagerContent>
 </MudDataGrid>
-

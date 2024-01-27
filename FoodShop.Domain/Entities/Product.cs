@@ -19,5 +19,4 @@ public class Product : Entity
     public Guid CategoryId { get; private set; }
 
     public string Image { get; private set; }
-    
 }

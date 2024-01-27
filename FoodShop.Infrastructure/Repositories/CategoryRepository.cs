@@ -1,4 +1,5 @@
 ﻿using FoodShop.Application.Abstractions;
+using FoodShop.Application.Filters;
 using FoodShop.Application.Queries;
 using FoodShop.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -70,5 +71,10 @@ public class CategoryRepository : ICategoryRepository
     public async Task DeleteCategoriesByIdsAsync(IEnumerable<Guid> ids)
     {
         await _dbContext.Set<Category>().Where(c => ids.Contains(c.Id)).ExecuteDeleteAsync();
+    }
+
+    public async Task<IEnumerable<Category>> GetCategoriesWithFiltersAsync(params IFilter<Category>[] filters)
+    {
+        return await _dbContext.Set<Category>().Include(c=>c.ParentCategory).Include(c=>c.BaseCategoryDiscriminator).ApplyFilters(filters).ToListAsync();
     }
 }
