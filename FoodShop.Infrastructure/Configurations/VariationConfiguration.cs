@@ -10,8 +10,8 @@ public class VariationConfiguration : IEntityTypeConfiguration<Variation>
     {
         builder.HasKey(v => v.Id);
 
-        builder.HasMany(v => v.VaritaionCategories)
-            .WithOne(c => c.Variation);
+        builder.HasMany(v => v.Categories)
+            .WithMany(c => c.Variations);
         
     }
 }

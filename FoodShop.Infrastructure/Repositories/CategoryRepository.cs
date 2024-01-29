@@ -17,7 +17,7 @@ public class CategoryRepository : ICategoryRepository
     
     public async Task<Category> GetCategoryByIdAsync(Guid id)
     {
-        return await _dbContext.Set<Category>().Include(c=>c.ParentCategory).FirstOrDefaultAsync(c=>c.Id == id);
+        return await _dbContext.Set<Category>().Include(c=>c.ParentCategory).Include(c=>c.Variations).FirstOrDefaultAsync(c=>c.Id == id);
     }
 
     public async Task<IEnumerable<Category>> GetCategoriesAsync()
@@ -39,7 +39,17 @@ public class CategoryRepository : ICategoryRepository
 
     public async Task CreateCategoryAsync(Category category)
     {
+            if(category.Variations != null)
+
+            foreach(var variation in category.Variations)
+            {
+                _dbContext.Attach(variation);
+                _dbContext.Entry(variation).State = EntityState.Unchanged;
+            }
+
         await _dbContext.Set<Category>().AddAsync(category);
+
+
     }
 
     public async Task<bool> CategoryExistsAsync(Guid id,CancellationToken cancellationToken)
@@ -75,6 +85,14 @@ public class CategoryRepository : ICategoryRepository
 
     public async Task<IEnumerable<Category>> GetCategoriesWithFiltersAsync(params IFilter<Category>[] filters)
     {
-        return await _dbContext.Set<Category>().Include(c=>c.ParentCategory).Include(c=>c.BaseCategoryDiscriminator).Include(c=>c.VaritaionCategories).ThenInclude(c=>c.Variation).ApplyFilters(filters).ToListAsync();
+        return await _dbContext.Set<Category>().Include(c=>c.ParentCategory).Include(c=>c.BaseCategoryDiscriminator).Include(c=>c.Variations).ApplyFilters(filters).ToListAsync();
     }
+
+    public async Task<bool> IsVariationBelongsToCategoryAsync(Guid categoryId, Guid variationId)
+    {
+        return await _dbContext.Set<Category>().Include(c=>c.Variations)
+            .AnyAsync(c=>c.Id == categoryId && c.Variations.Any(v=>v.Id == variationId));
+    }
+
+    
 }

@@ -21,9 +21,8 @@ public interface ICategoryRepository
     public Task<IEnumerable<Category>> GetCategoriesWithFiltersAsync(params IFilter<Category>[] filters);
 
     public Task<bool> CategoryExistsAsync(Guid id,CancellationToken cancellationToken);
+    public Task<bool> IsVariationBelongsToCategoryAsync(Guid categoryId,Guid variationId);
     public Task<bool> CategoriesExistsAsync(IEnumerable<Guid> ids,CancellationToken cancellationToken);
 
     public Task<int> GetCategoriesCountAsync();
-
-
 }

@@ -20,12 +20,20 @@ public class Category : Entity
     public BaseCategoryDiscriminator? BaseCategoryDiscriminator { get; set; }
     public Guid? BaseCategoryDiscriminatorId { get; private set; }
 
-    public ICollection<VariationCategory> VaritaionCategories { get; private set; } = new List<VariationCategory>();
+    public List<Variation> Variations { get; set; } = new();
 
     public void AddVariation(Guid variationId)
     {
-        var relation = new VariationCategory(Id,variationId);
-        VaritaionCategories.Add(relation);
+        var variation = new Variation(variationId,default);
+        Variations.Add(variation);
     }
-    
+
+    public void RemoveVariation(Guid variationId)
+    {
+        var item = Variations.FirstOrDefault(vc=>vc.Id == variationId);
+        if (item != null)
+            Variations.Remove(item);
+    }
+
+
 }

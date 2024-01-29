@@ -1,6 +1,7 @@
 ﻿using FoodShop.Admin.WebApp.Client.Abstractions.Services;
 using FoodShop.Admin.WebApp.Client.Pages.Categories.ViewModels;
 using FoodShop.Admin.WebApp.Client.Pages.Products.ViewModels;
+using FoodShop.Admin.WebApp.Client.Pages.Variations.ViewModels;
 using FoodShop.Application.Abstractions;
 using FoodShop.Application.Queries;
 using System.Net.Http.Json;
@@ -74,5 +75,22 @@ namespace FoodShop.Admin.WebApp.Client.Services
             return result;
         }
 
+        public async Task<bool> RemoveVariation(Guid categoryId, Guid variationId)
+        {
+            var result = await client.DeleteAsync($"/categories/{categoryId}/{variationId}");
+            return result.IsSuccessStatusCode;
+        }
+
+        public async Task<IEnumerable<VM_Variation>> GetVariations(Guid categoryId)
+        {
+            var variations = await client.GetFromJsonAsync<QueryResult<VM_Variation>>($"/categories/{categoryId}/variations");
+            return variations.Data;
+        }
+
+        public async Task<bool> AddVariation(Guid categoryId, Guid variationId)
+        {
+            var result = await client.PostAsync($"/categories/{categoryId}/variations/{variationId}",null);
+            return result.IsSuccessStatusCode;
+        }
     }
 }

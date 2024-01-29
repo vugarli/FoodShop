@@ -11,7 +11,7 @@ public class Variation : Entity
 
     public string Name { get; private set; }
 
-	public IEnumerable<VariationCategory> VaritaionCategories { get; private set; }
+	public IEnumerable<Category> Categories { get; private set; }
     public ICollection<VariationOption> VariationOptions { get; private set; }
 
     public void AddVariationOption(VariationOption variationOption)

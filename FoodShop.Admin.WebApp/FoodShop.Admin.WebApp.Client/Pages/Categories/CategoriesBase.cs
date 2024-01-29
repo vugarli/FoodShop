@@ -117,7 +117,7 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Categories
                 ParentId = category.ParentId
             };
 
-            dialogparams.Add<VM_UpdateCategory>(x => x.CategoryVM, updateCategory);
+            dialogparams.Add<VM_UpdateCategory>(x => x.UpdateModel, updateCategory);
 
             var dialog = await DialogService.ShowAsync<UpdateCategoriesDialog>("Update", dialogparams, options);
             using var result = dialog.Result;

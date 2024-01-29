@@ -7,16 +7,38 @@
     <DialogContent>
 
 
-        <EditForm Model="CategoryVM" @ref="_editForm" OnValidSubmit="Create">
+        <EditForm Model="UpdateModel" @ref="_editForm" OnValidSubmit="Create">
             <DataAnnotationsValidator></DataAnnotationsValidator>
             <ValidationSummary></ValidationSummary>
 
             <MudPaper Class="d-flex flex-column p-5 mb-2" Elevation="4">
 
                
-                <MudTextField @bind-Value="CategoryVM.Name" Variant="Variant.Text" Label="Name"></MudTextField>
+                <MudTextField @bind-Value="UpdateModel.Name" Variant="Variant.Text" Label="Name"></MudTextField>
 
-                <MudSelect T="Guid?" MultiSelection="false" Label="Category" Variant="Variant.Filled" @bind-Value="CategoryVM.ParentId">
+                <MudChipSet AllClosable="true">
+                    @foreach (var variation in Variations)
+                    {
+                        <MudChip OnClose="@(async a =>await RemoveVariation(variation.Id))" Text="@variation.Name"></MudChip>
+                    }
+                </MudChipSet>
+
+                <MudStack Row="true" Spacing="3">
+
+                    <MudSelect T="Guid" @bind-Value="SelectedVariation">
+                        @foreach(var variationtobeadd in VariationsToBeAdded)
+                        {
+                            <MudSelectItem Value="variationtobeadd.Id">
+                                @variationtobeadd.Name
+                            </MudSelectItem>
+                        }
+                    </MudSelect>
+
+                <MudIconButton Disabled="@(SelectedVariation == default)" Icon="@Icons.Material.Filled.Add" OnClick="AddVariation"></MudIconButton>
+
+                </MudStack>
+
+                <MudSelect T="Guid?" MultiSelection="false" Label="Category" Variant="Variant.Filled" @bind-Value="UpdateModel.ParentId">
                     @if (ParentCategories != null)
                         @foreach (var pCategory in ParentCategories)
                         {

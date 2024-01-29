@@ -14,24 +14,13 @@ public class CategoryProfile : Profile
     public CategoryProfile()
     {
         CreateMap<Category, CategoryDto>()
-            .ForMember(x=>x.ParentName,a=>a.MapFrom(c=>c.ParentCategory.Name))
-            .ForMember(x=>x.BaseCategoryDiscriminatorName,a=>a.MapFrom(c=>c.BaseCategoryDiscriminator.Name))
-            .ForMember(x=>x.Variations,a=>a.MapFrom(c=>c.VaritaionCategories.Select(a=>a.Variation)));
+            .ForMember(x => x.ParentName, a => a.MapFrom(c => c.ParentCategory.Name))
+            .ForMember(x => x.BaseCategoryDiscriminatorName, a => a.MapFrom(c => c.BaseCategoryDiscriminator.Name));
 
         CreateMap<CategoryDto, Category>();
 
         CreateMap<CreateCategoryCommand, Category>()
-            .ConstructUsing(c=>new Category(Guid.NewGuid(),c.Name,c.ParentId,c.BaseDiscriminatorId))
-            .AfterMap((src, dest) =>
-            {
-                if (src.Variations != null)
-                {
-                    foreach (var variation in src.Variations)
-                    { 
-                        dest.AddVariation(variation);
-                    }
-                }
-            });
+            .ConstructUsing(c=>new Category(Guid.NewGuid(),c.Name,c.ParentId,c.BaseDiscriminatorId));
 
         CreateMap<UpdateCategoryCommand, Category>()
             .ConstructUsing(c=>new Category(Guid.NewGuid(),c.Name,c.ParentId,c.BaseDiscriminatorId));

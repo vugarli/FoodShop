@@ -120,16 +120,16 @@ namespace FoodShop.Infrastructure.TestData
 
 			dbContext.Set<Variation>().AddRange(variations);
 
-			var variationCategories = new VariationCategory[]
-			{
+			//var variationCategories = new VariationCategory[]
+			//{
 
-				new VariationCategory(SubCategories[0].Id, variations[0].Id),
-				new VariationCategory(SubCategories[1].Id, variations[0].Id),
-				new VariationCategory(SubCategories[2].Id, variations[0].Id),
-				new VariationCategory(SubCategories[3].Id, variations[0].Id),
-			};
+			//	new VariationCategory(SubCategories[0].Id, variations[0].Id),
+			//	new VariationCategory(SubCategories[1].Id, variations[0].Id),
+			//	new VariationCategory(SubCategories[2].Id, variations[0].Id),
+			//	new VariationCategory(SubCategories[3].Id, variations[0].Id),
+			//};
 
-			dbContext.AddRange(variationCategories);
+			//dbContext.AddRange(variationCategories);
 
 			var variationOptions = new VariationOption[]
 			{

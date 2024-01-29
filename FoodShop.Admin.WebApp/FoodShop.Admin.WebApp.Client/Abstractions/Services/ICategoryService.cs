@@ -1,5 +1,6 @@
 ﻿using FoodShop.Admin.WebApp.Client.Pages.Categories.ViewModels;
 using FoodShop.Admin.WebApp.Client.Pages.Products.ViewModels;
+using FoodShop.Admin.WebApp.Client.Pages.Variations.ViewModels;
 using FoodShop.Application.Queries;
 
 namespace FoodShop.Admin.WebApp.Client.Abstractions.Services
@@ -16,5 +17,8 @@ namespace FoodShop.Admin.WebApp.Client.Abstractions.Services
         public Task<IEnumerable<VM_Gender>> GetGenders();
         public Task<IEnumerable<VM_Category>> GetParentCategories();
         public Task<PaginatedQueryResult<VM_Category>> GetPaginatedCategories(int page, int per_page);
+        public Task<bool> RemoveVariation(Guid categoryId,Guid variationId);
+        public Task<IEnumerable<VM_Variation>> GetVariations(Guid categoryId);
+        public Task<bool> AddVariation(Guid categoryId,Guid variationId);
     }
 }

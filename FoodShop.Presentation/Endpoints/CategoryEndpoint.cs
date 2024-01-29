@@ -2,6 +2,7 @@
 using FoodShop.Application.Categories.Commands.CreateCategory;
 using FoodShop.Application.Categories.Commands.DeleteCategories;
 using FoodShop.Application.Categories.Commands.DeleteCategory;
+using FoodShop.Application.Categories.Commands.RemoveVariation;
 using FoodShop.Application.Categories.Commands.UpdateCategory;
 using FoodShop.Application.Categories.Queries.GetCategories;
 using FoodShop.Application.Categories.Queries.GetCategoryById;
@@ -100,6 +101,17 @@ public static class CategoryEndpoint
                 await sender.Send(new DeleteCategoriesCommand(ids));
                 return Results.Ok();
             }).WithName("DeleteCategories");
+
+
+        group.MapDelete("/{id:guid}/variations/{variationId:guid}",
+            async (
+                [FromServices] ISender sender,
+                [FromRoute] Guid id,
+                [FromRoute] Guid variationId) =>
+            {
+                await sender.Send(new RemoveVariationCommand(id,variationId));
+                return Results.Ok();
+            }).WithName("RemoveVariaiton");
 
         return group;
 

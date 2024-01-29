@@ -4,6 +4,7 @@ using FoodShop.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodShop.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240129204124_variationcategoryfix")]
+    partial class variationcategoryfix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,12 +30,12 @@ namespace FoodShop.Api.Migrations
                     b.Property<Guid>("CategoriesId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("VariationsId")
+                    b.Property<Guid>("VaritaionsId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("CategoriesId", "VariationsId");
+                    b.HasKey("CategoriesId", "VaritaionsId");
 
-                    b.HasIndex("VariationsId");
+                    b.HasIndex("VaritaionsId");
 
                     b.ToTable("CategoryVariation");
                 });
@@ -253,7 +256,7 @@ namespace FoodShop.Api.Migrations
 
                     b.HasOne("FoodShop.Domain.Entities.Variation", null)
                         .WithMany()
-                        .HasForeignKey("VariationsId")
+                        .HasForeignKey("VaritaionsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

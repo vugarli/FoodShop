@@ -23,7 +23,16 @@ public class CategoryCreateCommandHandler : IRequestHandler<CreateCategoryComman
     public async Task<CategoryDto> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
         var category = _mapper.Map<Category>(request);
+        if (request.Variations != null)
+             {
+                 foreach (var variation in request.Variations)
+                 {
+                     category.AddVariation(variation);
+                 }
+             }
         await _repository.CreateCategoryAsync(category);
+
+        
         await _unitOfWork.SaveChangesAsync(cancellationToken);
         var categoryDto = _mapper.Map<CategoryDto>(category);
         return categoryDto;

@@ -16,7 +16,7 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
         builder.HasOne<BaseCategoryDiscriminator>(c => c.BaseCategoryDiscriminator)
             .WithMany(b => b.Categories).HasForeignKey(c => c.BaseCategoryDiscriminatorId);
 
-        builder.HasMany<VariationCategory>(c => c.VaritaionCategories)
-            .WithOne(v => v.Category).HasForeignKey(c=>c.CategoryId);
+        builder.HasMany(c => c.Variations)
+            .WithMany(v => v.Categories);
     }
 }
