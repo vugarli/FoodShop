@@ -22,8 +22,8 @@ builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IFileUploadService, FileUploadService>();
 builder.Services.AddTransient<IProductEntryService, ProductEntryService>();
-
-
+builder.Services.AddTransient<IVariationService, VariationService>();
+builder.Services.AddTransient<IVariationOptionService, VariationOptionService>();
 var app = builder.Build();
 
 

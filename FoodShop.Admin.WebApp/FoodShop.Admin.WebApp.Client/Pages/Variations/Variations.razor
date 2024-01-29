@@ -1,0 +1,40 @@
+﻿@page "/variations"
+@inherits VariationsBase
+@using FoodShop.Admin.WebApp.Client.Pages.Variations.ViewModels
+@using MudBlazor
+@rendermode InteractiveWebAssembly
+
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+
+<h3>Variations</h3>
+
+
+<MudButton Color="Color.Success" @onclick="DisplayCreateDialog">Create</MudButton>
+
+@if (SelectedItems.Count() > 0)
+{
+    <MudButton @onclick="DeleteSelectedProducts" Color="Color.Error">Delete @SelectedItems.Count()</MudButton>
+}
+
+<MudDataGrid @ref="_dataGrid" MultiSelection="true" ServerData="LoadGridData" T="VM_Variation" SelectedItemsChanged="@SelectedItemsChanged">
+    <Columns>
+        <SelectColumn T="VM_Variation" />
+        <PropertyColumn Property="x=>x.Id"></PropertyColumn>
+        <PropertyColumn Property="x=>x.Name"></PropertyColumn>
+
+        <TemplateColumn Title="Action">
+            <CellTemplate>
+                <MudButton @onclick="@(()=>DisplayEditDialog(context.Item.Id))" Color="Color.Warning">Edit</MudButton>
+            </CellTemplate>
+        </TemplateColumn>
+
+    </Columns>
+    
+    <PagerContent>
+        <MudDataGridPager T="VM_Variation" PageSizeOptions="[3,6,12]" />
+    </PagerContent>
+
+</MudDataGrid>

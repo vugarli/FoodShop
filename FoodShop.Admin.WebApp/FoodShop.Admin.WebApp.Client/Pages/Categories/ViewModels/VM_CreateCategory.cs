@@ -3,6 +3,7 @@
     public class VM_CreateCategory
     {
         public Guid? ParentId { get; set; }
+        public Guid? BaseDiscriminatorId { get; set; }
         public string Name { get; set; }
     }
 }

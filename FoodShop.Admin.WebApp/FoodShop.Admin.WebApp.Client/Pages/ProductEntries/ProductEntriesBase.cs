@@ -110,7 +110,7 @@ namespace FoodShop.Admin.WebApp.Client.Pages.ProductEntries
             using var result = dialog.Result;
             var dialogResult = await result;
 
-            if (!dialogResult.Cancelled)
+            if (!dialogResult.Canceled)
             {
                 var data = dialogResult.Data;
 

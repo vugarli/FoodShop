@@ -7,10 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\FoodShop.Application\FoodShop.Application.csproj" />
-    <ProjectReference Include="..\FoodShop.Admin.WebApp.Client\FoodShop.Admin.WebApp.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.0" />
     <PackageReference Include="MudBlazor" Version="6.11.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\FoodShop.Application\FoodShop.Application.csproj" />
+    <ProjectReference Include="..\FoodShop.Admin.WebApp.Client\FoodShop.Admin.WebApp.Client.csproj" />
   </ItemGroup>
 
 </Project>

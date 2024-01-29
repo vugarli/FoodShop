@@ -18,6 +18,8 @@ builder.Services.AddHttpClient("API", (sp, cl) =>
 
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IProductEntryService, ProductEntryService>();
+builder.Services.AddTransient<IVariationService, VariationService>();
+builder.Services.AddTransient<IVariationOptionService, VariationOptionService>();
 
 builder.Services.AddTransient<ICategoryService, CategoryService>();
 

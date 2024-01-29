@@ -23,7 +23,7 @@ public class VariationRepository : IVariationRepository
 
     public async Task<Variation> GetVariationByIdAsync(Guid id)
     {
-        var variation = await _dbContext.Set<Variation>().FirstOrDefaultAsync(v=>v.Id == id);
+        var variation = await _dbContext.Set<Variation>().Include(v=>v.VariationOptions).FirstOrDefaultAsync(v=>v.Id == id);
         return variation;
     }
 
@@ -40,8 +40,7 @@ public class VariationRepository : IVariationRepository
 
     public async Task<Variation> UpdateVariationAsync(Variation variation)
     {
-        _dbContext.Attach(variation);
-        _dbContext.Entry(variation).State = EntityState.Modified;
+        _dbContext.Update(variation);
         return variation;
     }
 
@@ -62,6 +61,17 @@ public class VariationRepository : IVariationRepository
 
     public async Task<IEnumerable<Variation>> GetFilteredVariationsAsync(params IFilter<Variation>[] filters)
     {
-        return await _dbContext.Set<Variation>().ApplyFilters(filters).ToListAsync();
+        return await _dbContext.Set<Variation>().Include(v=>v.VariationOptions).ApplyFilters(filters).ToListAsync();
+    }
+
+    public async Task DeleteVariationsAsync(IEnumerable<Guid> ids)
+    {
+        await _dbContext.Set<Variation>().Where(v=>ids.Contains(v.Id)).ExecuteDeleteAsync();
+    }
+
+    public async Task<bool> VariationsExistsAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken)
+    {
+        var count = await _dbContext.Set<Variation>().Where(v => ids.Contains(v.Id)).CountAsync(cancellationToken);
+        return count == ids.Count();
     }
 }

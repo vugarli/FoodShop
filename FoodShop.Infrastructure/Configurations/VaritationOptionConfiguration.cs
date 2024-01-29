@@ -9,7 +9,7 @@ public class VaritationOptionConfiguration : IEntityTypeConfiguration<VariationO
     public void Configure(EntityTypeBuilder<VariationOption> builder)
     {
         builder.HasKey(vo => vo.Id);
-        builder.HasOne<Variation>(vo => vo.Variation).WithMany().HasForeignKey(vo => vo.VariationId);
+        builder.HasOne<Variation>(vo => vo.Variation).WithMany(v=>v.VariationOptions).HasForeignKey(vo => vo.VariationId);
         builder.HasMany<ProductEntry>(vo => vo.ProductEntries)
             .WithMany(pe => pe.VariationOptions);
     }

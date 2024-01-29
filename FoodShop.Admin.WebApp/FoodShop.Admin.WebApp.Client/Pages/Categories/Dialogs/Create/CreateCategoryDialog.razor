@@ -1,20 +1,29 @@
 ﻿@inherits CreateCategoryDialogBase
 @using MudBlazor;
+@using FoodShop.Admin.WebApp.Client.Components.FormValidation;
 
 
 <MudBlazor.MudDialog>
     <DialogContent>
 
     
-        <EditForm Model="CategoryVM" @ref="_editForm" OnValidSubmit="Create">
+        <EditForm Model="CreateModel" @ref="_editForm" OnSubmit="Create">
         <DataAnnotationsValidator></DataAnnotationsValidator>
         <ValidationSummary></ValidationSummary>
+        <CustomValidationComponent @ref="_customValidator"></CustomValidationComponent>
+
+
 
             <MudPaper Class="d-flex flex-column p-5 mb-2" Elevation="4">
 
-            <MudTextField @bind-Value="CategoryVM.Name" Variant="Variant.Text" Label="Name"></MudTextField>
+            <MudTextField @bind-Value="CreateModel.Name" Variant="Variant.Text" Label="Name"></MudTextField>
 
-            <MudSelect T="Guid?" MultiSelection="false" Label="Category" Variant="Variant.Filled" @bind-Value="CategoryVM.ParentId">
+            <MudSelect T="Guid?" MultiSelection="false" Label="Category" Variant="Variant.Filled" @bind-Value="CreateModel.ParentId">
+                    
+                    <MudSelectItem T="Guid?" Value="@(null)">
+                        Not Specify
+                    </MudSelectItem>
+
                 @if (ParentCategories != null)
                 @foreach(var pCategory in ParentCategories)
             {
@@ -23,6 +32,28 @@
                 </MudSelectItem>
             }
         </MudSelect>
+
+
+                @if (CreateModel.ParentId != null)
+                {   
+                <MudSelect T="Guid?" MultiSelection="false" Label="Gender" Variant="Variant.Filled" @bind-Value="CreateModel.BaseDiscriminatorId">
+
+                        <MudSelectItem T="Guid?" Value="@(null)">
+                            Not Specify
+                        </MudSelectItem>
+
+            @if (Genders != null)
+                @foreach (var gender in Genders)
+                {
+                    <MudSelectItem T="Guid?" Value="gender.Id">
+                        @gender.Name
+                    </MudSelectItem>
+                }
+        </MudSelect>
+                }
+
+
+
         </MudPaper>
     </EditForm>
     

@@ -1,24 +1,6 @@
 ﻿@using MudBlazor
 
 
-
- @* <MudPaper Class="d-flex flex-row align-items-center">
-
-     <MudImage Height="100" Width="100" Src="@ImageData"></MudImage>
-    
-     <MudFileUpload T="IBrowserFile" FilesChanged="SetFile">
-         <ButtonTemplate Context="fileupload_context">
-             <MudFab HtmlTag="label"
-                     Color="Color.Secondary"
-                     Icon="@Icons.Material.Filled.Image"
-                     Label="Load picture"
-                     for="@fileupload_context.Id" />
-         </ButtonTemplate>
-     </MudFileUpload>        
-    
- </MudPaper> *@
-
-
 <MudStack Style="width: 100%;height: 20%;" Row="true" AlignItems="AlignItems.Center">
     <MudImage Height="100" Width="100" Src="@ImageData"></MudImage>
     <MudFileUpload T="IBrowserFile" Style="width: 100%;"

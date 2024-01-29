@@ -118,7 +118,7 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Products
             var dialog = await DialogService.ShowAsync<UpdateProductDialog>("Update",dialogparams,options);
             using var result = dialog.Result;
             var dialogResult = await result;
-            if(!dialogResult.Cancelled)
+            if(!dialogResult.Canceled)
             {
                 var data = dialogResult.Data;
                 var client = ClientFactory.CreateClient("API");

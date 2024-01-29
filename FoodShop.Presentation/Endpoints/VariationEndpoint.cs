@@ -9,6 +9,7 @@ using FoodShop.Application.Queries;
 using FoodShop.Application.Variations;
 using FoodShop.Application.Variations.Commands.CreateVariation;
 using FoodShop.Application.Variations.Commands.DeleteVariation;
+using FoodShop.Application.Variations.Commands.DeleteVariations;
 using FoodShop.Application.Variations.Commands.UpdateVariation;
 using FoodShop.Application.Variations.Queries.GetVariationById;
 using FoodShop.Application.Variations.Queries.GetVariations;
@@ -77,7 +78,17 @@ public static class VariationEndpoint
                 await sender.Send(new DeleteVariationCommand(id));
                 return Results.Ok();
             }).WithName("DeleteVariation");
-        
+
+
+        group.MapDelete("/",
+            async (
+                [FromServices] ISender sender,
+                [FromBody] IEnumerable<Guid> ids) =>
+            {
+                await sender.Send(new DeleteVariationsCommand(ids));
+                return Results.Ok();
+            }).WithName("DeleteVariations");
+
         return group;
     }
 }

@@ -33,6 +33,7 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Categories
         public HashSet<VM_Category> SelectedItems { get; set; } = new();
 
         public List<VM_Category> ParentCategories { get; set; }
+        public List<VM_Gender> Genders { get; set; }
 
 
         public MudForm form;
@@ -45,6 +46,7 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Categories
         protected override async Task OnInitializedAsync()
         {
             ParentCategories = (await CategoryService.GetParentCategories()).ToList();
+            Genders = (await CategoryService.GetGenders()).ToList();
             
         }
 
@@ -115,7 +117,7 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Categories
             var dialog = await DialogService.ShowAsync<UpdateCategoriesDialog>("Update", dialogparams, options);
             using var result = dialog.Result;
             var dialogResult = await result;
-            if (!dialogResult.Cancelled)
+            if (!dialogResult.Canceled)
             {
                 var data = dialogResult.Data;
                 var client = ClientFactory.CreateClient("API");
@@ -134,7 +136,10 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Categories
         public async void DisplayCreateDialog()
         {
             var parameters = new DialogParameters<CreateCategoryDialog>();
+            
             parameters.Add<IEnumerable<VM_Category>>(x => x.ParentCategories, ParentCategories);
+            parameters.Add<IEnumerable<VM_Gender>>(x => x.Genders, Genders);
+
             var dialog = await DialogService.ShowAsync<CreateCategoryDialog>("Crate Category", parameters);
             using var task = dialog.Result;
             var resultDialog = await task;
@@ -144,7 +149,7 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Categories
                 if (result)
                 {
                     Snackbar.Add("Created", Severity.Success);
-                    await _dataGrid.ReloadServerData();
+                    await _dataGrid.ReloadServerData(); 
                 }
                 else
                 {

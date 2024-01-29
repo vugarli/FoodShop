@@ -210,6 +210,10 @@ namespace FoodShop.Api.Migrations
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Value")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -299,7 +303,7 @@ namespace FoodShop.Api.Migrations
             modelBuilder.Entity("FoodShop.Domain.Entities.VariationOption", b =>
                 {
                     b.HasOne("FoodShop.Domain.Entities.Variation", "Variation")
-                        .WithMany()
+                        .WithMany("VariationOptions")
                         .HasForeignKey("VariationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -334,6 +338,8 @@ namespace FoodShop.Api.Migrations
 
             modelBuilder.Entity("FoodShop.Domain.Entities.Variation", b =>
                 {
+                    b.Navigation("VariationOptions");
+
                     b.Navigation("VaritaionCategories");
                 });
 #pragma warning restore 612, 618

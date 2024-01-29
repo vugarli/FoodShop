@@ -12,7 +12,6 @@ namespace FoodShop.Admin.WebApp.Client.Services
 {
     public class CategoryService : ICategoryService
     {
-
         HttpClient client;
         public CategoryService(IHttpClientFactory httpClientFactory)
         {
@@ -41,8 +40,8 @@ namespace FoodShop.Admin.WebApp.Client.Services
 
         public async Task<IEnumerable<VM_Category>> GetCategories()
         {
-            var categories = await client.GetFromJsonAsync<IEnumerable<VM_Category>>("/categories");
-            return categories;
+            var categories = await client.GetFromJsonAsync<QueryResult<VM_Category>>("/categories");
+            return categories.Data;
         }
 
         public async Task<VM_Category> GetCategoryById(Guid id)
@@ -68,5 +67,12 @@ namespace FoodShop.Admin.WebApp.Client.Services
             var result = await client.PostAsJsonAsync("/categories",category);
             return result.IsSuccessStatusCode;
         }
+
+        public async Task<IEnumerable<VM_Gender>> GetGenders()
+        {
+            var result = await client.GetFromJsonAsync<IEnumerable<VM_Gender>>("/basecategorydiscriminators");
+            return result;
+        }
+
     }
 }

@@ -4,6 +4,10 @@
     {
         public Guid Id { get; set; }
         public Guid? ParentId { get; set; }
+        
+        public Guid? BaseCategoryDiscriminatorId { get; set; }
+        public string? BaseCategoryDiscriminatorName { get; set; }
+
         public string ParentName { get; set; }
         public string Name { get; set; }
     }

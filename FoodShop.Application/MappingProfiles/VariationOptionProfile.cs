@@ -18,12 +18,20 @@ public class VariationOptionProfile : Profile
             .ForMember(dto=>dto.VariationName,opt=>opt.MapFrom(vo=>vo.Variation.Name));
 
 
-        CreateMap<VariationOptionDto, VariationOption>();
+        CreateMap<VariationOptionDto, VariationOption>()
+            .ConstructUsing(c => new VariationOption(Guid.NewGuid(), c.VariationId, c.Value, c.Name));
+        
+        
+        CreateMap<VariationVariationOptionCreateDto, VariationOption>()
+            .ConstructUsing(c => new VariationOption(Guid.NewGuid(), c.Value, c.Name));
+        
+        CreateMap<VariationUpdateVariationOptionDto, VariationOption>()
+            .ConstructUsing(c => new VariationOption(Guid.NewGuid(), c.Value, c.Name));
 
         CreateMap<CreateVariationOptionCommand, VariationOption>()
-            .ConstructUsing(c=>new VariationOption(Guid.NewGuid(),c.VariationId,c.Value));
+            .ConstructUsing(c=>new VariationOption(Guid.NewGuid(),c.VariationId,c.Value,c.Name));
         
         CreateMap<UpdateVariationOptionCommand, VariationOption>()
-            .ConstructUsing(c=>new VariationOption(Guid.NewGuid(),c.VariationId,c.Value));
+            .ConstructUsing(c=>new VariationOption(Guid.NewGuid(),c.VariationId,c.Value,c.Name));
     }
 }

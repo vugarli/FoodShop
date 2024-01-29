@@ -133,10 +133,10 @@ namespace FoodShop.Infrastructure.TestData
 
 			var variationOptions = new VariationOption[]
 			{
-				new VariationOption(Guid.NewGuid(),variations[0].Id,"S"),
-				new VariationOption(Guid.NewGuid(),variations[0].Id,"M"),
-				new VariationOption(Guid.NewGuid(),variations[0].Id,"L"),
-				new VariationOption(Guid.NewGuid(),variations[0].Id,"XL"),
+				new VariationOption(Guid.NewGuid(),variations[0].Id,"Small","S"),
+				new VariationOption(Guid.NewGuid(),variations[0].Id,"Medium","M"),
+				new VariationOption(Guid.NewGuid(),variations[0].Id,"Large","L"),
+				new VariationOption(Guid.NewGuid(),variations[0].Id,"XL","XL"),
 			};
 
 			dbContext.Set<VariationOption>().AddRange(variationOptions);

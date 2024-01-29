@@ -27,7 +27,6 @@ namespace FoodShop.Admin.WebApp.Client.Pages
         IFileUploadService fileUploadService { get; set; }
 
 
-
         public async Task Create()
         {
             if (SelectedFile != null)

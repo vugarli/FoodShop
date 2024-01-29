@@ -1,0 +1,46 @@
+﻿@inherits UpdateVariationDialogBase
+@using MudBlazor
+@using Microsoft.AspNetCore.Components.Forms
+
+<MudDialog>
+
+    <DialogContent>
+
+        <EditForm Model="UpdateModel" @ref="_editForm" OnValidSubmit="Update">
+
+            <Blazored.FluentValidation.FluentValidationValidator></Blazored.FluentValidation.FluentValidationValidator>
+            <ValidationSummary></ValidationSummary>
+
+            <MudPaper Class="d-flex flex-column p-5 mb-2" Elevation="4">
+
+                <MudTextField @bind-Value="UpdateModel.Name" For="@(() => UpdateModel.Name)" Label="Name" Variant="Variant.Text"></MudTextField>
+
+                <MudButton @onclick="AddVariationOption" Color="MudBlazor.Color.Success">Add Variaiton Option</MudButton>
+
+                <MudStack Row="false" Spacing="3">
+
+                    @foreach (var variationoption in UpdateModel.VariationOptions)
+                    {
+                        <MudPaper Class="pa-3">
+                            <MudStack Row="true" Spacing="2">
+
+                                <MudTextField For="@(() => variationoption.Value)" @bind-Value="variationoption.Value" Label="Variation Option Value"></MudTextField>
+
+                                <MudTextField For="@(() => variationoption.Name)" @bind-Value="variationoption.Name" Label="Variation Option Name"></MudTextField>
+
+                                <MudButton @onclick="@(a=>DeleteVariationOption(variationoption))"><MudIcon Icon="@Icons.Filled.Delete"></MudIcon></MudButton>
+                            </MudStack>
+                        </MudPaper>
+                    }
+
+                </MudStack>
+
+
+            </MudPaper>
+            <MudBlazor.MudButton ButtonType="ButtonType.Submit" Color="MudBlazor.Color.Success">Update</MudBlazor.MudButton>
+            <MudBlazor.MudButton @onclick="Cancel" Color="MudBlazor.Color.Error">Cancel</MudBlazor.MudButton>
+        </EditForm>
+
+    </DialogContent>
+
+</MudDialog>
