@@ -33,6 +33,16 @@
             }
         </MudSelect>
 
+                <MudSelect T="Guid" MultiSelection="true"  Label="Variation" Variant="Variant.Filled" @bind-SelectedValues="CreateModel.Variations">
+                    @if (Variations != null)
+                        @foreach (var variation in Variations)
+                        {
+                            <MudSelectItem T="Guid" Value="variation.Id">
+                                @variation.Name
+                            </MudSelectItem>
+                        }
+                </MudSelect>
+
 
                 @if (CreateModel.ParentId != null)
                 {   

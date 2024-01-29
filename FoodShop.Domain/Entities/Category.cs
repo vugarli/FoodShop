@@ -20,6 +20,12 @@ public class Category : Entity
     public BaseCategoryDiscriminator? BaseCategoryDiscriminator { get; set; }
     public Guid? BaseCategoryDiscriminatorId { get; private set; }
 
-    public IEnumerable<VariationCategory> VaritaionCategories { get; private set; }
+    public ICollection<VariationCategory> VaritaionCategories { get; private set; } = new List<VariationCategory>();
+
+    public void AddVariation(Guid variationId)
+    {
+        var relation = new VariationCategory(Id,variationId);
+        VaritaionCategories.Add(relation);
+    }
     
 }

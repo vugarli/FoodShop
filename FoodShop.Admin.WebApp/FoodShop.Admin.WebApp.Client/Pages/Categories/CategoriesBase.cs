@@ -5,6 +5,7 @@ using FoodShop.Admin.WebApp.Client.Pages.Categories.ViewModels;
 using FoodShop.Admin.WebApp.Client.Pages.Products.Dialogs.Create;
 using FoodShop.Admin.WebApp.Client.Pages.Products.Dialogs.Update;
 using FoodShop.Admin.WebApp.Client.Pages.Products.ViewModels;
+using FoodShop.Admin.WebApp.Client.Pages.Variations.ViewModels;
 using FoodShop.Application.Categories;
 using FoodShop.Application.Queries;
 using Microsoft.AspNetCore.Components;
@@ -20,6 +21,8 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Categories
 
         [Inject]
         public ICategoryService CategoryService { get; set; }
+        [Inject]
+        public IVariationService VariationService { get; set; }
 
         [Inject]
         public ISnackbar Snackbar { get; set; }
@@ -34,6 +37,7 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Categories
 
         public List<VM_Category> ParentCategories { get; set; }
         public List<VM_Gender> Genders { get; set; }
+        public List<VM_Variation> Variations{ get; set; }
 
 
         public MudForm form;
@@ -47,6 +51,7 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Categories
         {
             ParentCategories = (await CategoryService.GetParentCategories()).ToList();
             Genders = (await CategoryService.GetGenders()).ToList();
+            Variations = (await VariationService.GetVariations()).ToList();
             
         }
 
@@ -139,6 +144,7 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Categories
             
             parameters.Add<IEnumerable<VM_Category>>(x => x.ParentCategories, ParentCategories);
             parameters.Add<IEnumerable<VM_Gender>>(x => x.Genders, Genders);
+            parameters.Add<IEnumerable<VM_Variation>>(x => x.Variations, Variations);
 
             var dialog = await DialogService.ShowAsync<CreateCategoryDialog>("Crate Category", parameters);
             using var task = dialog.Result;

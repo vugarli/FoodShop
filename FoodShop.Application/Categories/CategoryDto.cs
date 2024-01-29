@@ -1,4 +1,6 @@
-﻿namespace FoodShop.Application.Categories;
+﻿using FoodShop.Application.Variations;
+
+namespace FoodShop.Application.Categories;
 
 public class CategoryDto
 {
@@ -8,6 +10,6 @@ public class CategoryDto
     public Nullable<Guid> ParentId { get; set; }
 
     public Nullable<Guid> BaseCategoryDiscriminatorId { get; set; }
-    public string BaseCategoryDiscriminatorName { get; set; }
-
+    public string? BaseCategoryDiscriminatorName { get; set; }
+    public IEnumerable<VariationDto>? Variations { get; set; }
 }

@@ -50,8 +50,8 @@ namespace FoodShop.Admin.WebApp.Client.Services
 
         public async Task<IEnumerable<VM_Variation>> GetVariations()
         {
-            var result = await httpClient.GetFromJsonAsync<IEnumerable<VM_Variation>>("/variations");
-            return result;
+            var result = await httpClient.GetFromJsonAsync<QueryResult<VM_Variation>>("/variations");
+            return result.Data;
         }
 
         public async Task<bool> UpdateVariation(VM_UpdateVariation model)

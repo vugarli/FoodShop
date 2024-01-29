@@ -75,6 +75,6 @@ public class CategoryRepository : ICategoryRepository
 
     public async Task<IEnumerable<Category>> GetCategoriesWithFiltersAsync(params IFilter<Category>[] filters)
     {
-        return await _dbContext.Set<Category>().Include(c=>c.ParentCategory).Include(c=>c.BaseCategoryDiscriminator).ApplyFilters(filters).ToListAsync();
+        return await _dbContext.Set<Category>().Include(c=>c.ParentCategory).Include(c=>c.BaseCategoryDiscriminator).Include(c=>c.VaritaionCategories).ThenInclude(c=>c.Variation).ApplyFilters(filters).ToListAsync();
     }
 }

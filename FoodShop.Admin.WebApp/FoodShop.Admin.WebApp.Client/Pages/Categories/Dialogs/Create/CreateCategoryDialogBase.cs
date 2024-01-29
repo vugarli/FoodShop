@@ -1,5 +1,6 @@
 ﻿using FoodShop.Admin.WebApp.Client.Components.FormValidation;
 using FoodShop.Admin.WebApp.Client.Pages.Categories.ViewModels;
+using FoodShop.Admin.WebApp.Client.Pages.Variations.ViewModels;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Logging;
@@ -22,6 +23,9 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Categories.Dialogs.Create
 
         [Parameter]
         public List<VM_Gender> Genders { get; set; }
+        [Parameter]
+        public List<VM_Variation> Variations { get; set; }
+
 
         protected CustomValidationComponent _customValidator { get; set; }
 
