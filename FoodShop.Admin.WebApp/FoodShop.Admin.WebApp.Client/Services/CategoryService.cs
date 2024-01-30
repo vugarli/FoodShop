@@ -77,7 +77,7 @@ namespace FoodShop.Admin.WebApp.Client.Services
 
         public async Task<bool> RemoveVariation(Guid categoryId, Guid variationId)
         {
-            var result = await client.DeleteAsync($"/categories/{categoryId}/{variationId}");
+            var result = await client.DeleteAsync($"/categories/{categoryId}/variations/{variationId}");
             return result.IsSuccessStatusCode;
         }
 

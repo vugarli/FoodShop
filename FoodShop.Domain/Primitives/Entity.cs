@@ -29,7 +29,7 @@ public abstract class Entity : IEquatable<Entity>
     }
     public static bool operator!=(Entity? first, Entity? second )
     {
-        if (first is null || second is null) return false;
+        //if (first is null || second is null) return false;
         return !(first == second);
     }
     public bool Equals(Entity? other)

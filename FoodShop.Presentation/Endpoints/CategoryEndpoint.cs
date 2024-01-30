@@ -1,4 +1,5 @@
 ﻿using FoodShop.Application.Categories;
+using FoodShop.Application.Categories.Commands.AddVariation;
 using FoodShop.Application.Categories.Commands.CreateCategory;
 using FoodShop.Application.Categories.Commands.DeleteCategories;
 using FoodShop.Application.Categories.Commands.DeleteCategory;
@@ -7,6 +8,7 @@ using FoodShop.Application.Categories.Commands.UpdateCategory;
 using FoodShop.Application.Categories.Queries.GetCategories;
 using FoodShop.Application.Categories.Queries.GetCategoryById;
 using FoodShop.Application.Categories.Queries.GetParentCategories;
+using FoodShop.Application.Categories.Queries.GetVariations;
 using FoodShop.Application.Filters;
 using FoodShop.Application.Products;
 using FoodShop.Application.Products.Commands.CreateProduct;
@@ -112,6 +114,25 @@ public static class CategoryEndpoint
                 await sender.Send(new RemoveVariationCommand(id,variationId));
                 return Results.Ok();
             }).WithName("RemoveVariaiton");
+
+        group.MapGet("/{id:guid}/variations",
+            async (
+                [FromServices] ISender sender,
+                [FromRoute] Guid id) =>
+            {
+                var result = await sender.Send(new GetVariationsQuery(id));
+                return Results.Ok(result);
+            }).WithName("GetVariaitons");
+
+        group.MapPost("/{id:guid}/variations/{variationId:guid}",
+            async (
+                [FromServices] ISender sender,
+                [FromRoute] Guid id,
+                [FromRoute] Guid variationId) =>
+            {
+                await sender.Send(new CategoryAddVariationCommand(id,variationId));
+                return Results.Ok();
+            }).WithName("AddVariaiton");
 
         return group;
 

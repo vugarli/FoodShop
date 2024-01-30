@@ -17,7 +17,7 @@
                 <MudTextField @bind-Value="UpdateModel.Name" Variant="Variant.Text" Label="Name"></MudTextField>
 
                 <MudChipSet AllClosable="true">
-                    @foreach (var variation in Variations)
+                    @foreach (var variation in OwnedVariations)
                     {
                         <MudChip OnClose="@(async a =>await RemoveVariation(variation.Id))" Text="@variation.Name"></MudChip>
                     }
@@ -54,7 +54,7 @@
     </DialogContent>
 
     <DialogActions>
-        <MudButton @onclick="Create" Color="Color.Success">Create</MudButton>
+        <MudButton @onclick="Create" Color="Color.Success">Update</MudButton>
         <MudButton @onclick="Cancel" Color="Color.Error">Cancel</MudButton>
     </DialogActions>
 

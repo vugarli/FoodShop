@@ -61,6 +61,7 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Categories.Dialogs.Update
         {
             await CategoryService.AddVariation(UpdateModel.Id, SelectedVariation);
             await LoadVariations();
+            SelectedVariation = default;
         }
 
         public async Task LoadVariations()

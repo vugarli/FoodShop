@@ -39,17 +39,19 @@ public class CategoryRepository : ICategoryRepository
 
     public async Task CreateCategoryAsync(Category category)
     {
-            if(category.Variations != null)
-
-            foreach(var variation in category.Variations)
-            {
-                _dbContext.Attach(variation);
-                _dbContext.Entry(variation).State = EntityState.Unchanged;
-            }
-
+        IfVariationsAddedToCategory(category);
         await _dbContext.Set<Category>().AddAsync(category);
+    }
 
 
+    public void IfVariationsAddedToCategory(Category category)
+    {
+        if (category.Variations != null)
+        foreach (var variation in category.Variations)
+        {
+            _dbContext.Attach(variation);
+            _dbContext.Entry(variation).State = EntityState.Unchanged;
+        }
     }
 
     public async Task<bool> CategoryExistsAsync(Guid id,CancellationToken cancellationToken)

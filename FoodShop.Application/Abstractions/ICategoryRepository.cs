@@ -8,7 +8,7 @@ public interface ICategoryRepository
     public Task<IEnumerable<Category>> GetCategoriesAsync();
     public Task<IEnumerable<Category>> GetParentCategoriesAsync();
     public Task<IEnumerable<Category>> GetPaginatedCategoriesAsync(int page,int per_page);
-
+    public void IfVariationsAddedToCategory(Category category);
     public Task<Category> GetCategoryByIdAsync(Guid id);
 
     public Task<Category> UpdateCategoryAsync(Category category);

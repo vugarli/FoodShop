@@ -20,7 +20,17 @@ public class CategoryProfile : Profile
         CreateMap<CategoryDto, Category>();
 
         CreateMap<CreateCategoryCommand, Category>()
-            .ConstructUsing(c=>new Category(Guid.NewGuid(),c.Name,c.ParentId,c.BaseDiscriminatorId));
+            .ConstructUsing(c=>new Category(Guid.NewGuid(),c.Name,c.ParentId,c.BaseDiscriminatorId))
+            .ForMember(c=>c.Variations,opt=>opt.Ignore())
+            .AfterMap( (src,dest) => {
+                if (src.Variations != null)
+                {
+                    foreach (var variation in src.Variations)
+                    {
+                        dest.AddVariation(variation);
+                    }
+                }
+            });
 
         CreateMap<UpdateCategoryCommand, Category>()
             .ConstructUsing(c=>new Category(Guid.NewGuid(),c.Name,c.ParentId,c.BaseDiscriminatorId));

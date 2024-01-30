@@ -11,6 +11,6 @@ public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCo
         RuleFor(c => c.Variations).MustAsync(async (a,cancel) =>
         {
             return await variationRepository.VariationsExistsAsync(a,cancel);
-        }).WithMessage("One or more variations not found!");
+        }).When(c=>c.Variations != null).WithMessage("One or more variations not found!");
     }
 }
