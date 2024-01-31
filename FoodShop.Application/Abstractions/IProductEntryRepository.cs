@@ -28,4 +28,7 @@ public interface IProductEntryRepository
         Specification<ProductEntry> specification,
         int count);
 
+    public Task<int> CountProductEntriesBySpecification(
+        Specification<ProductEntry> specification);
+
 }

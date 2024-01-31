@@ -25,11 +25,13 @@ public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, IQu
     public async Task<IQueryResult> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
     {
         var spec = new CategoriesByFiltersSpecification(request.filters);
+        var specWithoutPagination = new CategoriesByFiltersSpecification(request.filters.Where(f => !(f is IPaginationFilter)).ToArray());
 
         var categories = await _repository.GetCategoriesBySpecification(spec);
 
         var dtos = _mapper.Map<IEnumerable<CategoryDto>>(categories);
-        var count = await _repository.GetCategoriesCountAsync();
+
+        var count = await _repository.CountCategoriesBySpecification(specWithoutPagination);
 
         //var pModel = new PaginatedQueryResult<CategoryDto>(dtos, request.page, request.per_page, count);
 

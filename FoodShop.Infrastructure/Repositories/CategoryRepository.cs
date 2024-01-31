@@ -70,4 +70,9 @@ public class CategoryRepository : ICategoryRepository
         return await _dbContext.Set<Category>().Include(c=>c.Variations)
             .AnyAsync(c=>c.Id == categoryId && c.Variations.Any(v=>v.Id == variationId));
     }
+
+    public async Task<int> CountCategoriesBySpecification(Specification<Category> specification)
+    {
+        return await ApplySpecification(specification).CountAsync();
+    }
 }

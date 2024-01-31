@@ -15,5 +15,6 @@ public interface ICategoryRepository
     public Task<bool> CheckCategoryBySpecification(Specification<Category> specification);
     public Task DeleteCategoriesBySpecification(Specification<Category> specification);
     public Task<bool> CheckCategoriesBySpecification(Specification<Category> specification, int count);
+    public Task<int> CountCategoriesBySpecification(Specification<Category> specification);
     public Task<int> GetCategoriesCountAsync();
 }

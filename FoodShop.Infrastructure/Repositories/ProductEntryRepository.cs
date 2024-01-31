@@ -55,5 +55,7 @@ public class ProductEntryRepository : IProductEntryRepository
         _context.Entry(productEntry).State = EntityState.Modified;
         return productEntry;
     }
-      
+
+    public async Task<int> CountProductEntriesBySpecification(Specification<ProductEntry> specification)
+    => await ApplySpecification(specification).CountAsync();
 }

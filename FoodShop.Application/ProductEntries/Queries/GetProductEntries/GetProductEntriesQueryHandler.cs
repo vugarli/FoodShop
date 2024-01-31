@@ -22,13 +22,14 @@ public class GetProductEntriesQueryHandler : IRequestHandler<GetProductEntriesQu
     public async Task<IQueryResult> Handle(GetProductEntriesQuery request, CancellationToken cancellationToken)
     {
         var spec = new ProductEntriesByFiltersSpecification(request.filters);
+        var specWithoutPagination = new ProductEntriesByFiltersSpecification(request.filters.Where(f => !(f is IPaginationFilter)).ToArray());
 
         var productEntries = await _repository.GetProductEntriesBySpecification(spec);
 
         var dtos = _mapper.Map<IEnumerable<ProductEntryDto>>(productEntries);
 
 
-        var count = productEntries.Count();
+        var count = await _repository.CountProductEntriesBySpecification(specWithoutPagination);
         
         //var count = await _repository.GetProductEntriesWithFiltersCountAsync(request.filters.Where(f => !(f is IPaginationFilter)).ToArray());
 
