@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using FoodShop.Application.Abstractions;
+using FoodShop.Application.Specifications.Products;
 using FoodShop.Domain.Abstractions;
 using MediatR;
 
@@ -18,6 +19,7 @@ public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand>
     
     public async Task Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {
-        await _repository.DeleteProductByIdAsync(request.Id);
+        var spec = new ProductByIdSpecification(request.Id);
+        await _repository.DeleteProductsBySpecification(spec);
     }
 }

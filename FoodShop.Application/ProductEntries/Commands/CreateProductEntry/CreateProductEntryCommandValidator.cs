@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FoodShop.Application.Abstractions;
+using FoodShop.Application.Specifications.Products;
 
 namespace FoodShop.Application.ProductEntries.Commands.CreateProductEntry;
 
@@ -9,7 +10,11 @@ public class CreateProductEntryCommandValidator : AbstractValidator<CreateProduc
     {
         RuleFor(pe => pe.ProductId).NotEmpty();
         RuleFor(pe => pe.ProductId)
-            .MustAsync(async (id, cancel) => await productRepository.ProductExistsAsync(id, cancel))
+            .MustAsync(async (id, cancel) =>
+            {
+                var spec = new ProductByIdSpecification(id);
+                return await productRepository.CheckProductBySpecification(spec);
+            })
             .WithMessage("There is no match for given product id!");
         RuleFor(pe => pe.SKU).NotEmpty();
         RuleFor(pe => pe.Image).NotEmpty();

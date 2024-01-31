@@ -1,4 +1,5 @@
 ﻿using FoodShop.Application.Abstractions;
+using FoodShop.Application.Specifications.Products;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,9 @@ namespace FoodShop.Application.Products.Commands.DeleteProducts
         }
         public async Task Handle(DeleteProductsCommand request, CancellationToken cancellationToken)
         {
-            await _repository.DeleteProductsByIdsAsync(request.Ids);
+            var spec = new ProductsByIdsSpecification(request.Ids);
+
+            await _repository.DeleteProductsBySpecification(spec);
         }
     }
 }

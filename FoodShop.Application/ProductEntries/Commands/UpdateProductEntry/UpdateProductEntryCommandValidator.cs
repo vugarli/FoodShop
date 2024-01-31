@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using FoodShop.Application.Abstractions;
 using FoodShop.Application.Specifications.ProductEntries;
+using FoodShop.Application.Specifications.Products;
 
 namespace FoodShop.Application.ProductEntries.Commands.UpdateProductEntry;
 
@@ -17,7 +18,11 @@ public class UpdateProductEntryCommandValidator : AbstractValidator<UpdateProduc
             .WithMessage("There is no match for given ProductEntry id!");
         RuleFor(pe => pe.ProductId).NotEmpty();
         RuleFor(pe => pe.ProductId)
-            .MustAsync(async (id, cancel) => await productRepository.ProductExistsAsync(id, cancel))
+            .MustAsync(async (id, cancel) =>
+            {
+                var spec = new ProductByIdSpecification(id);
+                return await productRepository.CheckProductBySpecification(spec);
+            })
             .WithMessage("There is no match for given product id!");
         RuleFor(pe => pe.SKU).NotEmpty();
         RuleFor(pe => pe.Image).NotEmpty();

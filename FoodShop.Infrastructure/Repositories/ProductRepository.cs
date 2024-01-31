@@ -6,6 +6,8 @@ using FoodShop.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using FoodShop.Application.Filters;
 using Azure;
+using FoodShop.Application.Specifications;
+using FoodShop.Infrastructure.Specifications;
 
 namespace FoodShop.Infrastructure.Repositories;
 
@@ -19,27 +21,28 @@ public class ProductRepository : IProductRepository
         _context = context;
         _mapper = mapper;
     }
-    
+    private IQueryable<Product> ApplySpecification(Specification<Product> specification)
+    => SpecificationEvaluator.GetQuery(_context.Set<Product>(), specification);
+
+    public async Task<Product> GetProductBySpecification(Specification<Product> specification)
+    => await ApplySpecification(specification).FirstOrDefaultAsync();
+
+    public async Task<IEnumerable<Product>> GetProductsBySpecification(Specification<Product> specification)
+        => await ApplySpecification(specification).ToListAsync();
+
+    public async Task<bool> CheckProductBySpecification(Specification<Product> specification)
+    => await ApplySpecification(specification).AnyAsync();
+
+    public async Task DeleteProductsBySpecification(Specification<Product> specification)
+    => await ApplySpecification(specification).ExecuteDeleteAsync();
+
+    public async Task<bool> CheckProductsBySpecification(Specification<Product> specification, int count)
+    => await ApplySpecification(specification).CountAsync() == count;
+
     public async Task CreateProductAsync(Product product)
     {
         await _context.Products.AddAsync(product);
     }
-
-    public async Task<Product> GetProductByIdAsync(Guid id)
-    {
-        return await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
-    }
-
-    public async Task<IEnumerable<Product>> GetProductsAsync()
-    {
-        return await _context.Set<Product>().Include(p=>p.Category).ToListAsync();
-    }
-
-    public async Task<bool> ProductExistsAsync(Guid Id,CancellationToken cancellationToken)
-    {
-        return await _context.Products.AnyAsync(p => p.Id == Id,cancellationToken);
-    }
-
     public async Task<Product> UpdateProductAsync(Product product)
     {
         _context.Attach(product);
@@ -47,41 +50,6 @@ public class ProductRepository : IProductRepository
         return product;
     }
 
-    public async Task DeleteProductByIdAsync(Guid Id)
-    {
-        await _context.Products.Where(p => p.Id == Id).ExecuteDeleteAsync();
-    }
-
-    public async Task<IEnumerable<Product>> GetPaginatedProductsAsync(int page, int per_page)
-    {
-        return await _context.Set<Product>().Include(p => p.Category).AddPagination(page,per_page).ToListAsync();
-    }
-
-    public async Task<int> GetProductsCountAsync()
-    {
-        return await _context.Set<Product>().CountAsync();
-    }
-    
-    public async Task<int> GetFilteredProductsCountAsync(params IFilter<Product>[] filters)
-    {
-        return await _context.Set<Product>().ApplyFilters(filters).CountAsync();
-    }
-
-    public async Task DeleteProductsByIdsAsync(IEnumerable<Guid> Ids)
-    {
-        await _context.Set<Product>().Where(p => Ids.Contains(p.Id)).ExecuteDeleteAsync();
-    }
-
-    public async Task<bool> ProductsExistsAsync(IEnumerable<Guid> Ids, CancellationToken cancellationToken)
-    {
-        var count = await _context.Set<Product>().Where(x => Ids.Contains(x.Id)).CountAsync();
-        return count == Ids.Count();
-    }
-
-    public async Task<IEnumerable<Product>> GetFilteredProductsAsync(params IFilter<Product>[] filters)
-    {
-        return await _context.Set<Product>().Include(p=>p.Category).ApplyFilters<Product>(filters).ToListAsync();
-    }
-
-
+    public async Task<int> CountProductsBySpecification(Specification<Product> specification)
+    => await ApplySpecification(specification).CountAsync();
 }

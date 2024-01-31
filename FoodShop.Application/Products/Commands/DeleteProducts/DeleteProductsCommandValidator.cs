@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FoodShop.Application.Abstractions;
+using FoodShop.Application.Specifications.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,11 @@ namespace FoodShop.Application.Products.Commands.DeleteProducts
     {
         public DeleteProductsCommandValidator(IProductRepository repository)
         {
-            RuleFor(x=>x.Ids).MustAsync(async (ids,cancel)=>await repository.ProductsExistsAsync(ids,cancel))
+            RuleFor(x=>x.Ids).MustAsync(async (ids,cancel)=>
+            {
+            var spec = new ProductsByIdsSpecification(ids);
+                return await repository.CheckProductsBySpecification(spec,ids.Count());
+            })
                 .WithMessage("One or more resources are not found!");
         }
     }

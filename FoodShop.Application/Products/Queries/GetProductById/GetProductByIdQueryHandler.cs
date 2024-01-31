@@ -1,4 +1,5 @@
 ﻿using FoodShop.Application.Abstractions;
+using FoodShop.Application.Specifications.Products;
 using FoodShop.Domain.Entities;
 using MediatR;
 
@@ -15,6 +16,7 @@ public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery,Pr
     
     public async Task<Product> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
     {
-        return await _repository.GetProductByIdAsync(request.Id);
+        var spec = new ProductByIdSpecification(request.Id);
+        return await _repository.GetProductBySpecification(spec);
     }
 }
