@@ -20,7 +20,6 @@ public class CategoryRepository : ICategoryRepository
     private IQueryable<Category> ApplySpecification(Specification<Category> specification)
         => SpecificationEvaluator.GetQuery(_dbContext.Set<Category>(),specification);
 
-
     public async Task<Category> GetCategoryBySpecification(Specification<Category> specification)
         => await ApplySpecification(specification).FirstOrDefaultAsync();
     
@@ -32,7 +31,6 @@ public class CategoryRepository : ICategoryRepository
     
     public async Task<bool> CheckCategoriesBySpecification(Specification<Category> specification, int count)
         => await ApplySpecification(specification).CountAsync() == count;
-
 
     public async Task DeleteCategoriesBySpecification(Specification<Category> specification)
         => await ApplySpecification(specification).ExecuteDeleteAsync();
@@ -66,12 +64,10 @@ public class CategoryRepository : ICategoryRepository
         return await _dbContext.Set<Category>().CountAsync();
     }
 
-    // delegate this task to variaiton repo
+    //TODO delegate this task to variaiton repo
     public async Task<bool> IsVariationBelongsToCategoryAsync(Guid categoryId, Guid variationId)
     {
         return await _dbContext.Set<Category>().Include(c=>c.Variations)
             .AnyAsync(c=>c.Id == categoryId && c.Variations.Any(v=>v.Id == variationId));
     }
-
-    
 }

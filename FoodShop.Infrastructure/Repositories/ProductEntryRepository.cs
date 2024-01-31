@@ -1,8 +1,11 @@
 ﻿using FoodShop.Application.Abstractions;
 using FoodShop.Application.Filters;
 using FoodShop.Application.Queries;
+using FoodShop.Application.Specifications;
 using FoodShop.Domain.Entities;
+using FoodShop.Infrastructure.Specifications;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata.Ecma335;
 
 namespace FoodShop.Infrastructure.Repositories;
 
@@ -14,11 +17,31 @@ public class ProductEntryRepository : IProductEntryRepository
     {
         _context = context;
     }
-    
-    public async Task DeleteProductEntryAsync(Guid id)
-    {
-        await _context.Set<ProductEntry>().Where(pe => pe.Id == id).ExecuteDeleteAsync();
-    }
+
+    private IQueryable<ProductEntry> ApplySpecification(Specification<ProductEntry> specification)
+     => SpecificationEvaluator.GetQuery(_context.Set<ProductEntry>(), specification);
+
+
+    public async Task<ProductEntry> GetProductEntryBySpecification(Specification<ProductEntry> specification)
+    => await ApplySpecification(specification).FirstOrDefaultAsync();
+
+    public async Task<IEnumerable<ProductEntry>> GetProductEntriesBySpecification(
+        Specification<ProductEntry> specification)
+        => await ApplySpecification(specification).ToListAsync();
+
+    public async Task<bool> CheckProductEntryBySpecification(
+        Specification<ProductEntry> specification)
+        => await ApplySpecification(specification).AnyAsync();
+
+
+    public async Task DeleteProductEntriesBySpecification(
+        Specification<ProductEntry> specification)
+        => await ApplySpecification(specification).ExecuteDeleteAsync();
+
+    public async Task<bool> CheckProductEntriesBySpecification(
+        Specification<ProductEntry> specification,
+        int count)
+        => await ApplySpecification(specification).CountAsync() == count;
 
     public async Task<ProductEntry> CreateProductEntryAsync(ProductEntry productEntry)
     {
@@ -32,55 +55,5 @@ public class ProductEntryRepository : IProductEntryRepository
         _context.Entry(productEntry).State = EntityState.Modified;
         return productEntry;
     }
-
-    public async Task<ProductEntry> GetProductEntryByIdAsync(Guid id)
-    {
-        var productEntry = await _context.Set<ProductEntry>()
-            .Include(pe=>pe.Product)
-            .FirstOrDefaultAsync(pe => pe.Id == id);
-        return productEntry;
-    }
-
-    public async Task<IEnumerable<ProductEntry>> GetProductEntriesAsync()
-    {
-        var pes = await _context.Set<ProductEntry>()
-            .ToListAsync();
-        return pes;
-    }
-
-    public async Task<bool> ProductEntryExistsAsync(Guid id,CancellationToken cancellationToken)
-    {
-        return await _context.Set<ProductEntry>().AnyAsync(pe => pe.Id == id,cancellationToken);
-    }
-
-    public async Task<IEnumerable<ProductEntry>> GetPaginatedProductEntriesAsync(int page, int per_page)
-    {
-        return await _context.Set<ProductEntry>().AddPagination(page, per_page).ToListAsync();
-    }
-
-    public async Task<int> GetProductEntriesCountAsync()
-    {
-        return await _context.Set<ProductEntry>().CountAsync();
-    }
-
-    public async Task<IEnumerable<ProductEntry>> GetProductEntriesWithFiltersAsync(params IFilter<ProductEntry>[] filters)
-    {
-        return await _context.Set<ProductEntry>().Include(pe => pe.Product).ApplyFilters(filters).ToListAsync();
-    }
-
-    public async Task<int> GetProductEntriesWithFiltersCountAsync(params IFilter<ProductEntry>[] filters)
-    {
-        return await _context.Set<ProductEntry>().Include(pe=>pe.VariationOptions).ApplyFilters(filters).CountAsync();
-    }
-
-    public async Task DeleteProductEntriesAsync(IEnumerable<Guid> Ids)
-    {
-        await _context.Set<ProductEntry>().Where(pe=>Ids.Contains(pe.Id)).ExecuteDeleteAsync();
-    }
-
-    public async Task<bool> ProductEntriesExistAsync(IEnumerable<Guid> Ids, CancellationToken cancellationToken)
-    {
-        var count = await _context.Set<ProductEntry>().Where(x => Ids.Contains(x.Id)).CountAsync(cancellationToken);
-        return count == Ids.Count();
-    }
+      
 }

@@ -2,6 +2,7 @@
 using FoodShop.Application.Abstractions;
 using FoodShop.Application.Filters;
 using FoodShop.Application.Queries;
+using FoodShop.Application.Specifications.ProductEntries;
 using FoodShop.Domain.Entities;
 using MediatR;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -20,9 +21,17 @@ public class GetProductEntriesQueryHandler : IRequestHandler<GetProductEntriesQu
     }
     public async Task<IQueryResult> Handle(GetProductEntriesQuery request, CancellationToken cancellationToken)
     {
-        var productEntries = await _repository.GetProductEntriesWithFiltersAsync(request.filters);
+        var spec = new ProductEntriesByFiltersSpecification(request.filters);
+
+        var productEntries = await _repository.GetProductEntriesBySpecification(spec);
+
         var dtos = _mapper.Map<IEnumerable<ProductEntryDto>>(productEntries);
-        var count = await _repository.GetProductEntriesWithFiltersCountAsync(request.filters.Where(f => !(f is IPaginationFilter)).ToArray());
+
+
+        var count = productEntries.Count();
+        
+        //var count = await _repository.GetProductEntriesWithFiltersCountAsync(request.filters.Where(f => !(f is IPaginationFilter)).ToArray());
+
 
         IQueryResult queryResult;
 

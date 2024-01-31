@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FoodShop.Application.Abstractions;
+using FoodShop.Application.Specifications.ProductEntries;
 using MediatR;
 
 namespace FoodShop.Application.ProductEntries.Queries.GetProductEntryById;
@@ -17,7 +18,9 @@ public class GetProductEntryByIdQueryHandler : IRequestHandler<GetProductEntryBy
     
     public async Task<ProductEntryDto> Handle(GetProductEntryByIdQuery request, CancellationToken cancellationToken)
     {
-        var productEntry = await _repository.GetProductEntryByIdAsync(request.Id);
+        var spec = new ProductEntryByIdWithProductSpecification(request.Id);
+
+        var productEntry = await _repository.GetProductEntryBySpecification(spec);
         var dto = _mapper.Map<ProductEntryDto>(productEntry);
         return dto;
     }

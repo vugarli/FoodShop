@@ -1,4 +1,5 @@
 ﻿using FoodShop.Application.Abstractions;
+using FoodShop.Application.Specifications.ProductEntries;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,8 @@ namespace FoodShop.Application.ProductEntries.Commands.DeleteProductEntries
 
         public async Task Handle(DeleteProductEntriesCommand request, CancellationToken cancellationToken)
         {
-            await _productEntryRepository.DeleteProductEntriesAsync(request.Ids);
+            var spec = new ProductEntriesByIdsSpecification(request.Ids);
+            await _productEntryRepository.DeleteProductEntriesBySpecification(spec);
         }
     }
 }
