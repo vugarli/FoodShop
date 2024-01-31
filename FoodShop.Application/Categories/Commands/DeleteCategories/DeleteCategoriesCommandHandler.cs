@@ -1,4 +1,5 @@
 ﻿using FoodShop.Application.Abstractions;
+using FoodShop.Application.Specifications.Categories;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,8 @@ namespace FoodShop.Application.Categories.Commands.DeleteCategories
         }
         public async Task Handle(DeleteCategoriesCommand request, CancellationToken cancellationToken)
         {
-            await _repository.DeleteCategoriesByIdsAsync(request.ids);
+            var spec = new CategoriesByIdsSpecification(request.ids);
+            await _repository.DeleteCategoriesBySpecification(spec);
         }
     }
 }

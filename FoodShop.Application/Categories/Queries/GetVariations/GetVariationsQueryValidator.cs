@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
 using FoodShop.Application.Abstractions;
+using FoodShop.Application.Categories.Queries.GetCategoryById;
+using FoodShop.Application.Specifications.Categories;
 using FoodShop.Application.Variations.Queries.GetVariations;
 using System;
 using System.Collections.Generic;
@@ -13,9 +15,10 @@ namespace FoodShop.Application.Categories.Queries.GetVariations
     {
         public GetVariationsQueryValidator(ICategoryRepository categoryRepository)
         {
-            RuleFor(c=>c.categoryId).MustAsync(async (query,cancel) =>
+            RuleFor(c=>c.categoryId).MustAsync(async (Id,cancel) =>
             {
-                return await categoryRepository.CategoryExistsAsync(query,cancel);
+                var spec = new CategoryByIdSpecification(Id);
+                return await categoryRepository.CheckCategoryBySpecification(spec);
             }).WithMessage("Category not found!");
         }
     }

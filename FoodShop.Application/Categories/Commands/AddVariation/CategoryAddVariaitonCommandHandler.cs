@@ -1,4 +1,5 @@
 ﻿using FoodShop.Application.Abstractions;
+using FoodShop.Application.Specifications.Categories;
 using FoodShop.Domain.Abstractions;
 using MediatR;
 using System;
@@ -21,9 +22,14 @@ namespace FoodShop.Application.Categories.Commands.AddVariation
         }
         public async Task Handle(CategoryAddVariationCommand request, CancellationToken cancellationToken)
         {
-            var category = await _categoryRepository.GetCategoryByIdAsync(request.CategoryId);
+            var spec = new CategoryByIdSpecification(request.CategoryId);
+
+            var category = await _categoryRepository.GetCategoryBySpecification(spec);
+
             category.AddVariation(request.VariationId);
+
              _categoryRepository.IfVariationsAddedToCategory(category);
+
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }

@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FoodShop.Application.Abstractions;
+using FoodShop.Application.Specifications.Categories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,8 @@ namespace FoodShop.Application.Categories.Commands.AddVariation
         {
             RuleFor(c => c.CategoryId).MustAsync(async (c, categoryId, cancel) =>
             {
-                return await categoryRepository.CategoryExistsAsync(c.CategoryId,cancel);
+                var spec = new CategoryByIdSpecification(c.CategoryId);
+                return await categoryRepository.CheckCategoryBySpecification(spec);
             }).WithMessage("Category not found!");
 
             RuleFor(c => c.VariationId).MustAsync(async (c, variationId, cancel) =>

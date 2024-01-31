@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FoodShop.Application.Abstractions;
 using FoodShop.Application.Queries;
+using FoodShop.Application.Specifications.Categories;
 using FoodShop.Application.Variations;
 using MediatR;
 using System;
@@ -24,7 +25,10 @@ namespace FoodShop.Application.Categories.Queries.GetVariations
 
         public async Task<QueryResult<VariationDto>> Handle(GetVariationsQuery request, CancellationToken cancellationToken)
         {
-            var category = await _categoryRepository.GetCategoryByIdAsync(request.categoryId);
+            var spec = new CategoryByIdWithVariationsSpecification(request.categoryId);
+
+            var category = await _categoryRepository.GetCategoryBySpecification(spec);
+
             var dtos = _mapper.Map<IEnumerable<VariationDto>>(category.Variations);
 
             var queryResult = new QueryResult<VariationDto>(dtos);

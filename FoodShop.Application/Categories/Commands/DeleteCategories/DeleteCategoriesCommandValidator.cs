@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FoodShop.Application.Abstractions;
+using FoodShop.Application.Specifications.Categories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,11 @@ namespace FoodShop.Application.Categories.Commands.DeleteCategories
     {
         public DeleteCategoriesCommandValidator(ICategoryRepository repository)
         {
-            RuleFor(x => x.ids).MustAsync(async (ids, cancel) => await repository.CategoriesExistsAsync(ids, cancel));   
+            RuleFor(x => x.ids).MustAsync(async (ids, cancel) =>
+            {
+                var spec = new CategoriesByIdsSpecification(ids);
+                return await repository.CheckCategoriesBySpecification(spec,ids.Count());
+            });
         }
     }
 }

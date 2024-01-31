@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FoodShop.Application.Abstractions;
+using FoodShop.Application.Specifications.Categories;
 
 namespace FoodShop.Application.Categories.Queries.GetCategoryById;
 
@@ -8,7 +9,12 @@ public class GetCategoryByIdQueryValidator : AbstractValidator<GetCategoryByIdQu
     public GetCategoryByIdQueryValidator(ICategoryRepository repository)
     {
         RuleFor(c => c.Id)
-            .MustAsync(async (id ,cancelationtoken)=> await repository.CategoryExistsAsync(id,cancelationtoken))
-            .WithMessage("Category with Provided id does not exist");
+            .MustAsync(async (id ,cancelationtoken) =>
+            {
+                var spec = new CategoryByIdSpecification(id);
+
+                return await repository.CheckCategoryBySpecification(spec);
+            
+            }).WithMessage("Category with Provided id does not exist");
     }
 }

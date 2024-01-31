@@ -1,4 +1,5 @@
 ﻿using FoodShop.Application.Abstractions;
+using FoodShop.Application.Specifications.Categories;
 using FoodShop.Domain.Abstractions;
 using MediatR;
 using System;
@@ -23,8 +24,12 @@ namespace FoodShop.Application.Categories.Commands.RemoveVariation
 
         public async Task Handle(RemoveVariationCommand request, CancellationToken cancellationToken)
         {
-            var category = await _categoryRepository.GetCategoryByIdAsync(request.CategoryId);
+            var spec = new CategoryByIdWithVariationsSpecification(request.CategoryId);
+
+            var category = await _categoryRepository.GetCategoryBySpecification(spec);
+            
             category.RemoveVariation(request.VariationId);
+
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }

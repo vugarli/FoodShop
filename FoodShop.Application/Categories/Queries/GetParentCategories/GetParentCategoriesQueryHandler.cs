@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FoodShop.Application.Abstractions;
+using FoodShop.Application.Specifications.Categories;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,10 @@ namespace FoodShop.Application.Categories.Queries.GetParentCategories
         }
         public async Task<IEnumerable<CategoryDto>> Handle(GetParentCategoriesQuery request, CancellationToken cancellationToken)
         {
-            var data= await _repository.GetParentCategoriesAsync();
+            var spec = new ParentCategorySpecification();
+
+            var data= await _repository.GetCategoriesBySpecification(spec);
+
             var result = _mapper.Map<IEnumerable<CategoryDto>>(data);
             return result;
         }

@@ -1,7 +1,9 @@
 ﻿using FoodShop.Application.Abstractions;
 using FoodShop.Application.Filters;
 using FoodShop.Application.Queries;
+using FoodShop.Application.Specifications;
 using FoodShop.Domain.Entities;
+using FoodShop.Infrastructure.Specifications;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodShop.Infrastructure.Repositories;
@@ -14,16 +16,27 @@ public class CategoryRepository : ICategoryRepository
     {
         _dbContext = dbContext;
     }
-    
-    public async Task<Category> GetCategoryByIdAsync(Guid id)
-    {
-        return await _dbContext.Set<Category>().Include(c=>c.ParentCategory).Include(c=>c.Variations).FirstOrDefaultAsync(c=>c.Id == id);
-    }
 
-    public async Task<IEnumerable<Category>> GetCategoriesAsync()
-    {
-        return await _dbContext.Set<Category>().Include(c => c.ParentCategory).ToListAsync();
-    }
+    private IQueryable<Category> ApplySpecification(Specification<Category> specification)
+        => SpecificationEvaluator.GetQuery(_dbContext.Set<Category>(),specification);
+
+
+    public async Task<Category> GetCategoryBySpecification(Specification<Category> specification)
+        => await ApplySpecification(specification).FirstOrDefaultAsync();
+    
+    public async Task<IEnumerable<Category>> GetCategoriesBySpecification(Specification<Category> specification)
+        => await ApplySpecification(specification).ToListAsync();
+
+    public async Task<bool> CheckCategoryBySpecification(Specification<Category> specification)
+        => await ApplySpecification(specification).AnyAsync();
+    
+    public async Task<bool> CheckCategoriesBySpecification(Specification<Category> specification, int count)
+        => await ApplySpecification(specification).CountAsync() == count;
+
+
+    public async Task DeleteCategoriesBySpecification(Specification<Category> specification)
+        => await ApplySpecification(specification).ExecuteDeleteAsync();
+
 
     public async Task<Category> UpdateCategoryAsync(Category category)
     {
@@ -32,17 +45,11 @@ public class CategoryRepository : ICategoryRepository
         return category;
     }
 
-    public async Task DeleteCategoryByIdAsync(Guid id)
-    {
-        await _dbContext.Set<Category>().Where(c => c.Id == id).ExecuteDeleteAsync();
-    }
-
     public async Task CreateCategoryAsync(Category category)
     {
         IfVariationsAddedToCategory(category);
         await _dbContext.Set<Category>().AddAsync(category);
     }
-
 
     public void IfVariationsAddedToCategory(Category category)
     {
@@ -54,35 +61,9 @@ public class CategoryRepository : ICategoryRepository
         }
     }
 
-    public async Task<bool> CategoryExistsAsync(Guid id,CancellationToken cancellationToken)
-    {
-        return await _dbContext.Set<Category>().AnyAsync(c=>c.Id==id,cancellationToken);
-    }
-
-    public async Task<IEnumerable<Category>> GetPaginatedCategoriesAsync(int page, int per_page)
-    {
-        return await _dbContext.Set<Category>().Include(c => c.ParentCategory).Include(c=>c.BaseCategoryDiscriminator).AddPagination(page, per_page).ToListAsync();
-    }
-
     public async Task<int> GetCategoriesCountAsync()
     {
         return await _dbContext.Set<Category>().CountAsync();
-    }
-
-    public async Task<IEnumerable<Category>> GetParentCategoriesAsync()
-    {
-        return await _dbContext.Set<Category>().Where(c => c.ParentId == null).ToListAsync();
-    }
-
-    public async Task<bool> CategoriesExistsAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken)
-    {
-        var result = await _dbContext.Set<Category>().Where(c => ids.Contains(c.Id)).CountAsync();
-        return result == ids.Count();
-    }
-
-    public async Task DeleteCategoriesByIdsAsync(IEnumerable<Guid> ids)
-    {
-        await _dbContext.Set<Category>().Where(c => ids.Contains(c.Id)).ExecuteDeleteAsync();
     }
 
     public async Task<IEnumerable<Category>> GetCategoriesWithFiltersAsync(params IFilter<Category>[] filters)
@@ -90,6 +71,7 @@ public class CategoryRepository : ICategoryRepository
         return await _dbContext.Set<Category>().Include(c=>c.ParentCategory).Include(c=>c.BaseCategoryDiscriminator).Include(c=>c.Variations).ApplyFilters(filters).ToListAsync();
     }
 
+    // delegate this task to variaiton repo
     public async Task<bool> IsVariationBelongsToCategoryAsync(Guid categoryId, Guid variationId)
     {
         return await _dbContext.Set<Category>().Include(c=>c.Variations)
