@@ -66,11 +66,6 @@ public class CategoryRepository : ICategoryRepository
         return await _dbContext.Set<Category>().CountAsync();
     }
 
-    public async Task<IEnumerable<Category>> GetCategoriesWithFiltersAsync(params IFilter<Category>[] filters)
-    {
-        return await _dbContext.Set<Category>().Include(c=>c.ParentCategory).Include(c=>c.BaseCategoryDiscriminator).Include(c=>c.Variations).ApplyFilters(filters).ToListAsync();
-    }
-
     // delegate this task to variaiton repo
     public async Task<bool> IsVariationBelongsToCategoryAsync(Guid categoryId, Guid variationId)
     {

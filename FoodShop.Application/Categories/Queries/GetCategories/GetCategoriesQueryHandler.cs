@@ -3,6 +3,7 @@ using FoodShop.Application.Abstractions;
 using FoodShop.Application.Filters;
 using FoodShop.Application.Products;
 using FoodShop.Application.Queries;
+using FoodShop.Application.Specifications.Categories;
 using FoodShop.Domain.Entities;
 using MediatR;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -23,7 +24,9 @@ public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, IQu
     
     public async Task<IQueryResult> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
     {
-        var categories = await _repository.GetCategoriesWithFiltersAsync(request.filters);
+        var spec = new CategoriesByFiltersSpecification(request.filters);
+
+        var categories = await _repository.GetCategoriesBySpecification(spec);
 
         var dtos = _mapper.Map<IEnumerable<CategoryDto>>(categories);
         var count = await _repository.GetCategoriesCountAsync();

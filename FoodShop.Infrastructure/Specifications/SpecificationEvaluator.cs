@@ -1,4 +1,5 @@
-﻿using FoodShop.Application.Specifications;
+﻿using FoodShop.Application.Filters;
+using FoodShop.Application.Specifications;
 using FoodShop.Domain.Primitives;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -27,6 +28,9 @@ namespace FoodShop.Infrastructure.Specifications
                 queryable,
                 (current,includeExpression) => current.Include(includeExpression)
                 );
+
+            if(specification.Filters is not null)
+                queryable = queryable.ApplyFilters(specification.Filters);
 
             if (specification.OrderByExpression is not null)
             {

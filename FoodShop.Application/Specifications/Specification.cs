@@ -1,4 +1,5 @@
-﻿using FoodShop.Domain.Primitives;
+﻿using FoodShop.Application.Filters;
+using FoodShop.Domain.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace FoodShop.Application.Specifications
         public Expression<Func<TEntity,object>>? OrderByExpression { get; private set; }
         public Expression<Func<TEntity,object>>? OrderByDescendingExpression { get; private set; }
 
+        public IFilter<TEntity>[]? Filters { get; set; } 
+
         public Specification(Expression<Func<TEntity, bool>>? criteria)
             => Criteria = criteria;
 
@@ -30,6 +33,7 @@ namespace FoodShop.Application.Specifications
             Expression<Func<TEntity, object>> orderbyDescendingExpression
             ) => OrderByDescendingExpression = orderbyDescendingExpression;
         
-
+        protected void SetFilters(params IFilter<TEntity>[] filters)
+            => Filters = filters;
     }
 }

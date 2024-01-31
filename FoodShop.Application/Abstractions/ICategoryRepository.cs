@@ -15,7 +15,7 @@ public interface ICategoryRepository
 
     public Task CreateCategoryAsync(Category category);
 
-    public Task<IEnumerable<Category>> GetCategoriesWithFiltersAsync(params IFilter<Category>[] filters);
+    //public Task<IEnumerable<Category>> GetCategoriesWithFiltersAsync(params IFilter<Category>[] filters);
 
     
     public Task<bool> IsVariationBelongsToCategoryAsync(Guid categoryId,Guid variationId);
