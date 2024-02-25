@@ -8,7 +8,6 @@ namespace FoodShop.Application.Filters
 {
     public static class FilterExtensions
     {
-
         public static IQueryable<T> ApplyFilters<T>(this IQueryable<T> query, params IFilter<T>[] filters)
         { 
             foreach (var filter in filters)

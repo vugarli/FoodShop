@@ -32,12 +32,6 @@ public class VariationRepository : IVariationRepository
         return await _dbContext.Set<Variation>().AnyAsync(v => v.Id == id,cancellationToken);
     }
 
-    public async Task<IEnumerable<Variation>> GetVariationsAsync()
-    {
-        var variations = await _dbContext.Set<Variation>().ToListAsync();
-        return variations;
-    }
-
     public async Task<Variation> UpdateVariationAsync(Variation variation)
     {
         _dbContext.Update(variation);
@@ -47,11 +41,6 @@ public class VariationRepository : IVariationRepository
     public async Task DeleteVariationAsync(Guid id)
     {
         var r = await _dbContext.Set<Variation>().Where(v => v.Id == id).ExecuteDeleteAsync();
-    }
-
-    public async Task<IEnumerable<Variation>> GetPaginatedVariationsAsync(int page, int per_page)
-    {
-        return await _dbContext.Set<Variation>().AddPagination(page, per_page).ToListAsync();
     }
 
     public async Task<int> GetVariationsCountAsync()

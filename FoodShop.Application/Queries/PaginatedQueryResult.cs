@@ -7,7 +7,17 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FoodShop.Application.Queries
 {
-    public class PaginatedQueryResult<T> : QueryResult<T>
+    public interface IPaginatedResult
+    {
+        public int Page { get; init; }
+        public int Per_Page { get; init; }
+        public string? Previous { get; set; }
+        public string? Next { get; set; }
+
+        public bool HasNext { get; }
+        public bool HasPrev { get; }
+    }
+    public class PaginatedQueryResult<T> : QueryResult<T>, IPaginatedResult
     {
         public PaginatedQueryResult(IEnumerable<T> data, int page, int per_page, int rowCount) :base(data)
         {
@@ -23,6 +33,10 @@ namespace FoodShop.Application.Queries
 
         public string? Previous { get; set; }
         public string? Next { get; set; }
+
+        public bool HasNext => Page < TotalPages;
+
+        public bool HasPrev => Page > 1;
     }
 
 }

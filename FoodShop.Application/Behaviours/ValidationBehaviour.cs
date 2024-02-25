@@ -21,16 +21,24 @@ where TRequest : ICommandBase
 
         var validationResults = await Task.WhenAll(_validators
             .Select(v => v.ValidateAsync(context,cancellationToken)));
-        
-        var errors = validationResults
-            .Where(v=>!v.IsValid)
-            .SelectMany(res => res.Errors)
-            .Select(f => new ValidationError(f.PropertyName,f.ErrorMessage))
-            .ToList();
 
+        var errors = validationResults
+            .Where(v => !v.IsValid)
+            .SelectMany(res => res.Errors)
+            .GroupBy(f => f.PropertyName);
+            
+        
         if (errors.Any())
         {
-            throw new Exceptions.ValidationException(errors);
+            var validationEx = new ModelValidationException();
+
+            foreach (var error in errors)
+            {
+                foreach (var errorDetail in error.ToList())
+                    validationEx.UpsertDataList(error.Key,errorDetail.ErrorMessage);
+            }
+
+            throw validationEx;
         }
         
         return await next();

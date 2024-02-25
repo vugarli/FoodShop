@@ -17,7 +17,9 @@
             <MudPaper Class="d-flex flex-column p-5 mb-2" Elevation="0">
 
                 <MudTextField @bind-Value="CreateModel.SKU" Label="SKU" Variant="Variant.Text"></MudTextField>
+
                 <MudTextField @bind-Value="CreateModel.Quantity" Label="Quantity" Variant="Variant.Text"></MudTextField>
+
                 <MudTextField @bind-Value="CreateModel.Price" Label="Price" Variant="Variant.Text"></MudTextField>
 
                 <FormImageUploadSection @bind-SelectedImage="SelectedFile" ImageData="@ImageData"> </FormImageUploadSection>

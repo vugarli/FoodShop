@@ -1,14 +1,14 @@
-﻿namespace FoodShop.Application.Exceptions;
+﻿using Xeptions;
 
-public class ValidationException : Exception
+namespace FoodShop.Application.Exceptions;
+
+public class ModelValidationException : Xeption
 {
-    public IReadOnlyCollection<ValidationError> Errors;
-    public ValidationException(IReadOnlyCollection<ValidationError> errors)
+    public ModelValidationException()
     :base("Validation Error")
     {
-        Errors = errors;
+        
     }
-    
 }
 
 public record ValidationError(string PropertyName, string ErrorMessage);

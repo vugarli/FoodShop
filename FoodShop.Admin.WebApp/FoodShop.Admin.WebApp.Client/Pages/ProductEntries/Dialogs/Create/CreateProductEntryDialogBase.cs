@@ -29,12 +29,15 @@ namespace FoodShop.Admin.WebApp.Client.Pages.ProductEntries.Dialogs.Create
 
         public async void Create()
         {
+
             if (SelectedFile != null)
-                    CreateModel.Image = await fileUploadService.UploadFileAndProvideNameAsync(SelectedFile);
+                CreateModel.Image = await fileUploadService.UploadFileAndProvideNameAsync(SelectedFile);
+
             if (_editForm?.EditContext?.Validate() ?? false)
             {
                 MudDialog.Close(DialogResult.Ok(CreateModel));
             }
+
         }
 
         public void Cancel()

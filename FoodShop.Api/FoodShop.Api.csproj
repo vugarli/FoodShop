@@ -14,10 +14,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="RESTFulSense" Version="2.17.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FoodShop.Application\FoodShop.Application.csproj" />
     <ProjectReference Include="..\FoodShop.Infrastructure\FoodShop.Infrastructure.csproj" />
     <ProjectReference Include="..\FoodShop.Presentation\FoodShop.Presentation.csproj" />
   </ItemGroup>

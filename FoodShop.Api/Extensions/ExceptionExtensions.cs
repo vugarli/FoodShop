@@ -7,7 +7,7 @@ public static class ExceptionExtensions
 {
     public static ExceptionDetail GetExceptionDetails(this Exception exception)
     {
-        if (exception is ValidationException validationException)
+        if (exception is ModelValidationException validationException)
         {
             return new ExceptionDetail
                 (
@@ -15,7 +15,7 @@ public static class ExceptionExtensions
                     "ValidationException",
                     "Validation",
                     "Something bad happened",
-                    validationException.Errors
+                    null
                     );
         }
         return new ExceptionDetail

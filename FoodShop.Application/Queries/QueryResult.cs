@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FoodShop.Application.Filters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata;
@@ -26,4 +27,32 @@ namespace FoodShop.Application.Queries
             Data = data;
         }
     }
+
+    public static class QueryResultExtensions
+    {
+        public static IQueryResult ToQueryResult<Tdto, Tent>(
+            this IEnumerable<Tdto> data,
+            IFilter<Tent>[] filters, int count)
+        {
+            IQueryResult queryResult;
+
+            if (filters != null && filters.Any(f => f is PaginationFilter<Tent>))
+            {
+                var pFilter = (PaginationFilter<Tent>)filters.FirstOrDefault(c => c is PaginationFilter<Tent>);
+
+                if (pFilter != null && pFilter.per_page != null && pFilter.page != null)
+                    queryResult = new PaginatedQueryResult<Tdto>(data, (int)pFilter.page, (int)pFilter.per_page, count);
+                else
+                    queryResult = new QueryResult<Tdto>(data);
+            }
+            else
+                queryResult = new QueryResult<Tdto>(data);
+
+            return queryResult;
+        }
+
+
+
+    }
+
 }
