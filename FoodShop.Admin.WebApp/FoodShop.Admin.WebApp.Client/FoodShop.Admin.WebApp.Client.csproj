@@ -19,11 +19,13 @@
     <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
     <PackageReference Include="MudBlazor" Version="6.11.1" />
     	<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.*-*" PrivateAssets="all" />
+    	<PackageReference Include="SmartFormat.NET" Version="3.3.2" />
   </ItemGroup>
 
 
 	<ItemGroup>
     <ProjectReference Include="..\..\FoodShop.Application\FoodShop.Application.csproj" />
+    <ProjectReference Include="..\..\FoodShop.Common\FoodShop.Common.csproj" />
     <ProjectReference Include="..\..\FoodShop.Domain\FoodShop.Domain.csproj" />
   </ItemGroup>
 

@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\FoodShop.Application\FoodShop.Application.csproj" />
+    <ProjectReference Include="..\..\FoodShop.Common\FoodShop.Common.csproj" />
     <ProjectReference Include="..\FoodShop.Admin.WebApp.Client\FoodShop.Admin.WebApp.Client.csproj" />
   </ItemGroup>
 

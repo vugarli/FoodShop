@@ -17,6 +17,8 @@ using FoodShop.Application.Categories.Commands.DeleteCategories;
 using FoodShop.Application.Categories.Commands.RemoveVariation;
 using FoodShop.Application.Categories.Queries.GetVariations;
 using FoodShop.Application.Categories.Commands.AddVariation;
+using FoodShop.Presentation.Endpoints;
+using FoodShop.Common.Endpoints;
 
 namespace FoodShop.Api.Controllers
 {
@@ -30,7 +32,7 @@ namespace FoodShop.Api.Controllers
             _sender = sender;
         }
 
-        [HttpGet]
+        [HttpGet(CategoryEndpoints.GetCategoriesEndpoint)]
         public async Task<IActionResult> GetCategories
             (
                 [FromQuery] CategoryFilter categoryFilter,

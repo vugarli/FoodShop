@@ -3,6 +3,7 @@ using FoodShop.Presentation.Endpoints;
 using FoodShop.Application;
 using FoodShop.Infrastructure;
 using FoodShop.Api.Filters;
+using FoodShop.Api.Seeding;
 
 
 var builder = WebApplication.CreateBuilder(args);

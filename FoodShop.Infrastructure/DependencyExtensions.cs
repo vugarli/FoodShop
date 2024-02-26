@@ -18,9 +18,7 @@ namespace FoodShop.Infrastructure
             services.AddScoped<IProductEntryRepository, ProductEntryRepository>();
             services.AddScoped<IBaseCategoryDiscriminatorRepository, BaseCategoryDiscriminatorRepository>();
 
-            services.AddDbContext<ApplicationDbContext>(
-                options => options.UseSqlServer(config["ConnectionString"],
-                    o => o.MigrationsAssembly("FoodShop.Api")));
+            services.AddDbContext<ApplicationDbContext>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

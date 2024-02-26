@@ -47,7 +47,7 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Products
         {
             var client = ClientFactory.CreateClient("API");
 
-            var response = await client.GetFromJsonAsync<PaginatedQueryResult<CategoryDto>>($"/categories?page={1}&per_page={50}");
+            var response = await client.GetFromJsonAsync<PaginatedQueryResult<CategoryDto>>($"/api/categories?page={1}&per_page={50}");
             Categories = response.Data.ToList();
         }
 
@@ -102,7 +102,6 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Products
             DialogOptions options = new DialogOptions();
             options.FullWidth = true;
             var dialogparams = new DialogParameters<UpdateProductDialog>();
-            //dialogparams.Add<IEnumerable<CategoryDto>>(x => x.Categories, Categories);
             var product = await ProductService.GetProductById(Id);
             var updateProd = new VM_UpdateProduct()
             {
@@ -112,18 +111,19 @@ namespace FoodShop.Admin.WebApp.Client.Pages.Products
                 Image = product.Image,
                 CategoryId = product.CategoryId
             };
+
             dialogparams.Add<IEnumerable<CategoryDto>>(x => x.Categories, Categories);
             dialogparams.Add<VM_UpdateProduct>(x => x.UpdateModel, updateProd);
 
             var dialog = await DialogService.ShowAsync<UpdateProductDialog>("Update",dialogparams,options);
             using var result = dialog.Result;
             var dialogResult = await result;
+
             if(!dialogResult.Canceled)
             {
-                var data = dialogResult.Data;
-                var client = ClientFactory.CreateClient("API");
-                var updateResult = await client.PutAsJsonAsync($"/products/{Id}", data);
-                if(updateResult.IsSuccessStatusCode)
+                var data = dialogResult.Data as VM_UpdateProduct;
+                var updateResult = await ProductService.UpdateProduct(data);
+                if(updateResult)
                 {
                     Snackbar.Add("Updated!", Severity.Success);
                     await _dataGrid.ReloadServerData();

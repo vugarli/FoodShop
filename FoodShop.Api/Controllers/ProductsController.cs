@@ -13,6 +13,7 @@ using FoodShop.Application.Products.Commands.UpdateProduct;
 using FoodShop.Application.Products.Commands.DeleteProduct;
 using FoodShop.Application.Products.Commands.DeleteProducts;
 using RESTFulSense.Controllers;
+using FoodShop.Common.Endpoints;
 
 namespace FoodShop.Api.Controllers
 {
@@ -25,9 +26,10 @@ namespace FoodShop.Api.Controllers
         public ProductsController(ISender sender)
         {
             _sender = sender;
+            
         }
 
-        [HttpGet]
+        [HttpGet(ProductEndpoints.GetProductsEndpoint)]
         public async Task<IActionResult> GetProductsAsync(
             [FromQuery] PaginationFilter<Product> paginationFilter,
             [FromQuery] ProductFilter productFilter
@@ -38,7 +40,7 @@ namespace FoodShop.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{id:guid}")]
+        [HttpGet(ProductEndpoints.GetProductByIdEndpoint)]
         public async Task<IActionResult> GetProductByIdAsync
             (
                 [FromRoute] Guid Id

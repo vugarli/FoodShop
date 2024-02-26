@@ -3,6 +3,7 @@ using FoodShop.Domain.Entities;
 using FoodShop.Domain.Primitives;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.Extensions.Configuration;
 using Microsoft.VisualBasic.CompilerServices;
 
 namespace FoodShop.Infrastructure;
@@ -11,11 +12,24 @@ public class ApplicationDbContext : DbContext, IUnitOfWork
 {
     public DbSet<Product> Products { get; set; }
     public DbSet<BaseCategoryDiscriminator> BaseCategoryDiscriminators { get; set; }
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) :base(options) {}
+    
     
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+    }
+
+    private IConfiguration _configuration { get; }
+    public ApplicationDbContext(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        var connectionString = _configuration.GetConnectionString(name: "MSSQL");
+        optionsBuilder.UseSqlServer(connectionString);
+        base.OnConfiguring(optionsBuilder);
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
