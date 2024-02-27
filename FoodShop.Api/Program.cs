@@ -4,12 +4,40 @@ using FoodShop.Application;
 using FoodShop.Infrastructure;
 using FoodShop.Api.Filters;
 using FoodShop.Api.Seeding;
-
+using FoodShop.Api;
+using FoodShop.Infrastructure.IdentityRelated;
+using FluentAssertions.Common;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "FoodShop", Version = "v1.0.0" });
+
+    var securitySchema = new OpenApiSecurityScheme
+    {
+        Description = "Using the Authorization header with the Bearer scheme.",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        Reference = new OpenApiReference
+        {
+            Type = ReferenceType.SecurityScheme,
+            Id = "Bearer"
+        }
+    };
+
+    c.AddSecurityDefinition("Bearer", securitySchema);
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+          {
+              { securitySchema, new[] { "Bearer" } }
+          });
+});
 
 builder.Services.InstallInfrastructureServices(builder.Configuration);
 builder.Services.InstallApplicationServices();
@@ -17,6 +45,8 @@ builder.Services.InstallApplicationServices();
 builder.Services.AddTransient<ExceptionMiddleware>();
 
 builder.Services.AddCors();
+
+builder.Services.SetupIdentity(builder.Configuration);
 
 builder.Services.AddControllers(options=>
 {
@@ -36,6 +66,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 //app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

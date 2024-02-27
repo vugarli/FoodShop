@@ -25,6 +25,12 @@ builder.Services.AddScoped<ILatesArrivalsProductServices, LatestArrivalsProductS
 builder.Services.AddScoped<IDiscriminatorGroupsService, DiscriminatorGroupsService>();
 builder.Services.AddScoped<IFilteredProductEntryService, FilteredProductEntryService>();
 
+builder.Services.AddOidcAuthentication(options =>
+{
+    builder.Configuration.Bind("Auth0", options.ProviderOptions);
+    options.ProviderOptions.ResponseType = "code";
+});
+
 
 builder.Services.AddMudServices();
 builder.Services.AddMudExtensions();

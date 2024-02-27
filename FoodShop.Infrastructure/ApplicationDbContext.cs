@@ -11,7 +11,9 @@ using Microsoft.VisualBasic.CompilerServices;
 
 namespace FoodShop.Infrastructure;
 
-public class ApplicationDbContext : IdentityDbContext, IUnitOfWork
+public class ApplicationDbContext : 
+    IdentityDbContext<ApplicationIdentityUser,IdentityRole<Guid>,Guid>,
+    IUnitOfWork
 {
     public DbSet<Product> Products { get; set; }
     public DbSet<BaseCategoryDiscriminator> BaseCategoryDiscriminators { get; set; }

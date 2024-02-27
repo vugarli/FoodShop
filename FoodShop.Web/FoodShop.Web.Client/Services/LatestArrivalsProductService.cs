@@ -1,6 +1,7 @@
 ﻿
 using FoodShop.Web.Abstractions.Services;
 using FoodShop.Web.ViewModels.Products;
+using Microsoft.AspNetCore.Components.Authorization;
 using System.Net.Http.Json;
 
 namespace FoodShop.Web.Client.Services
@@ -10,15 +11,20 @@ namespace FoodShop.Web.Client.Services
         HttpClient client;
         public const int GroupSize = 4;
 
-        public LatestArrivalsProductService(IHttpClientFactory httpClientFactory)
+        public AuthenticationStateProvider A { get; }
+
+        public LatestArrivalsProductService(IHttpClientFactory httpClientFactory, AuthenticationStateProvider a)
         {
             client = httpClientFactory.CreateClient("API");
+            A = a;
         }
-
+        
 
         public async Task<IEnumerable<IEnumerable<ProductItemViewModel>>> GetLatestArrivalsGroups()
         {
-            var products = (await client.GetFromJsonAsync<PaginatedResult<ProductItemViewModel>>("/ProductEntries?LatestProducts=true")).Data.ToList();
+
+            var aa = await A.GetAuthenticationStateAsync();
+            var products = (await client.GetFromJsonAsync<PaginatedResult<ProductItemViewModel>>("/api/ProductEntries?LatestProducts=true")).Data.ToList();
             var groups = new List<List<ProductItemViewModel>>();
 
             var groupSize = (int)Math.Ceiling(products.Count()*1.0 / GroupSize);

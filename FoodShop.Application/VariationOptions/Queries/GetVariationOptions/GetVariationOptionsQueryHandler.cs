@@ -26,20 +26,7 @@ public class GetVariationOptionsQueryHandler : IRequestHandler<GetVariationOptio
 
         var count = await _repository.GetVariationOptionsCountAsync();
 
-        IQueryResult queryResult;
-
-        //temp
-        if (request.filters.Any(f => f is PaginationFilter<VariationOption>))
-        {
-            var pFilter = (PaginationFilter<VariationOption>)request.filters.FirstOrDefault(c => c is PaginationFilter<VariationOption>);
-
-            if (pFilter != null && pFilter.per_page != null && pFilter.page != null)
-                queryResult = new PaginatedQueryResult<VariationOptionDto>(dtos, (int)pFilter.page, (int)pFilter.per_page, count);
-            else
-                queryResult = new QueryResult<VariationOptionDto>(dtos);
-        }
-        else
-            queryResult = new QueryResult<VariationOptionDto>(dtos);
+        IQueryResult queryResult = dtos.ToQueryResult(request.filters,count);
 
         return queryResult;
     }

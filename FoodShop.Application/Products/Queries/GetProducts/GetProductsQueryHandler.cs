@@ -35,19 +35,6 @@ public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, IQueryR
 
         var queryResult = dtos.ToQueryResult(request.filters,count);
 
-        //temp
-        //if (request.filters.Any(f => f is PaginationFilter<Product>))
-        //{
-        //    var pFilter = (PaginationFilter<Product>)request.filters.FirstOrDefault(c => c is PaginationFilter<Product>);
-
-        //    if (pFilter != null && pFilter.per_page != null && pFilter.page != null)
-        //        queryResult = new PaginatedQueryResult<ProductDto>(dtos, (int)pFilter.page, (int)pFilter.per_page, count);
-        //    else
-        //        queryResult = new QueryResult<ProductDto>(dtos);
-        //}
-        //else
-        //    queryResult = new QueryResult<ProductDto>(dtos);
-
         return queryResult;
     }
 }

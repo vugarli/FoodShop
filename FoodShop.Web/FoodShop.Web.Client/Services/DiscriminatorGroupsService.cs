@@ -15,7 +15,7 @@ namespace FoodShop.Web.Services
 
         public async Task<IEnumerable<BaseDiscriminatorGroupVM>> GetDiscriminatorGroups()
         {
-            var categories = (await client.GetFromJsonAsync<PaginatedResult<CategoryVM>>("/categories?page=1&per_page=100")).Data;
+            var categories = (await client.GetFromJsonAsync<PaginatedResult<CategoryVM>>("/api/categories?page=1&per_page=100")).Data;
 
             if (categories == null) new List<CategoryGroupVM>();
 

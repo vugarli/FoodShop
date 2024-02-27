@@ -33,23 +33,7 @@ public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, IQu
 
         var count = await _repository.CountCategoriesBySpecification(specWithoutPagination);
 
-        //var pModel = new PaginatedQueryResult<CategoryDto>(dtos, request.page, request.per_page, count);
-
-
-        IQueryResult queryResult;
-
-        //temp
-        if (request.filters.Any(f => f is PaginationFilter<Category>))
-        {
-            var pFilter = (PaginationFilter<Category>)request.filters.FirstOrDefault(c => c is PaginationFilter<Category>);
-
-            if (pFilter != null && pFilter.per_page != null && pFilter.page != null)
-                queryResult = new PaginatedQueryResult<CategoryDto>(dtos, (int)pFilter.page, (int)pFilter.per_page, count);
-            else
-                queryResult = new QueryResult<CategoryDto>(dtos);
-        }
-        else
-            queryResult = new QueryResult<CategoryDto>(dtos);
+        IQueryResult queryResult = dtos.ToQueryResult(request.filters,count);
 
         return queryResult;
     }

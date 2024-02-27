@@ -12,10 +12,12 @@ using FoodShop.Application.Products.Commands.DeleteProduct;
 using FoodShop.Application.Products.Commands.DeleteProducts;
 using RESTFulSense.Controllers;
 using FoodShop.Common.Endpoints;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FoodShop.Api.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class ProductsController : RESTFulController
     {
