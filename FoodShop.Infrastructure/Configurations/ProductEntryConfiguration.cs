@@ -10,7 +10,7 @@ public class ProductEntryConfiguration : IEntityTypeConfiguration<ProductEntry>
     {
         builder.HasKey(pe => pe.Id);
         builder.HasOne<Product>(pe => pe.Product)
-            .WithMany().HasForeignKey(p=>p.ProductId);
+            .WithMany().HasForeignKey(p=>p.ProductId).OnDelete(DeleteBehavior.Restrict);
         builder.HasMany<VariationOption>(pe => pe.VariationOptions);
     }
 }

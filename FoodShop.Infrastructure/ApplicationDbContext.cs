@@ -1,6 +1,9 @@
 ﻿using FoodShop.Domain.Abstractions;
 using FoodShop.Domain.Entities;
 using FoodShop.Domain.Primitives;
+using FoodShop.Infrastructure.IdentityRelated;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.Extensions.Configuration;
@@ -8,7 +11,7 @@ using Microsoft.VisualBasic.CompilerServices;
 
 namespace FoodShop.Infrastructure;
 
-public class ApplicationDbContext : DbContext, IUnitOfWork
+public class ApplicationDbContext : IdentityDbContext, IUnitOfWork
 {
     public DbSet<Product> Products { get; set; }
     public DbSet<BaseCategoryDiscriminator> BaseCategoryDiscriminators { get; set; }
@@ -17,6 +20,7 @@ public class ApplicationDbContext : DbContext, IUnitOfWork
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+        base.OnModelCreating(modelBuilder);
     }
 
     private IConfiguration _configuration { get; }

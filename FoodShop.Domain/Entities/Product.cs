@@ -12,6 +12,9 @@ public class Product : Entity
         Image = image;
     }
 
+    public Guid SellerId { get; set; }
+    public ApplicationSellerUser Seller { get; set; }
+
     public string Name { get; private set; }
     public string Description { get; private set; }
     

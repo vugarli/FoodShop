@@ -39,15 +39,6 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 
-//app.MapProducts().WithOpenApi();
-//app.MapBaseCategoryDiscriminators().WithOpenApi();
-
-//app.MapCategories().WithOpenApi();
-//app.MapVariations().WithOpenApi();
-//app.MapVariationOptions().WithOpenApi();
-//app.MapProductEntries().WithOpenApi().AddEndpointFilter<ValidationActionFilter>();
-
-//app.MapUpload().WithOpenApi();
 
 app.UseCors(x => x
                    .AllowAnyMethod()

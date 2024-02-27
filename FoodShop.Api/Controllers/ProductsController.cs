@@ -1,7 +1,5 @@
 ﻿using FoodShop.Application.Filters;
 using FoodShop.Application.Products.Queries.GetProducts;
-using FoodShop.Application.Products;
-using FoodShop.Application.Queries;
 using FoodShop.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -62,7 +60,8 @@ namespace FoodShop.Api.Controllers
         }
 
         [HttpPut("{id:guid}")]
-        public async Task<IActionResult> UpdateProductAsync(
+        public async Task<IActionResult> UpdateProductAsync
+            (
             [FromBody] UpdateProductCommand command,
             [FromRoute] Guid id
             )

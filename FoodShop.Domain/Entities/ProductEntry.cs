@@ -13,6 +13,9 @@ public class ProductEntry : Entity
         this.SKU = SKU;
     }
 
+    public Guid SellerId { get; set; }
+    public ApplicationSellerUser Seller { get; set; }
+
     public Guid ProductId { get; private set; }
     public Product? Product { get; private set; }
 
