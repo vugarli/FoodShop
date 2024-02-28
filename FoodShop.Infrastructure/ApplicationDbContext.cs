@@ -34,7 +34,7 @@ public class ApplicationDbContext :
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var connectionString = _configuration.GetConnectionString(name: "MSSQL");
-        optionsBuilder.UseSqlServer(connectionString);
+        optionsBuilder.UseSqlServer(connectionString, options => options.EnableRetryOnFailure());
         base.OnConfiguring(optionsBuilder);
     }
 

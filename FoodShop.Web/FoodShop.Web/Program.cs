@@ -5,6 +5,8 @@ using FoodShop.Web.Client.Pages;
 using FoodShop.Web.Client.Services;
 using FoodShop.Web.Components;
 using FoodShop.Web.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using MudBlazor.Services;
 using MudExtensions.Services;
 
@@ -31,6 +33,7 @@ builder.Services.AddOidcAuthentication(options =>
     options.ProviderOptions.ResponseType = "code";
 });
 
+builder.Services.AddAuthentication(options=>options.DefaultAuthenticateScheme= CookieAuthenticationDefaults.AuthenticationScheme);
 
 builder.Services.AddMudServices();
 builder.Services.AddMudExtensions();

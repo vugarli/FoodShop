@@ -62,17 +62,17 @@ namespace FoodShop.Api.Filters
 
                 context.Result = new BadRequestObjectResult(problemDetail);
             }
-            else 
-            {
-                var problemDetail = new ValidationProblemDetails
-                {
-                    Status = StatusCodes.Status500InternalServerError,
-                    Type = "https://tools.ietf.org/html/rfc7231#section-6.6.1",
-                    Title = "Something bad happened"
-                };
+            //else 
+            //{
+            //    var problemDetail = new ValidationProblemDetails
+            //    {
+            //        Status = StatusCodes.Status500InternalServerError,
+            //        Type = "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+            //        Title = "Something bad happened"
+            //    };
 
-                context.Result = new InternalServerErrorObjectResult(problemDetail);
-            }
+            //    context.Result = new InternalServerErrorObjectResult(problemDetail);
+            //}
         }
     }
 }

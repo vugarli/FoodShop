@@ -321,7 +321,7 @@
     protected async override Task OnInitializedAsync()
     {
         base.OnInitialized();
-        DiscGroups = await discriminatorGroupService.GetDiscriminatorGroups();
+        DiscGroups = new List<BaseDiscriminatorGroupVM>();// await discriminatorGroupService.GetDiscriminatorGroups();
     }
 
 }
