@@ -16,9 +16,6 @@ namespace FoodShop.Infrastructure.Services
         private readonly IManagementApiTokenService _tokenService;
         private readonly IConfiguration _configuration;
 
-
-
-
         public UserService
             (
             IManagementApiTokenService tokenService,
@@ -29,7 +26,7 @@ namespace FoodShop.Infrastructure.Services
             _configuration = configuration;
         }
 
-        public async Task CreateUserAsync()
+        public async Task CreateUserAsync(CreateUserRequest request)
         {
             string token = await _tokenService.AcquireTokenAsync();
 
@@ -48,10 +45,10 @@ namespace FoodShop.Infrastructure.Services
             var user = await _managementApiClient.Users.CreateAsync(new UserCreateRequest
             {
                 Connection = connection.Name,
-                Email = $"{Guid.NewGuid().ToString("N")}@nonexistingdomain.aaa",
+                Email = request.Email,
                 EmailVerified = true,
-                Password = "SampleV$03",
-                UserMetadata = new {type="seller"}
+                Password = request.Password,
+                UserMetadata = new {type=request.UserType}
             }) ;
 
         }

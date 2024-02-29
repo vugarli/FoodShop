@@ -14,10 +14,10 @@ namespace FoodShop.Api.Controllers
             _userService = userService;
         }
 
-        [HttpGet]
+        [HttpGet("registercustomer")]
         public async Task<IActionResult> RegisterAsync()
         {
-            await _userService.CreateUserAsync();
+            await _userService.CreateUserAsync(new() { });
             return Ok();
         }
 

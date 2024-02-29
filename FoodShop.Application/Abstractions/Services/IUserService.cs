@@ -8,6 +8,6 @@ namespace FoodShop.Application.Abstractions.Services
 {
     public interface IUserService
     {
-        public Task CreateUserAsync();
+        public Task CreateUserAsync(CreateUserRequest request);
     }
 }
